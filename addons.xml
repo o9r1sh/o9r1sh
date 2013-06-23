@@ -6,7 +6,7 @@
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.urlresolver" version="1.0.3"/>
+    <import addon="script.module.urlresolver" version="2.0.9"/>
     <import addon="script.module.mechanize" version="0.2.5"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
