@@ -10,10 +10,5 @@ Added Next Page option for series with large numbers of episodes
 Fixed bug that prevented videolink list from loading if videoweed file was no longer available
 Added Posters for shows
 
-[B]Version 0.3b Beta[/B]
-Removed a few unused imports.
-Edited addon.xml so dependancies install.
-
-
 
 -
