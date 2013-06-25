@@ -1,9 +1,7 @@
 import urllib,urllib2,re,sys,xbmcplugin,xbmcgui,httplib
 import cookielib,os,string,cookielib,StringIO
-import os,time,base64,logging
 import xbmcaddon
 import urlresolver
-import datetime
 import mechanize
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.gogoanime/art', ''))
