@@ -22,7 +22,7 @@
 
 <addon id="plugin.video.mmline"
        name="MegaMovieLine"
-       version="0.1"
+       version="1.0"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
