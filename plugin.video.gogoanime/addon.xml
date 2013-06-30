@@ -13,8 +13,8 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Watch Anime from gogoanime.com</summary>
-    <description>gogoanime.com</description>
+    <summary>Watch Anime from GoGoAnime.com</summary>
+    <description>Watch Anime from GoGoAnime.com</description>
     <platform>all</platform>
   </extension>
 </addon>

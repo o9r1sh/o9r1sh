@@ -14,8 +14,8 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Watch Anime from gogoanime.com</summary>
-    <description>gogoanime.com</description>
+    <summary>Watch Anime from GoGoAnime.com</summary>
+    <description>Watch Anime from GoGoAnime.com</description>
     <platform>all</platform>
   </extension>
 </addon>
@@ -47,8 +47,10 @@
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Install Addons from o9r1sh</summary>
-		<description>Download and install addons from o9r1sh. For OFFICIAL !! Support Visit XBMCHUB.COM</description>
-		<platform>all</platform>
+		<description>Download and install addons from o9r1sh. For OFFICIAL !! Support Visit XBMCHUB.COM
+Addons Inside - GoGoAnime, MegaMovieLine</description>
+
+	<platform>all</platform>
 	</extension>
 </addon>
 </addons>
