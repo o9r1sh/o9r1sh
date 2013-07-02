@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
+<addon id="plugin.video.filmikz"
+       name="Filmikz"
+       version="1.0"
+       provider-name="o9r1sh">
+  <requires>
+    <import addon="xbmc.python" version="1.0"/>
+    <import addon="script.module.urlresolver" version="2.0.9"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource"
+            library="default.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Watch Movies And TV Shows from Filmikz.net</summary>
+    <description>Watch Movies And TV Shows from Filmikz.net</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.gogoanime"
        name="GoGo Anime"
        version="0.3b"
