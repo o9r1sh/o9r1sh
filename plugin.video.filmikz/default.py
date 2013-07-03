@@ -1,14 +1,19 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui
-import urlresolver
+import urlresolver,xbmcaddon
 
 base_url = 'http://filmikz.net/'
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.filmikz/art/', ''))
 
+settings = xbmcaddon.Addon(id='<plugin.video.filikz>')
+adult_content = settings.getSetting('adult_content')
+
 def CATEGORIES():
+        if adult_content == 'true':
+                addDir('Adult Movies',base_url + 'index.php?genre=14',1,artwork + 'adult.png','')  
         addDir('Recently Added Movies',base_url + 'index.php',1,artwork + 'new_movies.png','')
         addDir('Recently Added Episodes',base_url + 'index.php?genre=15',1,artwork + 'new_episodes.png','')
         addDir('Movie Genres',base_url,3,artwork + 'genres.png','')
-        addDir('Search',base_url,5,artwork + 'search.png','')               
+        addDir('Search',base_url,5,artwork + 'search.png','')
 def INDEX(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -60,6 +65,10 @@ def INDEX(url):
         elif url == base_url + 'index.php?genre=4':
                 next_page = str(pages[10][0])
                 addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=14':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
                 
         else:
                 next_page = str(pages[11][0])
@@ -67,10 +76,13 @@ def INDEX(url):
         
         match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
         for thumbnail,name,plot,url in match:
-                if 'XXX' in url:
-                        continue
+                if adult_content == 'false':
+                        if 'XXX' in url:
+                                continue
+                        else:
+                                addDir(name,base_url + url,2,base_url + thumbnail,plot)
                 else:
-                        addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                         addDir(name,base_url + url,2,base_url + thumbnail,plot)
 
 def VIDEOLINKS(url,name):
         req = urllib2.Request(url)
@@ -78,19 +90,37 @@ def VIDEOLINKS(url,name):
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        match=re.compile('<form><br>\n<input type=button value="Watch Full Movie-(.+?)" onClick="javascript:popUp(.+?)">\n</form>').findall(link)
-        for name, url in match:
+        multi_part=re.compile('<input type=button value="(.+?)" onClick="javascript:popUp((.+?))">').findall(link)
+        
+        for name, url,url2 in multi_part:
                 req = urllib2.Request(base_url + re.sub("[')(]", '', url))
                 req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
                 response = urllib2.urlopen(req)
                 link=response.read()
                 response.close()
-                links=re.compile('<frameset  cols=".+?">\n  <frame src="(.+?)" />\n  <frame src=".+?" />').findall(link)
-                addDir(name,links[0],4,artwork +name +'.png','')
-        
+                links2=re.compile('<frameset  cols=".+?">\n  <frame src="(.+?)" />\n  <frame src=".+?" />').findall(link)
+                if name.find("NowDownload") == -1 and name.find("Billionuploads") ==-1:
+                        addDir(name,links2[0],4,artwork  + name +'.png','')
+                
 
-def RESOLVE(url):
-        addLink('Play Video',urlresolver.resolve(url),artwork + 'play.png')                                
+def RESOLVE(name,url):
+        if 'ePornik' in name:
+                
+                req = urllib2.Request(url)
+                req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+                response = urllib2.urlopen(req)
+                link=response.read()
+                response.close()
+                elink=re.compile('s1.addVariable(.+?);').findall(link)
+
+                dirty = re.sub("[',)(]", '', (elink[5]))
+                clean =   dirty[7:-1]
+
+                addLink('Play Video',clean,artwork + 'play.png')
+
+                
+        else:
+                addLink('Play Video',urlresolver.resolve(url),artwork + 'play.png')                                
 
 def GENRES():
         addDir('Action',base_url +'index.php?genre=3',1,artwork + 'action.png','')
@@ -200,7 +230,7 @@ elif mode==3:
         GENRES()
 elif mode==4:
         print ""+url
-        RESOLVE(url)
+        RESOLVE(name,url)
 elif mode==5:
         print ""+url
         SEARCH()
