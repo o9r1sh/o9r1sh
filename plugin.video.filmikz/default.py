@@ -92,15 +92,15 @@ def VIDEOLINKS(url,name):
         response.close()
         multi_part=re.compile('<input type=button value="(.+?)" onClick="javascript:popUp((.+?))">').findall(link)
         
-        for name, url,url2 in multi_part:
+        for host, url,url2 in multi_part:
                 req = urllib2.Request(base_url + re.sub("[')(]", '', url))
                 req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
                 response = urllib2.urlopen(req)
                 link=response.read()
                 response.close()
                 links2=re.compile('<frameset  cols=".+?">\n  <frame src="(.+?)" />\n  <frame src=".+?" />').findall(link)
-                if name.find("NowDownload") == -1 and name.find("Billionuploads") ==-1:
-                        addDir(name,links2[0],4,artwork  + name +'.png','')
+                if host.find("NowDownload") == -1 and host.find("Nosvideo") == -1:
+                        addDir(name,links2[0],4,artwork  + host +'.png','')
                 
 
 def RESOLVE(name,url):
@@ -116,11 +116,11 @@ def RESOLVE(name,url):
                 dirty = re.sub("[',)(]", '', (elink[5]))
                 clean =   dirty[7:-1]
 
-                addLink('Play Video',clean,artwork + 'play.png')
+                addLink(name,clean,artwork + 'play.png')
 
                 
         else:
-                addLink('Play Video',urlresolver.resolve(url),artwork + 'play.png')                                
+                addLink(name,urlresolver.resolve(url),artwork + 'play.png')                                
 
 def GENRES():
         addDir('Action',base_url +'index.php?genre=3',1,artwork + 'action.png','')
