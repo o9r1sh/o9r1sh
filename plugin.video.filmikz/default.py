@@ -9,12 +9,80 @@ adult_content = settings.getSetting('adult_content')
 
 def CATEGORIES():
         if adult_content == 'true':
-                addDir('Adult Movies',base_url + 'index.php?genre=14',1,artwork + 'adult.png','')  
+                addDir('Adult Movies',base_url + 'index.php?genre=14',6,artwork + 'adult.png','')  
         addDir('Recently Added Movies',base_url + 'index.php',1,artwork + 'new_movies.png','')
         addDir('Recently Added Episodes',base_url + 'index.php?genre=15',1,artwork + 'new_episodes.png','')
         addDir('Movie Genres',base_url,3,artwork + 'genres.png','')
         addDir('Search',base_url,5,artwork + 'search.png','')
 def INDEX(url):
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        pages=re.compile("<a style=\'color:red;\' href=\'(.+?)'>(.+?)</a>").findall(link)
+        
+        if url == base_url + 'index.php':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=15':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=3':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=2':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=11':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=12':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=1':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=5':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=6':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=13':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=4':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+
+        elif url == base_url + 'index.php?genre=14':
+                next_page = str(pages[10][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+                
+        else:
+                next_page = str(pages[11][0])
+                addDir('Next Page',base_url + next_page,1,artwork + 'next.png','')
+        
+        match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
+        for thumbnail,name,plot,url in match:
+                if 'XXX' in url:
+                                continue
+                else:
+                        addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                
+
+def ADULTINDEX(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -82,7 +150,7 @@ def INDEX(url):
                         else:
                                 addDir(name,base_url + url,2,base_url + thumbnail,plot)
                 else:
-                         addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                        addDir(name,base_url + url,2,base_url + thumbnail,plot)
 
 def VIDEOLINKS(url,name):
         req = urllib2.Request(url)
@@ -104,7 +172,7 @@ def VIDEOLINKS(url,name):
                 
 
 def RESOLVE(name,url):
-        if 'ePornik' in name:
+        if 'epornik' in url:
                 
                 req = urllib2.Request(url)
                 req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -112,9 +180,9 @@ def RESOLVE(name,url):
                 link=response.read()
                 response.close()
                 elink=re.compile('s1.addVariable(.+?);').findall(link)
-
                 dirty = re.sub("[',)(]", '', (elink[5]))
                 clean =   dirty[7:-1]
+                print 'look' + clean
 
                 addLink(name,clean,artwork + 'play.png')
 
@@ -234,6 +302,9 @@ elif mode==4:
 elif mode==5:
         print ""+url
         SEARCH()
+elif mode==6:
+        print ""+url
+        ADULTINDEX(url)
 
 
 
