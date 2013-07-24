@@ -8,7 +8,7 @@ Removed Nowdownload and BillionUpload Links from the list.
 Version 1.11
 Quick fix to pass video name to player
 
-Version 1.1.2
+Version 1.12
 Fixed ePornik Links.
 Made artwork tiles for multi-part sources for easier readability.
 Added seperate index for adult content to keep adult content from being listed in the movies section.

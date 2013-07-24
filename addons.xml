@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.video.filmikz"
        name="Filmikz"
-       version="1.1.2"
+       version="1.12"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
