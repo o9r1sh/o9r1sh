@@ -1,8 +1,19 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui
 import urlresolver
+from metahandler import metahandlers
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.mmline/art/', ''))
 base_url = 'http://www.megamovieline.com'
+
+grab=metahandlers.MetaData()
+
+def GRABMETA(name,year):
+        meta = grab.get_meta('movie',name,year,None,None,overlay=6)
+        infoLabels = {'rating': meta['rating'],'duration': meta['duration'],'genre': meta['genre'],'mpaa':"rated %s"%meta['mpaa'],
+        'plot': meta['plot'],'title': meta['title'],'writer': meta['writer'],'cover_url': meta['cover_url'],
+        'director': meta['director'],'cast': meta['cast'],'backdrop_url': meta['backdrop_url'],'tmdb_id': meta['tmdb_id'],'year': meta['year']}
+                
+        return infoLabels
 
 def CATEGORIES():
         addDir('A-Z','http://www.megamovieline.com/movies/sort/alphabet/page/1',1,artwork + 'a-z.png','')
@@ -25,16 +36,12 @@ def INDEX(url):
         inc = 0
         for url,thumbnail,name in match:
                 m_url = base_url + str(url)
-                req = urllib2.Request(m_url)
-                req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-                response = urllib2.urlopen(req)
-                link=response.read()
-                response.close()
-                plot=re.compile('<span class=".+?" style="width:650px;">(.+?)</span').findall(link)
-                pl = plot[0]
                 inc += 1
                 if inc > 8:
-                        addDir(name,base_url + url,2,base_url + thumbnail,pl)
+                        movie_name = name[:-6]
+                        year = name[-6:]
+                        data = GRABMETA(name,year)
+                        addDir(data['title'],base_url + url,2,base_url+thumbnail,data)
                         
 
 def VIDEOLINKS(url,name):
@@ -53,16 +60,16 @@ def VIDEOLINKS(url,name):
                         addDir('Filenuke',url,3,artwork + 'filenuke.png','')
                 if 'nowvideo' in url:
                         addDir('Nowvideo',url,3,artwork + 'nowvideo.png','')
-                #if 'youtube' in url:
-                #        addDir('Youtube',url,3,'','')
-                #if 'stagevu' in url:
-                #       addDir('Stagevu',url,3,'','')
+                if 'youtube' in url:
+                        addDir('Youtube',url,3,'','')
+                if 'stagevu' in url:
+                       addDir('Stagevu',url,3,'','')
                 if 'divxstage' in url:
                         addDir('Divxstage',url,3,artwork + 'divxstage.png','')
-                #if 'veehd' in url:
-                #        addDir('VeeHD',url,3,'','')
-                #if 'veevr' in url:
-                #        addDir('Veevr',url,3,'','')
+                if 'veehd' in url:
+                        addDir('VeeHD',url,3,'','')
+                if 'veevr' in url:
+                        addDir('Veevr',url,3,'','')
         
 
 
@@ -310,11 +317,11 @@ def addLink(name,url,iconimage):
         return ok
 
 
-def addDir(name,url,mode,iconimage,plot):
+def addDir(name,url,mode,iconimage,labels):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-        liz.setInfo( type="Video", infoLabels={ "Title": name, "Plot": plot } )
+        liz.setInfo( type="Video", infoLabels=labels )
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
         return ok        
               
