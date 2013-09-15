@@ -112,6 +112,18 @@ def ADULTINDEX(url):
                         addDir(name,base_url + url,2,base_url + thumbnail,plot)
 
 def VIDEOLINKS(url,name):
+        if name == '':
+                req = urllib2.Request(url)
+                req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+                response = urllib2.urlopen(req)
+                link=response.read()
+                response.close()
+                get_name=re.compile('</a><br><br><h3>(.+?)</h3><br><iframe src=".+?" width=".+?" height=".+?" frameborder=".+?" scrolling=".+?">').findall(link)
+                if len(get_name) > 0:
+                        name = get_name[0]
+                else:
+                        name = 'Choose Your Host'
+                
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -176,6 +188,45 @@ def SEARCH():
                 link=response.read()
                 response.close()
                 match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
+                if len(match) > 0:
+                        for thumbnail,name,plot,url in match:
+                                if adult_content == 'true':
+                                        addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                                elif adult_content == 'false':
+                                        if 'XXX' in url:
+                                                continue
+                                        else:
+                                                addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                else:
+                        match=re.compile('<!--\nwindow.location = "(.+?)"\n//-->').findall(link)
+                        if len(match) > 0:
+                                if adult_content == 'true':
+                                        VIDEOLINKS(base_url[:-1]+ match[0],'')
+                                elif adult_content == 'false':
+                                        if 'XXX' in str(match[0]):
+                                                return
+                                                
+                                        else:
+                                                VIDEOLINKS(base_url[:-1]+ match[0],'')
+                        else:
+                                return
+                        
+                        
+                        
+
+def COLLECTIVESEARCH(name):
+        search = name
+        search = re.sub(' ','+', search)
+                
+        url = base_url + 'index.php?search=' + search
+        
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
+        if len(match) > 0:
                 for thumbnail,name,plot,url in match:
                         if adult_content == 'true':
                                 addDir(name,base_url + url,2,base_url + thumbnail,plot)
@@ -184,26 +235,20 @@ def SEARCH():
                                         continue
                                 else:
                                         addDir(name,base_url + url,2,base_url + thumbnail,plot)
-
-def COLLECTIVESEARCH(name):
-        search = name
-        search = re.sub(' ','+', search)
-
-        url = base_url + 'index.php?search=' + search
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
-        match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
-        for thumbnail,name,plot,url in match:
-                if adult_content == 'true':
-                                addDir(name,base_url + url,2,base_url + thumbnail,plot)
-                elif adult_content == 'false':
-                        if 'XXX' in url:
-                                continue
-                        else:
-                                addDir(name,base_url + url,2,base_url + thumbnail,plot)
+        else:
+                match=re.compile('<!--\nwindow.location = "(.+?)"\n//-->').findall(link)
+                if len(match) > 0:
+                        if adult_content == 'true':
+                                VIDEOLINKS(base_url[:-1]+ match[0],'')
+                        elif adult_content == 'false':
+                                if 'XXX' in str(match[0]):
+                                        return
+                                        
+                                else:
+                                        VIDEOLINKS(base_url[:-1]+ match[0],'')
+                else:
+                        return
+                                
                 
 
                 
