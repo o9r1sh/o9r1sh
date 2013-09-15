@@ -14,6 +14,7 @@ def CATEGORIES():
         addDir('Recently Added Episodes',base_url + 'index.php?genre=15',1,artwork + 'new_episodes.png','')
         addDir('Movie Genres',base_url,3,artwork + 'genres.png','')
         addDir('Search',base_url,5,artwork + 'search.png','')
+
 def INDEX(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -175,10 +176,33 @@ def SEARCH():
                 response.close()
                 match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
                 for thumbnail,name,plot,url in match:
+                        if adult_content == 'true':
+                                addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                        elif adult_content == 'false':
+                                if 'XXX' in url:
+                                        continue
+                                else:
+                                        addDir(name,base_url + url,2,base_url + thumbnail,plot)
+
+def COLLECTIVESEARCH(name):
+        search = name
+        url = base_url + 'index.php?search=' + search
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
+        for thumbnail,name,plot,url in match:
+                if adult_content == 'true':
+                                addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                elif adult_content == 'false':
                         if 'XXX' in url:
                                 continue
                         else:
                                 addDir(name,base_url + url,2,base_url + thumbnail,plot)
+                
+
                 
 def get_params():
         param=[]
@@ -263,6 +287,9 @@ elif mode==5:
 elif mode==6:
         print ""+url
         ADULTINDEX(url)
+elif mode==7:
+        print ""+url
+        COLLECTIVESEARCH(name)
 
 
 
