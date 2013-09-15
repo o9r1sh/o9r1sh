@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+<<<<<<< HEAD
 import urllib,urllib2,re,xbmcplugin,xbmcgui
+=======
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon
+>>>>>>> Added Autoview to mmline
 import urlresolver
 from metahandler import metahandlers
 from universal import favorites
@@ -7,10 +11,27 @@ from universal import favorites
 fav = favorites.Favorites('plugin.video.mmline', sys.argv)
 
 
+
+
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.mmline/art/', ''))
 base_url = 'http://www.megamovieline.com'
 
+settings = xbmcaddon.Addon(id='<plugin.video.mmline>')
+
 grab=metahandlers.MetaData()
+
+def AUTO_VIEW(content):
+        if content:
+                xbmcplugin.setContent(int(sys.argv[1]), content)
+                if settings.getSetting('auto-view') == 'true':
+                        if content == 'movies':
+                                xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('movies-view') )
+                        else:
+                                xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('default-view') )
+                else:
+                        xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('default-view') )
+                        
+        
 
 def GRABMETA(name,year):
         meta = grab.get_meta('movie',name,year,None,None,overlay=6)
@@ -30,6 +51,8 @@ def CATEGORIES():
         addDir('Search','http://www.megamovieline.com',29,artwork + 'search.png','','')
 
 def INDEX(url):
+        
+                
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -51,6 +74,11 @@ def INDEX(url):
                                 
                                 favtype = 'movie'
                                 addDir(movie_name,base_url + url,2,base_url+thumbnail,data,favtype)
+<<<<<<< HEAD
+=======
+
+        AUTO_VIEW('movies')
+>>>>>>> Added Autoview to mmline
                         
 def VIDEOLINKS(url,name):
         req = urllib2.Request(url)
@@ -275,18 +303,25 @@ def SEARCH():
                 if len(match) > 8:
                         inc = 0
                         for url,thumbnail,name in match:
+<<<<<<< HEAD
                                 m_url = base_url + str(url)
                                 req = urllib2.Request(m_url)
                                 req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
                                 response = urllib2.urlopen(req)
                                 link=response.read()
                                 response.close()
+=======
+>>>>>>> Added Autoview to mmline
                                 inc += 1
                                 if inc > 8:
                                         movie_name = name[:-6]
                                         year = name[-6:]
                                         data = GRABMETA(name,year)
                                         addDir(name,base_url + url,2,base_url + thumbnail,data,'')
+<<<<<<< HEAD
+=======
+                AUTO_VIEW('movies')
+>>>>>>> Added Autoview to mmline
 
 def COLLECTIVESEARCH(name):
         
@@ -304,18 +339,25 @@ def COLLECTIVESEARCH(name):
         if len(match) > 8:
                 inc = 0
                 for url,thumbnail,name in match:
+<<<<<<< HEAD
                         m_url = base_url + str(url)
                         req = urllib2.Request(m_url)
                         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
                         response = urllib2.urlopen(req)
                         link=response.read()
                         response.close()
+=======
+>>>>>>> Added Autoview to mmline
                         inc += 1
                         if inc > 8:
                                 movie_name = name[:-6]
                                 year = name[-6:]
                                 data = GRABMETA(name,year)
                                 addDir(name,base_url + url,2,base_url + thumbnail,data,'')
+<<<<<<< HEAD
+=======
+        AUTO_VIEW('movies')
+>>>>>>> Added Autoview to mmline
                                         
 def get_params():
         param=[]

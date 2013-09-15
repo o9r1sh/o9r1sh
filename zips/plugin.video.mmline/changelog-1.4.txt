@@ -13,10 +13,7 @@ Version 1.3
 Made use of some urlresolver methodsfor easier host listing
 New Artwork
 Added searh fuction to support The Collective addon by Coolwave
-<<<<<<< HEAD
-=======
 
 Version 1.4
 Added Autoview
 Code Cleanup
->>>>>>> Added Autoview to mmline
