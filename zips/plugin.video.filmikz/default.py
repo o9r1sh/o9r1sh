@@ -166,6 +166,7 @@ def SEARCH():
         keyboard.doModal()
         if keyboard.isConfirmed():
                 search = keyboard.getText()
+                search = re.sub(' ','+', search)
                 
                 url = base_url + 'index.php?search=' + search
                 
@@ -186,6 +187,8 @@ def SEARCH():
 
 def COLLECTIVESEARCH(name):
         search = name
+        search = re.sub(' ','+', search)
+
         url = base_url + 'index.php?search=' + search
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
