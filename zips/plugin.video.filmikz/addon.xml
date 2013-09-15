@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.filmikz"
        name="Filmikz"
-       version="1.16"
+       version="1.17"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
