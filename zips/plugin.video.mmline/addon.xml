@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addon id="plugin.video.mmline"
        name="MegaMovieLine"
-<<<<<<< HEAD
-       version="1.3"
-=======
        version="1.4"
->>>>>>> Added Autoview to mmline
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
