@@ -333,6 +333,7 @@ def SEARCH():
         keyboard.doModal()
         if keyboard.isConfirmed():
                 search = keyboard.getText()
+                search = search.replace(' ','+')
                 
                 url = base_url + '?search_key=' + search
                 
@@ -357,6 +358,7 @@ def SEARCH():
 def COLLECTIVESEARCH(name):
         
         search = name
+        search = search.replace(' ','+')
         
         url = base_url + '?search_key=' + search
         
