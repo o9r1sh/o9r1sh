@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon
 import urlresolver
 from metahandler import metahandlers
-
+from universal import favorites
 
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.mmline/art/', ''))
@@ -11,6 +10,8 @@ base_url = 'http://www.megamovieline.com'
 settings = xbmcaddon.Addon(id='<plugin.video.mmline>')
 
 grab=metahandlers.MetaData()
+
+fav = favorites.Favorites('plugin.video.mmline', sys.argv)
 
 def AUTO_VIEW(content):
         if content:
@@ -34,12 +35,14 @@ def GRABMETA(name,year):
         return infoLabels
 
 def CATEGORIES():
-        addDir('A-Z','http://www.megamovieline.com/movies/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/sort/ratings/page/1',1,artwork + 'highly.png','','')
-        addDir('Genres','http://www.megamovieline.com',4,artwork + 'genres.png','','')
-        addDir('Search','http://www.megamovieline.com',29,artwork + 'search.png','','')
+        addDir('A-Z','http://www.megamovieline.com/movies/sort/alphabet/page/1',1,artwork + 'a-z.png','','dir')
+        addDir('Recently Added','http://www.megamovieline.com/movies/sort/recently/page/1',1,artwork + 'recent.png','','dir')
+        addDir('Popular','http://www.megamovieline.com/movies/sort/popular/page/1',1,artwork + 'popular.png','','dir')
+        addDir('Highly Rated','http://www.megamovieline.com/movies/sort/ratings/page/1',1,artwork + 'highly.png','','dir')
+        addDir('Genres','http://www.megamovieline.com',4,artwork + 'genres.png','','dir')
+        addDir('Search','http://www.megamovieline.com',29,artwork + 'search.png','','dir')
+        fav.add_my_fav_directory(title='Universal Favorites', img= artwork + 'favs.png', fanart='')
+        addDir('Resolver Settings','http://www.megamovieline.com',31,artwork + 'resolver.png','','')
 
         AUTO_VIEW('')
         
@@ -62,6 +65,7 @@ def INDEX(url):
                         if inc > 8:
                                 movie_name = name[:-6]
                                 year = name[-6:]
+                                movie_name = movie_name.decode('cp1252').encode('utf8')
                                 
                                 data = GRABMETA(movie_name,year)
                                 
@@ -108,30 +112,30 @@ def RESOLVE(name,url):
         AUTO_VIEW('')
         
 def GENRES():
-        addDir('Action','http://www.megamovieline.com/movies/gen/Action/page/1',5,artwork + 'action.png','','')
-        addDir('Adventure','http://www.megamovieline.com/movies/gen/Adventure/page/1',6,artwork + 'adventure.png','','')
-        addDir('Animation','http://www.megamovieline.com/movies/gen/Animation/page/1',7,artwork + 'animation.png','','')
-        addDir('Biography','http://www.megamovieline.com/movies/gen/Biography/page/1',8,artwork + 'biography.png','','')
-        addDir('Comedy','http://www.megamovieline.com/movies/gen/Comedy/page/1',9,artwork + 'comedy.png','','')
-        addDir('Crime','http://www.megamovieline.com/movies/gen/Crime/page/1',10,artwork + 'crime.png','','')
-        addDir('Documentary','http://www.megamovieline.com/movies/gen/Documentary/page/1',11,artwork + 'documentary.png','','')
-        addDir('Drama','http://www.megamovieline.com/movies/gen/Drama/page/1',12,artwork + 'drama.png','','')
-        addDir('Family','http://www.megamovieline.com/movies/gen/Family/page/1',13,artwork + 'family.png','','')
-        addDir('Fantasy','http://www.megamovieline.com/movies/gen/Fantasy/page/1',14,artwork + 'fantasy.png','','')
-        addDir('History','http://www.megamovieline.com/movies/gen/History/page/1',15,artwork + 'history.png','','')
-        addDir('Horror','http://www.megamovieline.com/movies/gen/Horror/page/1',16,artwork + 'horror.png','','')
-        addDir('Music','http://www.megamovieline.com/movies/gen/Music/page/1',17,artwork + 'music.png','','')
-        addDir('Musical','http://www.megamovieline.com/movies/gen/Musical/page/1',18,artwork + 'musical.png','','')
-        addDir('Mystery','http://www.megamovieline.com/movies/gen/Mystery/page/1',19,artwork + 'mystery.png','','')
-        addDir('Romance','http://www.megamovieline.com/movies/gen/Romance/page/1',20,artwork + 'romance.png','','')
-        addDir('Sci-Fi','http://www.megamovieline.com/movies/gen/Sci-Fi/page/1',21,artwork + 'scifi.png','','')
-        addDir('Sport','http://www.megamovieline.com/movies/gen/Sport/page/1',22,artwork + 'sport.png','','')
-        addDir('Thriller','http://www.megamovieline.com/movies/gen/Thriller/page/1',23,artwork + 'thriller.png','','')
-        addDir('War','http://www.megamovieline.com/movies/gen/War/page/1',24,artwork + 'war.png','','')
-        addDir('Western','http://www.megamovieline.com/movies/gen/Western/page/1',25,artwork + 'western.png','','')
-        addDir('Indian','http://www.megamovieline.com/movies/gen/Indian/page/1',26,artwork + 'indian.png','','')
-        addDir('Short','http://www.megamovieline.com/movies/gen/Short/page/1',27,artwork + 'short.png','','')
-        addDir('Classic','http://www.megamovieline.com/movies/gen/Classic/page/1',28,artwork + 'classic.png','','')
+        addDir('Action','http://www.megamovieline.com/movies/gen/Action/page/1',5,artwork + 'action.png','','dir')
+        addDir('Adventure','http://www.megamovieline.com/movies/gen/Adventure/page/1',6,artwork + 'adventure.png','','dir')
+        addDir('Animation','http://www.megamovieline.com/movies/gen/Animation/page/1',7,artwork + 'animation.png','','dir')
+        addDir('Biography','http://www.megamovieline.com/movies/gen/Biography/page/1',8,artwork + 'biography.png','','dir')
+        addDir('Comedy','http://www.megamovieline.com/movies/gen/Comedy/page/1',9,artwork + 'comedy.png','','dir')
+        addDir('Crime','http://www.megamovieline.com/movies/gen/Crime/page/1',10,artwork + 'crime.png','','dir')
+        addDir('Documentary','http://www.megamovieline.com/movies/gen/Documentary/page/1',11,artwork + 'documentary.png','','dir')
+        addDir('Drama','http://www.megamovieline.com/movies/gen/Drama/page/1',12,artwork + 'drama.png','','dir')
+        addDir('Family','http://www.megamovieline.com/movies/gen/Family/page/1',13,artwork + 'family.png','','dir')
+        addDir('Fantasy','http://www.megamovieline.com/movies/gen/Fantasy/page/1',14,artwork + 'fantasy.png','','dir')
+        addDir('History','http://www.megamovieline.com/movies/gen/History/page/1',15,artwork + 'history.png','','dir')
+        addDir('Horror','http://www.megamovieline.com/movies/gen/Horror/page/1',16,artwork + 'horror.png','','dir')
+        addDir('Music','http://www.megamovieline.com/movies/gen/Music/page/1',17,artwork + 'music.png','','dir')
+        addDir('Musical','http://www.megamovieline.com/movies/gen/Musical/page/1',18,artwork + 'musical.png','','dir')
+        addDir('Mystery','http://www.megamovieline.com/movies/gen/Mystery/page/1',19,artwork + 'mystery.png','','dir')
+        addDir('Romance','http://www.megamovieline.com/movies/gen/Romance/page/1',20,artwork + 'romance.png','','dir')
+        addDir('Sci-Fi','http://www.megamovieline.com/movies/gen/Sci-Fi/page/1',21,artwork + 'scifi.png','','dir')
+        addDir('Sport','http://www.megamovieline.com/movies/gen/Sport/page/1',22,artwork + 'sport.png','','dir')
+        addDir('Thriller','http://www.megamovieline.com/movies/gen/Thriller/page/1',23,artwork + 'thriller.png','','dir')
+        addDir('War','http://www.megamovieline.com/movies/gen/War/page/1',24,artwork + 'war.png','','dir')
+        addDir('Western','http://www.megamovieline.com/movies/gen/Western/page/1',25,artwork + 'western.png','','dir')
+        addDir('Indian','http://www.megamovieline.com/movies/gen/Indian/page/1',26,artwork + 'indian.png','','dir')
+        addDir('Short','http://www.megamovieline.com/movies/gen/Short/page/1',27,artwork + 'short.png','','dir')
+        addDir('Classic','http://www.megamovieline.com/movies/gen/Classic/page/1',28,artwork + 'classic.png','','dir')
 
         AUTO_VIEW('')
         
@@ -352,7 +356,7 @@ def SEARCH():
                                         movie_name = name[:-6]
                                         year = name[-6:]
                                         data = GRABMETA(name,year)
-                                        addDir(name,base_url + url,2,base_url + thumbnail,data,'')
+                                        addDir(name,base_url + url,2,base_url + thumbnail,data,'movie')
                 AUTO_VIEW('movies')
 
 def COLLECTIVESEARCH(name):
@@ -377,7 +381,7 @@ def COLLECTIVESEARCH(name):
                                 movie_name = name[:-6]
                                 year = name[-6:]
                                 data = GRABMETA(name,year)
-                                addDir(name,base_url + url,2,base_url + thumbnail,data,'')
+                                addDir(name,base_url + url,2,base_url + thumbnail,data,'movie')
         AUTO_VIEW('movies')
                                         
 def get_params():
@@ -413,15 +417,17 @@ def addDir(name,url,mode,iconimage,labels,favtype):
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
         liz.setInfo( type="Video", infoLabels=labels )
         
-        if favtype == 'kovie':
+        if favtype == 'movie':
                 contextMenuItems.append(('Movie Information', 'XBMC.Action(Info)'))
                 
-                contextMenuItems.append(('Add to Favorites', fav.add_directory(name, u, section_title='Movies')))
+                
+                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Movies')))
+                
 
-                liz.addContextMenuItems(contextMenuItems, replaceItems=True)
+        elif favtype == 'dir':
+                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Directories')))
 
-
-        
+        liz.addContextMenuItems(contextMenuItems, replaceItems=False)
 
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
 
@@ -546,4 +552,8 @@ elif mode==29:
 elif mode==30:
         print ""+url
         COLLECTIVESEARCH(name)
+elif mode==31:
+        print ""+url
+        urlresolver.display_settings()
+        
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
