@@ -41,7 +41,7 @@
 
 <addon id="plugin.video.mmline"
        name="MegaMovieLine"
-       version="1.7"
+       version="1.8"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>

@@ -65,7 +65,7 @@ def INDEX(url):
                         if inc > 8:
                                 movie_name = name[:-6]
                                 year = name[-6:]
-                                movie_name = movie_name.decode('cp1252').encode('utf8')
+                                movie_name = movie_name.decode('UTF-8','ignore')
                                 
                                 data = GRABMETA(movie_name,year)
                                 
@@ -355,8 +355,9 @@ def SEARCH():
                                 if inc > 8:
                                         movie_name = name[:-6]
                                         year = name[-6:]
-                                        data = GRABMETA(name,year)
-                                        addDir(name,base_url + url,2,base_url + thumbnail,data,'movie')
+                                        movie_name = movie_name.decode('UTF-8','ignore')
+                                        data = GRABMETA(movie_name,year)
+                                        addDir(movie_name,base_url + url,2,base_url + thumbnail,data,'movie')
                 AUTO_VIEW('movies')
 
 def COLLECTIVESEARCH(name):
@@ -380,8 +381,9 @@ def COLLECTIVESEARCH(name):
                         if inc > 8:
                                 movie_name = name[:-6]
                                 year = name[-6:]
-                                data = GRABMETA(name,year)
-                                addDir(name,base_url + url,2,base_url + thumbnail,data,'movie')
+                                movie_name = movie_name.decode('UTF-8','ignore')
+                                data = GRABMETA(movie_name,year)
+                                addDir(movie_name,base_url + url,2,base_url + thumbnail,data,'movie')
         AUTO_VIEW('movies')
                                         
 def get_params():
@@ -411,6 +413,7 @@ def addLink(name,url,iconimage):
 
 def addDir(name,url,mode,iconimage,labels,favtype):
         contextMenuItems = []
+    
 
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
         ok=True
@@ -419,11 +422,12 @@ def addDir(name,url,mode,iconimage,labels,favtype):
         
         if favtype == 'movie':
                 contextMenuItems.append(('Movie Information', 'XBMC.Action(Info)'))
-                
+
+                if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
+                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=51&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
                 
                 contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Movies')))
-                
-
+        
         elif favtype == 'dir':
                 contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Directories')))
 
@@ -432,6 +436,7 @@ def addDir(name,url,mode,iconimage,labels,favtype):
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
 
         
+
 
         return ok        
               
@@ -555,5 +560,6 @@ elif mode==30:
 elif mode==31:
         print ""+url
         urlresolver.display_settings()
+
         
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
