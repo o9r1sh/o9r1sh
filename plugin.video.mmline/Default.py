@@ -6,11 +6,8 @@ from universal import favorites
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.mmline/art/', ''))
 base_url = 'http://www.megamovieline.com'
-
 settings = xbmcaddon.Addon(id='<plugin.video.mmline>')
-
 grab=metahandlers.MetaData()
-
 fav = favorites.Favorites('plugin.video.mmline', sys.argv)
 
 def AUTO_VIEW(content):
@@ -23,8 +20,6 @@ def AUTO_VIEW(content):
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('default-view') )
                 else:
                         xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('default-view') )
-                        
-        
 
 def GRABMETA(name,year):
         meta = grab.get_meta('movie',name,year,None,None,overlay=6)
@@ -35,20 +30,18 @@ def GRABMETA(name,year):
         return infoLabels
 
 def CATEGORIES():
-        addDir('A-Z','http://www.megamovieline.com/movies/sort/alphabet/page/1',1,artwork + 'a-z.png','','dir')
-        addDir('Recently Added','http://www.megamovieline.com/movies/sort/recently/page/1',1,artwork + 'recent.png','','dir')
-        addDir('Popular','http://www.megamovieline.com/movies/sort/popular/page/1',1,artwork + 'popular.png','','dir')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/sort/ratings/page/1',1,artwork + 'highly.png','','dir')
-        addDir('Genres','http://www.megamovieline.com',4,artwork + 'genres.png','','dir')
-        addDir('Search','http://www.megamovieline.com',29,artwork + 'search.png','','dir')
+        addDir('A-Z',base_url + '/movies/sort/alphabet/page/1',1,artwork + 'a-z.png','','dir')
+        addDir('Recently Added',base_url + '/movies/sort/recently/page/1',1,artwork + 'recent.png','','dir')
+        addDir('Popular',base_url + '/movies/sort/popular/page/1',1,artwork + 'popular.png','','dir')
+        addDir('Highly Rated',base_url + '/movies/sort/ratings/page/1',1,artwork + 'highly.png','','dir')
+        addDir('Genres','None',4,artwork + 'genres.png','','dir')
+        addDir('Search','None',29,artwork + 'search.png','','dir')
         fav.add_my_fav_directory(title='Universal Favorites', img= artwork + 'favs.png', fanart='')
-        addDir('Resolver Settings','http://www.megamovieline.com',31,artwork + 'resolver.png','','')
+        addDir('Resolver Settings','None',31,artwork + 'resolver.png','','')
 
         AUTO_VIEW('')
         
-def INDEX(url):
-        
-                
+def INDEX(url):     
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -112,222 +105,222 @@ def RESOLVE(name,url):
         AUTO_VIEW('')
         
 def GENRES():
-        addDir('Action','http://www.megamovieline.com/movies/gen/Action/page/1',5,artwork + 'action.png','','dir')
-        addDir('Adventure','http://www.megamovieline.com/movies/gen/Adventure/page/1',6,artwork + 'adventure.png','','dir')
-        addDir('Animation','http://www.megamovieline.com/movies/gen/Animation/page/1',7,artwork + 'animation.png','','dir')
-        addDir('Biography','http://www.megamovieline.com/movies/gen/Biography/page/1',8,artwork + 'biography.png','','dir')
-        addDir('Comedy','http://www.megamovieline.com/movies/gen/Comedy/page/1',9,artwork + 'comedy.png','','dir')
-        addDir('Crime','http://www.megamovieline.com/movies/gen/Crime/page/1',10,artwork + 'crime.png','','dir')
-        addDir('Documentary','http://www.megamovieline.com/movies/gen/Documentary/page/1',11,artwork + 'documentary.png','','dir')
-        addDir('Drama','http://www.megamovieline.com/movies/gen/Drama/page/1',12,artwork + 'drama.png','','dir')
-        addDir('Family','http://www.megamovieline.com/movies/gen/Family/page/1',13,artwork + 'family.png','','dir')
-        addDir('Fantasy','http://www.megamovieline.com/movies/gen/Fantasy/page/1',14,artwork + 'fantasy.png','','dir')
-        addDir('History','http://www.megamovieline.com/movies/gen/History/page/1',15,artwork + 'history.png','','dir')
-        addDir('Horror','http://www.megamovieline.com/movies/gen/Horror/page/1',16,artwork + 'horror.png','','dir')
-        addDir('Music','http://www.megamovieline.com/movies/gen/Music/page/1',17,artwork + 'music.png','','dir')
-        addDir('Musical','http://www.megamovieline.com/movies/gen/Musical/page/1',18,artwork + 'musical.png','','dir')
-        addDir('Mystery','http://www.megamovieline.com/movies/gen/Mystery/page/1',19,artwork + 'mystery.png','','dir')
-        addDir('Romance','http://www.megamovieline.com/movies/gen/Romance/page/1',20,artwork + 'romance.png','','dir')
-        addDir('Sci-Fi','http://www.megamovieline.com/movies/gen/Sci-Fi/page/1',21,artwork + 'scifi.png','','dir')
-        addDir('Sport','http://www.megamovieline.com/movies/gen/Sport/page/1',22,artwork + 'sport.png','','dir')
-        addDir('Thriller','http://www.megamovieline.com/movies/gen/Thriller/page/1',23,artwork + 'thriller.png','','dir')
-        addDir('War','http://www.megamovieline.com/movies/gen/War/page/1',24,artwork + 'war.png','','dir')
-        addDir('Western','http://www.megamovieline.com/movies/gen/Western/page/1',25,artwork + 'western.png','','dir')
-        addDir('Indian','http://www.megamovieline.com/movies/gen/Indian/page/1',26,artwork + 'indian.png','','dir')
-        addDir('Short','http://www.megamovieline.com/movies/gen/Short/page/1',27,artwork + 'short.png','','dir')
-        addDir('Classic','http://www.megamovieline.com/movies/gen/Classic/page/1',28,artwork + 'classic.png','','dir')
+        addDir('Action',base_url + '/movies/gen/Action/page/1',5,artwork + 'action.png','','dir')
+        addDir('Adventure',base_url + '/movies/gen/Adventure/page/1',6,artwork + 'adventure.png','','dir')
+        addDir('Animation',base_url + '/movies/gen/Animation/page/1',7,artwork + 'animation.png','','dir')
+        addDir('Biography',base_url + '/movies/gen/Biography/page/1',8,artwork + 'biography.png','','dir')
+        addDir('Comedy',base_url + '/movies/gen/Comedy/page/1',9,artwork + 'comedy.png','','dir')
+        addDir('Crime',base_url + '/movies/gen/Crime/page/1',10,artwork + 'crime.png','','dir')
+        addDir('Documentary',base_url + '/movies/gen/Documentary/page/1',11,artwork + 'documentary.png','','dir')
+        addDir('Drama',base_url + '/movies/gen/Drama/page/1',12,artwork + 'drama.png','','dir')
+        addDir('Family',base_url + '/movies/gen/Family/page/1',13,artwork + 'family.png','','dir')
+        addDir('Fantasy',base_url + '/movies/gen/Fantasy/page/1',14,artwork + 'fantasy.png','','dir')
+        addDir('History',base_url + '/movies/gen/History/page/1',15,artwork + 'history.png','','dir')
+        addDir('Horror',base_url + '/movies/gen/Horror/page/1',16,artwork + 'horror.png','','dir')
+        addDir('Music',base_url + '/movies/gen/Music/page/1',17,artwork + 'music.png','','dir')
+        addDir('Musical',base_url + '/movies/gen/Musical/page/1',18,artwork + 'musical.png','','dir')
+        addDir('Mystery',base_url + '/movies/gen/Mystery/page/1',19,artwork + 'mystery.png','','dir')
+        addDir('Romance',base_url + '/movies/gen/Romance/page/1',20,artwork + 'romance.png','','dir')
+        addDir('Sci-Fi',base_url + '/movies/gen/Sci-Fi/page/1',21,artwork + 'scifi.png','','dir')
+        addDir('Sport',base_url + '/movies/gen/Sport/page/1',22,artwork + 'sport.png','','dir')
+        addDir('Thriller',base_url + '/movies/gen/Thriller/page/1',23,artwork + 'thriller.png','','dir')
+        addDir('War',base_url + '/movies/gen/War/page/1',24,artwork + 'war.png','','dir')
+        addDir('Western',base_url + '/movies/gen/Western/page/1',25,artwork + 'western.png','','dir')
+        addDir('Indian',base_url + '/movies/gen/Indian/page/1',26,artwork + 'indian.png','','dir')
+        addDir('Short',base_url + '/movies/gen/Short/page/1',27,artwork + 'short.png','','dir')
+        addDir('Classic',base_url + '/movies/gen/Classic/page/1',28,artwork + 'classic.png','','dir')
 
         AUTO_VIEW('')
         
 def ACTION():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Action/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Action/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Action/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Action/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Action/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Action/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Action/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Action/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def ADVENTURE():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Adventure/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Adventure/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Adventure/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Adventure/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Adventure/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Adventure/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Adventure/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Adventure/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def ANIMATION():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Animation/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Animation/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Animation/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Animation/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Animation/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Animation/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Animation/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Animation/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def BIOGRAPHY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Biography/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Biography/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Biography/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Biography/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Biography/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Biography/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Biography/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Biography/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def COMEDY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Comedy/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Comedy/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Comedy/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Comedy/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Comedy/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Comedy/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Comedy/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Comedy/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def CRIME():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Crime/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Crime/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Crime/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Crime/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Crime/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Crime/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Crime/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Crime/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def DOCUMENTARY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Documentary/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Documentary/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Documentary/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Documentary/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Documentary/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Documentary/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Documentary/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Documentary/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def DRAMA():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Drama/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Drama/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Drama/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Drama/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Drama/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Drama/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Drama/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Drama/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def FAMILY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Family/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Family/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Family/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Family/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Family/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Family/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Family/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Family/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def FANTASY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Fantasy/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Fantasy/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Fantasy/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Fantasy/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Fantasy/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Fantasy/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Fantasy/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Fantasy/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def HISTORY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/History/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/History/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/History/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/History/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/History/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/History/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/History/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/History/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def HORROR():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Horror/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Horror/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Horror/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Horror/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Horror/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Horror/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Horror/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Horror/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def MUSIC():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Music/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Music/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Music/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Music/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Music/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Music/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Music/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Music/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def MUSICAL():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Musical/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Musical/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Musical/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Musical/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Musical/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Musical/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Musical/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Musical/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def MYSTERY():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Mystery/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Mystery/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Mystery/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Mystery/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Mystery/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Mystery/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Mystery/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Mystery/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def ROMANCE():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Romance/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Romance/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Romance/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Romance/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Romance/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Romance/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Romance/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Romance/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def SCIFI():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Sci-Fi/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Sci-Fi/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Sci-Fi/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Sci-Fi/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Sci-Fi/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Sci-Fi/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Sci-Fi/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Sci-Fi/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def SPORT():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Sport/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Sport/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Sport/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Sport/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Sport/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Sport/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Sport/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Sport/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def THRILLER():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Thriller/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Thriller/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Thriller/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Thriller/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Thriller/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Thriller/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Thriller/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Thriller/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def WAR():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/War/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/War/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/War/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/War/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/War/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/War/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/War/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/War/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def WESTERN():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Western/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Western/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Western/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Western/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Western/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Western/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Western/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Western/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def INDIAN():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Indian/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Indian/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Indian/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Indian/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Indian/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Indian/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Indian/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Indian/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def SHORT():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Short/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Short/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Short/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Short/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Short/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Short/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Short/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Short/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
 def CLASSIC():
-        addDir('A-Z','http://www.megamovieline.com/movies/gen/Classic/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
-        addDir('Recently Added','http://www.megamovieline.com/movies/gen/Classic/sort/recently/page/1',1,artwork + 'recent.png','','')
-        addDir('Popular','http://www.megamovieline.com/movies/gen/Classic/sort/popular/page/1',1,artwork + 'popular.png','','')
-        addDir('Highly Rated','http://www.megamovieline.com/movies/gen/Classic/sort/ratings/page/1',1,artwork + 'highly.png','','')
+        addDir('A-Z',base_url + '/movies/gen/Classic/sort/alphabet/page/1',1,artwork + 'a-z.png','','')
+        addDir('Recently Added',base_url + '/movies/gen/Classic/sort/recently/page/1',1,artwork + 'recent.png','','')
+        addDir('Popular',base_url + '/movies/gen/Classic/sort/popular/page/1',1,artwork + 'popular.png','','')
+        addDir('Highly Rated',base_url + '/movies/gen/Classic/sort/ratings/page/1',1,artwork + 'highly.png','','')
 
         AUTO_VIEW('')
         
@@ -414,7 +407,6 @@ def addLink(name,url,iconimage):
 def addDir(name,url,mode,iconimage,labels,favtype):
         contextMenuItems = []
     
-
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
         ok=True
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
@@ -426,17 +418,14 @@ def addDir(name,url,mode,iconimage,labels,favtype):
                 if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
                         contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=51&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
                 
-                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Movies')))
+                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Movies', img=iconimage, infolabels=labels)))
         
         elif favtype == 'dir':
-                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Directories')))
+                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Directories', img=iconimage, infolabels=labels)))
 
         liz.addContextMenuItems(contextMenuItems, replaceItems=False)
 
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=True)
-
-        
-
 
         return ok        
               
@@ -464,12 +453,10 @@ print "Name: "+str(name)
 
 if mode==None or url==None or len(url)<1:
         print ""
-        CATEGORIES()
-       
+        CATEGORIES() 
 elif mode==1:
         print ""+url
-        INDEX(url)
-        
+        INDEX(url) 
 elif mode==2:
         print ""+url
         VIDEOLINKS(url,name)
@@ -560,6 +547,5 @@ elif mode==30:
 elif mode==31:
         print ""+url
         urlresolver.display_settings()
-
-        
+   
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
