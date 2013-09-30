@@ -1,14 +1,14 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon
 import urlresolver
 from metahandler import metahandlers
-from universal import favorites
+
 
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.mmline/art/', ''))
 base_url = 'http://www.megamovieline.com'
 settings = xbmcaddon.Addon(id='<plugin.video.mmline>')
 grab=metahandlers.MetaData()
-fav = favorites.Favorites('plugin.video.mmline', sys.argv)
+
 
 def AUTO_VIEW(content):
         if content:
@@ -36,7 +36,6 @@ def CATEGORIES():
         addDir('Highly Rated',base_url + '/movies/sort/ratings/page/1',1,artwork + 'highly.png','','dir')
         addDir('Genres','None',4,artwork + 'genres.png','','dir')
         addDir('Search','None',29,artwork + 'search.png','','dir')
-        fav.add_my_fav_directory(title='Universal Favorites', img= artwork + 'favs.png', fanart='')
         addDir('Resolver Settings','None',31,artwork + 'resolver.png','','')
 
         AUTO_VIEW('')
@@ -417,11 +416,6 @@ def addDir(name,url,mode,iconimage,labels,favtype):
 
                 if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
                         contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=51&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
-                
-                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Movies', img=iconimage, infolabels=labels)))
-        
-        elif favtype == 'dir':
-                contextMenuItems.append(('Add to Universal Favorites', fav.add_directory(name, u, section_title='Directories', img=iconimage, infolabels=labels)))
 
         liz.addContextMenuItems(contextMenuItems, replaceItems=False)
 
