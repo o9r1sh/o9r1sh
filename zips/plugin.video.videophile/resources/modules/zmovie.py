@@ -25,7 +25,7 @@ def CATEGORIES():
         main.addDir('Genres','none',34,artwork + 'genres.png')
 
 def LETTERS():
-        main.addDir('#',base_url + '/search/alpha/0-9',32,artwork + '#.png')
+        main.addDir('#',base_url + '/search/alpha/0-9',32,artwork + 'num.png')
         main.addDir('A',base_url + '/search/alpha/A',32,artwork + 'a.png')
         main.addDir('B',base_url + '/search/alpha/B',32,artwork + 'b.png')
         main.addDir('C',base_url + '/search/alpha/C',32,artwork + 'c.png')

@@ -25,7 +25,7 @@ def CATEGORIES():
         main.addDir('Years','none',29,artwork + 'years.png')
 
 def LETTERS():
-        main.addDir('#',base_url + '/movies/letter/123',26,artwork + '#.png')
+        main.addDir('#',base_url + '/movies/letter/123',26,artwork + 'num.png')
         main.addDir('A',base_url + '/movies/letter/A',26,artwork + 'a.png')
         main.addDir('B',base_url + '/movies/letter/B',26,artwork + 'b.png')
         main.addDir('C',base_url + '/movies/letter/C',26,artwork + 'c.png')

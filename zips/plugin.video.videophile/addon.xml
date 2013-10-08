@@ -15,7 +15,7 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Play content from an ever growing list of sources</summary>
-    <description>VideoPhile is a media site aggregator that enables you to watch content from many different sources.</description>
+    <description>VideoPhile is a video site aggregator that enables you to watch content from many different sources.</description>
     <platform>all</platform>
   </extension>
 </addon>

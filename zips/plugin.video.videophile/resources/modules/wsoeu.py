@@ -11,7 +11,7 @@ def CATEGORIES():
         main.addDir('Search','none',15,artwork + 'search.png')
 
 def LETTERS():
-        main.addDir("#",base_url + "/2005/07/index.html#goto_'",12,artwork + '#.png')
+        main.addDir("#",base_url + "/2005/07/index.html#goto_'",12,artwork + 'num.png')
         main.addDir("A",base_url + "/2005/07/index.html#goto_A",12,artwork + 'a.png')
         main.addDir("B",base_url + "/2005/07/index.html#goto_B",12,artwork + 'b.png')
         main.addDir("C",base_url + "/2005/07/index.html#goto_C",12,artwork + 'c.png')
