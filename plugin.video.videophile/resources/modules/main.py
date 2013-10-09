@@ -122,7 +122,7 @@ def AUTOVIEW(content):
                         if content == 'movies':
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('movies-view'))
 
-                        elif content == 'shows':
+                        elif content == 'tvshows':
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('shows-view'))
 
                         elif content == 'episodes':

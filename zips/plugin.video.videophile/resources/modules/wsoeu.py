@@ -182,6 +182,7 @@ def RECENTEPS(url):
                                         main.addDir(name,url,14,'')
                                 except:
                                         continue
+        main.AUTOVIEW('episodes')
 
 def INDEXEPS(url,name):
         show_name = name
