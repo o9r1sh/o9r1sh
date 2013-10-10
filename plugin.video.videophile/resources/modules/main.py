@@ -74,8 +74,6 @@ def addEDir(name,url,mode,thumb,show):
      
      addon.add_directory(params, ep_meta,img=thumb)
     
-     
-
 def GETHOSTTHUMB(host):
         if host.endswith('.com'):
              host = host[:-4]
@@ -111,6 +109,8 @@ def RESOLVE(name,url,thumb):
              
         params = {'url':url, 'name':name, 'thumb':thumb}
         addon.add_item(params, {'title':name}, img= thumb)
+
+        xbmc.sleep(1000)
         
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=thumb)
         xbmc.Player ().play(url, liz, False)

@@ -111,7 +111,7 @@ def VIDEOLINKS(name,url,thumb):
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        match=re.compile('class="atest" target="_blank"   href="(.+?) ">').findall(link)
+        match=re.compile('class="atest" target="_blank"   href="(.+?)">').findall(link)
         for url in match:
                 hmf = urlresolver.HostedMediaFile(url)
                 if hmf:
