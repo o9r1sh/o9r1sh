@@ -2,7 +2,7 @@
 <addons>
 <addon id="plugin.video.filmikz"
        name="Filmikz"
-       version="1.17"
+       version="1.18"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
@@ -41,7 +41,7 @@
 
 <addon id="plugin.video.mmline"
        name="MegaMovieLine"
-       version="1.9.1"
+       version="1.9.2"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
