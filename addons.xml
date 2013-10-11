@@ -2,11 +2,11 @@
 <addons>
 <addon id="plugin.video.filmikz"
        name="Filmikz"
-       version="1.18"
+       version="1.17"
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.urlresolver" version="2.0.9"/>
+    <import addon="script.module.urlresolver" version="1.0.0"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
             library="default.py">
@@ -25,7 +25,7 @@
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.urlresolver" version="2.0.9"/>
+    <import addon="script.module.urlresolver" version="1.0.0"/>
     <import addon="script.module.mechanize" version="0.2.5"/>
   </requires>
   <extension point="xbmc.python.pluginsource"
@@ -45,7 +45,7 @@
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.urlresolver" version="2.0.9"/>
+    <import addon="script.module.urlresolver" version="1.0.0"/>
     <import addon="script.module.metahandler" version="1.0.0" />
   </requires>
   <extension point="xbmc.python.pluginsource"
@@ -65,7 +65,7 @@
        provider-name="o9r1sh">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
-    <import addon="script.module.urlresolver" version="2.0.9"/>
+    <import addon="script.module.urlresolver" version="1.0.0"/>
     <import addon="script.module.metahandler" version="1.0.0" />
     <import addon="script.module.t0mm0.common" version="1.1.0"/>
   </requires>
