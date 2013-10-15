@@ -8,5 +8,25 @@
 	<setting id="default-view" type="number" label="Default 			View" 			
 		default="50"/>
    </category>
+
+   <category label="Enable / Disable Sites">
+     <setting id="mooviemaniac" type="bool" label="MoovieManiac" default="true"/>
+     <setting id="newmyvideolinks" type="bool" label="NewMyVideoLinks" default="true"/>
+     <setting id="freemoviesaddict" type="bool" label="FreeMoviesAddict" default="true"/>
+     <setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true"/>
+     <setting id="wwmf" type="bool" label="WeWatchMoviesFree" default="true"/>
+     <setting id="videocloud" type="bool" label="VideoCloud" default="true"/>
+     <setting id="wsoeu" type="bool" label="WatchSeries-Online" default="true"/>
+     <setting id="youtubedocs" type="bool" label="Youtube Documentaries" default="true"/>
+   </category>
+   <category label="Enable / Disable Sections">
+     <setting id="movies" type="bool" label="Movies" default="true"/>
+     <setting id="shows" type="bool" label="TV Shows" default="true"/>
+     <setting id="docs" type="bool" label="Documentaries" default="true"/>
+     <setting id="search" type="bool" label="VideoPhile Search" default="true"/>
+     <setting id="resolver" type="bool" label="Resolver Settings" default="true"/>
+   </category>
+   
+
 </settings>
 

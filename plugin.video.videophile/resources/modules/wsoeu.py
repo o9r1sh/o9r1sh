@@ -185,6 +185,7 @@ def RECENTEPS(url):
         main.AUTOVIEW('episodes')
 
 def INDEXEPS(url,name):
+        thumb = ''
         show_name = name
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -193,32 +194,26 @@ def INDEXEPS(url,name):
         response.close()
         match=re.compile('<a href="(.+?)" rel=".+?" title=".+?">\n(.+?)\n</a>').findall(link)
         np=re.compile('</a></li><li><a href="(.+?)" class="next">').findall(link)
+        if show_name == 'Next Page':
+                real_show=re.compile('Episodes Available for: &#8216;(.+?)&#8217;').findall(link)
+                if len(real_show) > 0:
+                        show_name = real_show[0]
+        thumb = main.GET_SHOW_THUMB(show_name)
         if len(np) > 0:
                 np_url = np[0]
-                main.addDir('Next Page',np_url,13,'')
+                main.addDir('Next Page',np_url,13,artwork + 'next.png')
 
         for url,name in match:
                 name = re.sub('&#215;','X',name)
-                sooeoo = re.findall('[Ss]\d\d[Ee]\d\d',name)
-                sooeoo = str(sooeoo)
-                sooeoo.strip('[Ss][Ee]')
-
-                print sooeoo
                 
-                episode = sooeoo[-4:]
-                episode = episode[:-2]
-                season = sooeoo[:5]
-                season = season[-2:]
-                
-                print 'season = '+season + episode
                 try:
-                        main.addDir(name,url,14,'')
+                        main.addEDir(name,url,14,thumb,show_name)
                 except:
                         continue
 
         main.AUTOVIEW('episodes')
 
-def VIDEOLINKS(url,name):
+def VIDEOLINKS(url,name,thumb):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -226,7 +221,6 @@ def VIDEOLINKS(url,name):
         response.close()
         match=re.compile('<a target=".+?" id=".+?" href="(.+?)">(.+?)</a>').findall(link)
         inc = 0
-        thumb = ''
         for url,host in match:
                 dirty_url = match[inc][0]
                 trash, sep,desired = dirty_url.partition('=')
@@ -322,6 +316,7 @@ def VIDEOLINKS(url,name):
                                 host = hmf.get_host()
                                 hthumb = main.GETHOSTTHUMB(host)
                                 try:
+                                        print main.thumb
                                         main.addHDir(name,hmf.get_url(),9,thumb,hthumb)
                                 except:
                                         continue

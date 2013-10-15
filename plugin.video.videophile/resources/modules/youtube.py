@@ -2,17 +2,6 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
-addon_id = 'plugin.video.videophile'
-from t0mm0.common.addon import Addon
-addon = Addon(addon_id, sys.argv)
-
-mode = addon.queries['mode']
-url = addon.queries.get('url', '')
-name = addon.queries.get('name', '')
-thumb = addon.queries.get('thumb', '')
-year = addon.queries.get('year', '')
-types = addon.queries.get('types', '')
-
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.youtube.com'
 

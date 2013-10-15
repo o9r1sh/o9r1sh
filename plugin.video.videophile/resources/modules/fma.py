@@ -3,18 +3,6 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
 
-addon_id = 'plugin.video.videophile'
-from t0mm0.common.addon import Addon
-addon = Addon(addon_id, sys.argv)
-
-mode = addon.queries['mode']
-url = addon.queries.get('url', '')
-name = addon.queries.get('name', '')
-thumb = addon.queries.get('thumb', '')
-year = addon.queries.get('year', '')
-types = addon.queries.get('types', '')
-
-settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.freemoviesaddict.com'
 
@@ -163,4 +151,3 @@ def SEARCH():
                 url = base_url + 'index.php?s=' + search 
                 
                 INDEX(url)
-

@@ -1,6 +1,6 @@
 #VideoPhile addon by o9r1sh
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud
 
 addon_id = 'plugin.video.videophile'
@@ -12,39 +12,66 @@ url = addon.queries.get('url', '')
 name = addon.queries.get('name', '')
 thumb = addon.queries.get('thumb', '')
 year = addon.queries.get('year', '')
+season = addon.queries.get('season', '')
+episode = addon.queries.get('episode', '')
+show = addon.queries.get('show', '')
 types = addon.queries.get('types', '')
 
+settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 
 def CATEGORIES():
-        main.addDir('Movies','none',1,artwork + 'movie.png')
+        if settings.getSetting('movies') == 'true':
+                main.addDir('Movies','none',1,artwork + 'movie.png')
         #main.addDir('HD Movies','none',4,artwork + 'hdmovie.png')
-        main.addDir('TV Shows','none',2,artwork + 'tv.png')
-        main.addDir('Documentaries','none',3,artwork + 'docs.png')
-        main.addDir('Resolver Settings','none',8,artwork + 'resolver.png')
+        if settings.getSetting('shows') == 'true':        
+                main.addDir('TV Shows','none',2,artwork + 'tv.png')
+        if settings.getSetting('docs') == 'true':
+                main.addDir('Documentaries','none',3,artwork + 'docs.png')
+        if settings.getSetting('search') == 'true':
+                main.addDir('VideoPhile Searchs','none',5,artwork + 'search.png')
+        if settings.getSetting('resolver') == 'true':
+                main.addDir('Resolver Settings','none',8,artwork + 'resolver.png')
         
 def MOVIESECTIONS():
-        main.addDir('MoovieManiac','none',10,artwork + 'mmaniac.png')
-        main.addDir('NewMyVideoLinks','none',17,artwork + 'nmvl.png')
-        main.addDir('FreeMoviesAddict','none',22,artwork + 'fma.png')
-        main.addDir('Watch-Movies / Z-Movie','none',35,artwork + 'zmovie.png')
-        main.addDir('WeWatchMoviesFree','none',38,artwork + 'wwmf.png')
-        main.addDir('VideoCloud','none',48,artwork + 'videocloud.png')
+        if settings.getSetting('mooviemaniac') == 'true':
+                main.addDir('MoovieManiac','none',10,artwork + 'mmaniac.png')
+        if settings.getSetting('newmyvideolinks') == 'true':
+                main.addDir('NewMyVideoLinks','none',17,artwork + 'nmvl.png')
+        if settings.getSetting('freemoviesaddict') == 'true':
+                main.addDir('FreeMoviesAddict','none',22,artwork + 'fma.png')
+        if settings.getSetting('zmovie') == 'true':
+                main.addDir('Watch-Movies / Z-Movie','none',35,artwork + 'zmovie.png')
+        if settings.getSetting('wwmf') == 'true':
+                main.addDir('WeWatchMoviesFree','none',38,artwork + 'wwmf.png')
+        if settings.getSetting('videocloud') == 'true':
+                main.addDir('VideoCloud','none',48,artwork + 'videocloud.png')
 
 def HDMOVIESECTIONS():
-        main.addDir('NewMyVideoLinks','none',17,artwork + 'nmvl.png')
-        main.addDir('VideoCloud','none',48,artwork + 'videocloud.png')
+        if settings.getSetting('newmyvideolinks') == 'true':
+                main.addDir('NewMyVideoLinks','none',17,artwork + 'nmvl.png')
         
 def TVSECTIONS():
-        main.addDir('WatchSeries-Online','none',11,artwork + 'wso.png')
-        main.addDir('NewMyVideoLinks','none',20,artwork + 'nmvl.png')
+        if settings.getSetting('wsoeu') == 'true':
+                main.addDir('WatchSeries-Online','none',11,artwork + 'wso.png')
+        if settings.getSetting('newmyvideolinks') == 'true':
+                main.addDir('NewMyVideoLinks','none',20,artwork + 'nmvl.png')
 
 def DOCSECTIONS():
-        main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic&oq=national+geographic&gs_l=youtube.3..35i39l2j0l8.1350.5331.0.5427.19.19.0.0.0.0.106.1194.17j2.19.0...0.0...1ac.1.11.youtube._BEl_uoU7Bk',16,artwork + 'natgeo.png')
-        main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc&oq=bbc&gs_l=youtube.3..0l7j0i3j0l2.11848138.11848424.0.11848594.3.3.0.0.0.0.116.301.1j2.3.0...0.0...1ac.1.11.youtube.de569af2UXE',16,artwork + 'bbc.png')
-        main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel+documentary&oq=history+&gs_l=youtube.1.0.0l10.24739.26444.0.29034.8.6.0.2.2.0.121.583.5j1.6.0...0.0...1ac.1.11.youtube.9fDvAjIM7ug',16,artwork + 'history.png')
-        main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_query=discovery+channel+documentary&oq=discovery+channel+documentary&gs_l=youtube.3..0l10.243928.245622.0.246576.10.10.0.0.0.0.110.743.9j1.10.0...0.0...1ac.1.11.youtube.oK45qI8tlys',16,artwork + 'discovery.png')
-                 
+        if settings.getSetting('youtubedocs') == 'true':
+                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic&oq=national+geographic&gs_l=youtube.3..35i39l2j0l8.1350.5331.0.5427.19.19.0.0.0.0.106.1194.17j2.19.0...0.0...1ac.1.11.youtube._BEl_uoU7Bk',16,artwork + 'natgeo.png')
+                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc&oq=bbc&gs_l=youtube.3..0l7j0i3j0l2.11848138.11848424.0.11848594.3.3.0.0.0.0.116.301.1j2.3.0...0.0...1ac.1.11.youtube.de569af2UXE',16,artwork + 'bbc.png')
+                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel+documentary&oq=history+&gs_l=youtube.1.0.0l10.24739.26444.0.29034.8.6.0.2.2.0.121.583.5j1.6.0...0.0...1ac.1.11.youtube.9fDvAjIM7ug',16,artwork + 'history.png')
+                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_query=discovery+channel+documentary&oq=discovery+channel+documentary&gs_l=youtube.3..0l10.243928.245622.0.246576.10.10.0.0.0.0.110.743.9j1.10.0...0.0...1ac.1.11.youtube.oK45qI8tlys',16,artwork + 'discovery.png')
+
+def MASTERSEARCH():
+        if settings.getSetting('wsoeu') == 'true':
+                main.addDir('WatchSeries-Online','none',15,artwork + 'wso.png')
+        if settings.getSetting('newmyvideolinks') == 'true':
+                main.addDir('NewMyVideoLinks','none',21,artwork + 'nmvl.png')
+        if settings.getSetting('wwmf') == 'true':
+                main.addDir('WeWatchMoviesFree','none',42,artwork + 'wwmf.png')
+                      
 def get_params():
         param=[]
         paramstring=sys.argv[2]
@@ -106,6 +133,10 @@ elif mode==4:
         print ""+url
         HDMOVIESECTIONS()
 
+elif mode==5:
+        print ""+url
+        MASTERSEARCH()
+
 elif mode==8:
         print ""+url
         urlresolver.display_settings()
@@ -136,7 +167,7 @@ elif mode==13:
 
 elif mode==14:
         print ""+url
-        wsoeu.VIDEOLINKS(url,name)
+        wsoeu.VIDEOLINKS(url,name,thumb)
 
 elif mode==15:
         print ""+url
