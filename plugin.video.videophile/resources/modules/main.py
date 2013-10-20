@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #Main VideoPhile module by o9r1sh
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,urlresolver,xbmc,os,xbmcaddon
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,urlresolver,xbmc,os,xbmcaddon,mechanize
 from metahandler import metahandlers
 
 addon_id = 'plugin.video.videophile'
@@ -169,6 +169,8 @@ def GET_EPISODE_NUMBERS(ep_name):
 def GETHOSTTHUMB(host):
         if host.endswith('.com'):
              host = host[:-4]
+        if host.endswith('.org'):
+             host = host[:-4]
         if host.endswith('.eu'):
              host = host[:-3]
         if host.endswith('.ch'):
@@ -191,7 +193,7 @@ def GETHOSTTHUMB(host):
              host = host[4:]
         if 'movzap' in host:
              host = 'movzap'
-        host = artwork + host +'.png'
+        host = artwork + '/hosts/' + host +'.png'
         return(host)
      
 def RESOLVE(name,url,thumb):
@@ -200,6 +202,8 @@ def RESOLVE(name,url,thumb):
         if hmf:
              url = urlresolver.resolve(url)
              host = hmf.get_host()
+        else:
+             url = OTHER_RESOLVERS(url)
              
         params = {'url':url, 'name':name, 'thumb':thumb}
         addon.add_item(params, {'title':name}, img= thumb)
@@ -209,6 +213,25 @@ def RESOLVE(name,url,thumb):
         liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=thumb)
         xbmc.Player ().play(url, liz, False)
 
+def OTHER_RESOLVERS(url):
+     if 'vidx.to' in url:
+        br = mechanize.Browser()
+
+        response1 = br.open(url)
+
+        xbmc.sleep(11000)
+        
+        br.select_form(nr=0)
+        response2 = br.submit()
+        link=response2.read()
+        response2.close()
+        xbmc.sleep(1000)
+        match=re.compile('file: "(.+?)"').findall(link)
+        url = match[0]
+     return str(url)
+     
+
+          
 def AUTOVIEW(content):
         if content:
                 xbmcplugin.setContent(int(sys.argv[1]), content)

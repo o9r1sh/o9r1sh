@@ -8,13 +8,17 @@ artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.vi
 base_url = 'http://www.myvideolinks.eu'
 
 def CATEGORIES():
-        main.addDir('Yify Movies',base_url + '/category/movies/yify/',18,artwork + 'yify.png')
-        main.addDir('Recent Movies',base_url + '/category/movies/',18,artwork + 'recentlyadded.png')
-        main.addDir('Search','none',21,artwork + 'search.png')
+        main.addDir('Yify Movies',base_url + '/category/movies/yify/',18,artwork + '/main/yify.png')
+        main.addDir('Recent Movies',base_url + '/category/movies/',18,artwork + '/main/recentlyadded.png')
+        main.addDir('Search','none',21,artwork + '/main/search.png')
+
+def HDMOVIES():
+        INDEX(base_url + '/category/movies/yify/')
+
 
 def TVCATEGORIES():
-        main.addDir('Recent Episodes',base_url + '/category/tv-shows/',18,artwork + 'recentlyadded.png')
-        main.addDir('Search','none',21,artwork + 'search.png')
+        main.addDir('Recent Episodes',base_url + '/category/tv-shows/',18,artwork + '/main/recentlyadded.png')
+        main.addDir('Search','none',21,artwork + '/main/search.png')
         
 def INDEX(url):
         req = urllib2.Request(url)
@@ -36,7 +40,7 @@ def INDEX(url):
                         else:
                                 a,b,c = url.partition('/page/')
                                 next_page = url + a + b + str(nex)
-                        main.addDir('Next Page',next_page,18,artwork + 'next.png')
+                        main.addDir('Next Page',next_page,18,artwork + '/main/next.png')
 
         for url,thumbnail,name in match:
                 if len(match) > 0:
@@ -57,7 +61,6 @@ def VIDEOLINKS(name,url,thumb,year):
                                 hmf = urlresolver.HostedMediaFile(url)
                                 if hmf:
                                         host = hmf.get_host()
-                                        print 'tttttttttt' + host
                                         hthumb = main.GETHOSTTHUMB(host)
                                         main.addHDir(name,url,9,thumb,hthumb)
 

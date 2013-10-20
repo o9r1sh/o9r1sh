@@ -1,16 +1,14 @@
 <settings>
 	<category label="Auto-View">
-		<setting id="auto-view" type="bool" label="Enable 			Autoview" 			
-		default="false"/>
-	<setting id="movies-view" type="number" label="Movies View" 				default="503" enable="!eq(-1,false)"/>
-      <setting id="shows-view" type="number" label="TV Shows View" 				default="503" enable="!eq(-1,false)"/>
-	<setting id="episodes-view" type="number" label="Episodes View" 				default="503" enable="!eq(-1,false)"/>
-	<setting id="default-view" type="number" label="Default 			View" 			
-		default="50"/>
-   </category>
+		<setting id="auto-view" type="bool" label="Enable Autoview" default="false"/>
+		<setting id="movies-view" type="number" label="Movies View" 				default="503" enable="!eq(-1,false)"/>
+      	<setting id="shows-view" type="number" label="TV Shows View" 				default="503" enable="!eq(-2,false)"/>
+		<setting id="episodes-view" type="number" label="Episodes 					View" default="503" enable="!eq(-3,false)"/>
+		<setting id="default-view" type="number" label="Default 					View" default="50" enable="!eq(-4,false)"/>
+    </category>
 
    <category label="Enable / Disable Sites">
-     <setting id="mooviemaniac" type="bool" label="MoovieManiac" default="true"/>
+     <setting id="mooviemaniac" type="bool" label="MoovieManiac" default="false"/>
      <setting id="newmyvideolinks" type="bool" label="NewMyVideoLinks" default="true"/>
      <setting id="freemoviesaddict" type="bool" label="FreeMoviesAddict" default="true"/>
      <setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true"/>
@@ -18,13 +16,19 @@
      <setting id="videocloud" type="bool" label="VideoCloud" default="true"/>
      <setting id="wsoeu" type="bool" label="WatchSeries-Online" default="true"/>
      <setting id="youtubedocs" type="bool" label="Youtube Documentaries" default="true"/>
+	<setting id="iwatchonline" type="bool" label="I-WatchOnline" default="true"/>
+	<setting id="tvrelease" type="bool" label="TV Release" default="true"/>
+
    </category>
+
    <category label="Enable / Disable Sections">
+     <setting id="adult" type="bool" label="Adult" default="false"/>
      <setting id="movies" type="bool" label="Movies" default="true"/>
      <setting id="shows" type="bool" label="TV Shows" default="true"/>
      <setting id="docs" type="bool" label="Documentaries" default="true"/>
      <setting id="search" type="bool" label="VideoPhile Search" default="true"/>
      <setting id="resolver" type="bool" label="Resolver Settings" default="true"/>
+     <setting id="hdmovies" type="bool" label="HD Movies" default="true"/>
    </category>
    
 

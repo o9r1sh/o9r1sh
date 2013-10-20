@@ -7,21 +7,21 @@ artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.vi
 base_url = 'http://videocloud.in'
 
 def CATEGORIES():
-        main.addDir('Action',base_url +'/category/action/',49,artwork + 'action.png')
-        main.addDir('Adventure',base_url +'/category/adventure/',49,artwork + 'adventure.png')
-        main.addDir('Comedy',base_url +'/category/comedy/',49,artwork + 'comedy.png')
-        main.addDir('Crime',base_url +'/category/crime/',49,artwork + 'crime.png')
-        main.addDir('Drama',base_url +'/category/drama/',49,artwork + 'drama.png')
-        main.addDir('Family',base_url +'/category/family/',49,artwork + 'family.png')
-        main.addDir('Fantasy',base_url +'/category/fantasy/',49,artwork + 'fantasy.png')
-        main.addDir('Horror',base_url +'/category/horror/',49,artwork + 'horror.png')
-        main.addDir('Mystery',base_url +'/category/mystery/',49,artwork + 'mystery.png')
-        main.addDir('Others',base_url +'/category/others/',49,artwork + 'others.png')
-        main.addDir('Romance',base_url +'/category/romance/',49,artwork + 'romance.png')
-        main.addDir('Sci-Fi',base_url +'/category/sci-fi/',49,artwork + 'sci-fi.png')
-        main.addDir('Thriller',base_url +'/category/thriller/',49,artwork + 'thriller.png')
-        main.addDir('War',base_url +'/category/war/',49,artwork + 'war.png')
-        main.addDir('Western',base_url +'/category/western/',49,artwork + 'western.png')
+        main.addDir('Action',base_url +'/category/action/',49,artwork + '/genres/action.png')
+        main.addDir('Adventure',base_url +'/category/adventure/',49,artwork + '/genres/adventure.png')
+        main.addDir('Comedy',base_url +'/category/comedy/',49,artwork + '/genres/comedy.png')
+        main.addDir('Crime',base_url +'/category/crime/',49,artwork + '/genres/crime.png')
+        main.addDir('Drama',base_url +'/category/drama/',49,artwork + '/genres/drama.png')
+        main.addDir('Family',base_url +'/category/family/',49,artwork + '/genres/family.png')
+        main.addDir('Fantasy',base_url +'/category/fantasy/',49,artwork + '/genres/fantasy.png')
+        main.addDir('Horror',base_url +'/category/horror/',49,artwork + '/genres/horror.png')
+        main.addDir('Mystery',base_url +'/category/mystery/',49,artwork + '/genres/mystery.png')
+        main.addDir('Others',base_url +'/category/others/',49,artwork + '/genres/others.png')
+        main.addDir('Romance',base_url +'/category/romance/',49,artwork + '/genres/romance.png')
+        main.addDir('Sci-Fi',base_url +'/category/sci-fi/',49,artwork + '/genres/sci-fi.png')
+        main.addDir('Thriller',base_url +'/category/thriller/',49,artwork + '/genres/thriller.png')
+        main.addDir('War',base_url +'/category/war/',49,artwork + '/genres/war.png')
+        main.addDir('Western',base_url +'/category/western/',49,artwork + '/genres/western.png')
 
 def INDEX(url):
         req = urllib2.Request(url)
@@ -33,7 +33,7 @@ def INDEX(url):
         np=re.compile('<strong>.+?</strong><a href="(.+?)">').findall(link)
         if len(np) > 0:
                 next_page = np[0]
-                main.addDir('Next Page',next_page,49,artwork + 'next.png')
+                main.addDir('Next Page',next_page,49,artwork + '/main/next.png')
         for name,url,thumbnail in match:
                 if len(match) > 0:
                         head, sep, tail = name.partition(')')

@@ -15,7 +15,7 @@ def INDEX(url):
         np=re.compile('<a href="(.+?)" class="yt-uix-button  yt-uix-pager-button yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=.+?" data-page=".+?"><span class="yt-uix-button-content">Next \xc2\xbb </span></a>').findall(link)
         if len(np) > 0:
                 next_page = base_url + np[0]
-                main.addDir('Next Page',next_page,16,artwork + 'next.png')
+                main.addDir('Next Page',next_page,16,artwork + '/main/next.png')
         match=re.compile('data-context-item-title="(.+?)"').findall(link)
         times=re.compile('data-context-item-time="(.+?)"').findall(link)
         ids=re.compile('data-context-item-id="(.+?)"').findall(link)

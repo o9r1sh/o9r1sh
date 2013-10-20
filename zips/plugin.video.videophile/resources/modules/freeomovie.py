@@ -1,0 +1,108 @@
+#FreeMoviesAddict Module by o9r1sh September 2013
+
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os,mechanize
+import urlresolver
+
+artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+base_url = 'http://www.freeomovie.com'
+
+def CATEGORIES():
+        main.addDir('Recent Videos',base_url,135,artwork + '/main/recentlyadded.png')
+        main.addDir('Full Movies',base_url,135,artwork + '/main/movie.png')
+        main.addDir('Categories','none',134,artwork + '/main/genres.png')
+        
+def GENRES():
+        main.addDir('All Girl',base_url + '/category/all-girl/',135,artwork + '/genres/allgirl.png')
+        main.addDir('All Sex',base_url + '/category/all-sex/',135,artwork + '/genres/allsex.png')
+        main.addDir('Amateur',base_url + '/category/amateur/',135,artwork + '/genres/amateur.png')
+        main.addDir('Anal',base_url + '/category/anal/',135,artwork + '/genres/anal.png')
+        main.addDir('Anime / Cartoon',base_url + '/category/animecartoon/',135,artwork + '/genres/anime.png')
+        main.addDir('Asian',base_url + '/category/asian/',135,artwork + '/genres/asian.png')
+        main.addDir('Big Butts',base_url + '/category/big-butts/',135,artwork + '/genres/bigbutts.png')
+        main.addDir('Big Dicks',base_url + '/category/big-dicks/',135,artwork + '/genres/bigdicks.png')
+        main.addDir('Big Tits',base_url + '/category/big-tits/',135,artwork + '/genres/bigtits.png')
+        main.addDir('Black',base_url + '/category/black/',135,artwork + '/genres/black.png')
+        main.addDir('Blow Job',base_url + '/category/blowjob/',135,artwork + '/genres/blowjob.png')
+        main.addDir('Classic',base_url + '/category/classic/',135,artwork + '/genres/classic.png')
+        main.addDir('Clips',base_url + '/category/clips/',135,artwork + '/genres/clips.png')
+        main.addDir('Compilation',base_url + '/category/compilation/',135,artwork + '/genres/compilation.png')
+        main.addDir('Couples',base_url + '/category/couples/',135,artwork + '/genres/couples.png')
+        main.addDir('Cream Pie',base_url + '/category/cream-pie/',135,artwork + '/genres/creampie.png')
+        main.addDir('Double Penetration',base_url + '/category/dp/',135,artwork + '/genres/doublepenetration.png')
+        main.addDir('Feature',base_url + '/category/feature/',135,artwork + '/genres/feature.png')
+        main.addDir('Fetish',base_url + '/category/fetish/',135,artwork + '/genres/fetish.png')
+        main.addDir('Foreign',base_url + '/category/foreign/',135,artwork + '/genres/foreign.png')
+        main.addDir('French',base_url + '/category/french/',135,artwork + '/genres/french.png')
+        main.addDir('Full Movie',base_url + '/category/full-movie/',135,artwork + '/genres/fullmovie.png')
+        main.addDir('Gang Bang',base_url + '/category/gang-bang/',135,artwork + '/genres/gangbang.png')
+        main.addDir('German',base_url + '/category/german/',135,artwork + '/genres/german.png')
+        main.addDir('Gonzo',base_url + '/category/gonzo/',135,artwork + '/genres/gonzo.png')
+        main.addDir('Group Sex',base_url + '/category/group-sex/',135,artwork + '/genres/groupsex.png')
+        main.addDir('Hardcore',base_url + '/category/hardcore/',135,artwork + '/genres/hardcore.png')
+        main.addDir('Interracial',base_url + '/category/interracial/',135,artwork + '/genres/interracial.png')
+        main.addDir('Italian',base_url + '/category/italian/',135,artwork + '/genres/italian.png')
+        main.addDir('Lesbian',base_url + '/category/lesbian/',135,artwork + '/genres/lesbian.png')
+        main.addDir('Mature',base_url + '/category/matureolder/',135,artwork + '/genres/mature.png')
+        main.addDir('Milf',base_url + '/category/milf-cougar/',135,artwork + '/genres/milf.png')
+        main.addDir('Parody',base_url + '/category/parody/',135,artwork + '/genres/parody.png')
+        main.addDir('Plot Based',base_url + '/category/plot-based/',135,artwork + '/genres/plotbased.png')
+        main.addDir('Star Power',base_url + '/category/star-power/',135,artwork + '/genres/starpower.png')
+        main.addDir('Teen',base_url + '/category/teen/',135,artwork + '/genres/teen.png')
+
+def INDEX(url):
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        match=re.compile('<a href="(.+?)" title=".+?">\r\n\r\n\t\t\t\t\t\t\t\t\t\r\n                                    <img src="(.+?)" alt="(.+?)" width=".+?" height=".+?" />').findall(link)
+        np=re.compile("<link rel='next' href='(.+?)' />").findall(link)
+        if len(np) > 0:
+                np_url = np[0]
+                main.addDir('Next Page',np_url,135,artwork + '/main/next.png')
+        for url,thumbnail,name in match:
+                
+                try:
+                        main.addDir(name,url,136,thumbnail)
+                except:
+                        continue
+                
+        main.AUTOVIEW('movies')
+
+def VIDEOLINKS(name,url,thumb):
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
+        response = urllib2.urlopen(req)
+        link=response.read()
+        response.close()
+        match=re.compile('<a href="(.+?)" target="_blank">').findall(link)
+        for url in match:
+                if 'vidx.to' in url:
+                        main.addHDir(name,url,9,thumb,artwork + 'hosts/vidx.png')
+                        
+                else:
+                        hmf = urlresolver.HostedMediaFile(url)
+                        if hmf:
+                                host = hmf.get_host()
+                                hthumb = main.GETHOSTTHUMB(host)
+                                try:
+                                        main.addHDir(name,url,9,thumb,hthumb)
+                                except:
+                                        continue
+                        
+
+
+
+
+        
+def SEARCH():
+        search = ''
+        keyboard = xbmc.Keyboard(search,'Search')
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+                search = keyboard.getText()
+                search = search.replace(' ','+')
+                
+                url = base_url + 'index.php?s=' + search 
+                
+                INDEX(url)

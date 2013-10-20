@@ -19,11 +19,11 @@ def INDEX(url):
         match=re.compile('<a href="(.+?)" target=".+?" onclick=".+?">\n  <img class=".+?" src="(.+?)" alt=".+?" title="(.+?)" onmousemove=".+?" style=".+?"/>').findall(link)
 
         if url == base_url + '/movies.htm':
-                main.addDir('Next Page',base_url + '/movies2.htm',47,artwork + 'next.png')
+                main.addDir('Next Page',base_url + '/movies2.htm',47,artwork + '/main/next.png')
         elif url == base_url + '/movies2.htm':
-                main.addDir('Next Page',base_url + '/movies3.htm',47,artwork + 'next.png')
+                main.addDir('Next Page',base_url + '/movies3.htm',47,artwork + '/main/next.png')
         elif url == base_url + '/movies3.htm':
-                main.addDir('Next Page',base_url + '/movies4.htm',47,artwork + 'next.png')
+                main.addDir('Next Page',base_url + '/movies4.htm',47,artwork + '/main/next.png')
                 
         for url,thumbnail,name in match:
                 if len(match) > 0:
