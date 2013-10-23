@@ -43,11 +43,29 @@ def INDEX(url):
                         main.addDir('Next Page',next_page,18,artwork + '/main/next.png')
 
         for url,thumbnail,name in match:
-                if len(match) > 0:
+                types = None
+                show = re.split('[Ss]\d\d[Ee]\d\d',name)
+                
+                if len(show) == 2:
+                        types = 'episode'
+                else:
+                        types = 'movie'
+
+                if types == 'episode':
                         try:        
-                                main.addMDir(name,url,19,thumbnail,'')
+                                main.addEDir(name,url,19,thumbnail,show[0])
                         except:
                                 continue
+                        main.AUTOVIEW('episodes')
+                        
+                if types == 'movie':
+                        try:        
+                                main.addMDir(name,url,19,thumbnail,'')      
+                        except:
+                                continue
+                        main.AUTOVIEW('movies')
+        
+
 
 def VIDEOLINKS(name,url,thumb,year):
         req = urllib2.Request(url)

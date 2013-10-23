@@ -178,8 +178,9 @@ def RECENTEPS(url):
                         if name == 'TV':
                                 continue
                         else:
+                                show = re.split('[Ss]\d\d[Ee]\d\d',name)
                                 try:
-                                        main.addDir(name,url,14,'')
+                                        main.addEDir(name,url,14,'',show[0])
                                 except:
                                         continue
         main.AUTOVIEW('episodes')
@@ -198,7 +199,7 @@ def INDEXEPS(url,name):
                 real_show=re.compile('Episodes Available for: &#8216;(.+?)&#8217;').findall(link)
                 if len(real_show) > 0:
                         show_name = real_show[0]
-        thumb = main.GET_SHOW_THUMB(show_name)
+                        
         if len(np) > 0:
                 np_url = np[0]
                 main.addDir('Next Page',np_url,13,artwork + '/main/next.png')

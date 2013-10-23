@@ -22,36 +22,58 @@ settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 grab=metahandlers.MetaData()
 
+
+def getMeta(types,name,year,show,season,episode):
+     show_meta = 0
+     meta = 0
+     if types=='movie':
+          meta = grab.get_meta('movie',name,year)
+     elif types=='tvshow':
+          meta = grab.get_meta('tvshow',name)
+     elif types=='episode':
+          try:
+               show_meta = grab.get_meta('tvshow',show)
+          except:
+               show_meta = 0
+          if show_meta == 0:
+               return 0
+          else:
+               imdb_id = show_meta['imdb_id']
+               meta = grab.get_episode_meta(show,imdb_id,season,episode)
+     return(meta)
+
 def addDir(name,url,mode,thumb):   
-     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types}
+     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'movie'}
      addon.add_directory(params, {'title':name}, img= thumb)
 
 def addMDir(name,url,mode,thumb,year):
      contextMenuItems = []
-     
-     meta = grab.get_meta('movie',name,year,None,None,overlay=6)
-     try:
-          imdb = meta['imdb_id']
-     except:
-          imdb_id = ''
+
+     title = re.split('\d\d\d\d',name)
+
+     if title[0] == '':
+          title = name
+     meta = getMeta('movie',title[0],year,'','','')
+     year = re.sub('[()]','',year)
+     if year == '':
+          try:
+               year = meta['year']
+          except:
+               year = ''
+     if year == 0:
+          year = ''
 
      if year == '':
-          year = str(meta['year'])
-          if year == '0':
-               name = name
-          else:
-               name = name + ' ' + '(' + year +')'
-          
-     else:
-          name = name + ' ' +  year
+          meta['title'] = name
 
-     meta['title'] = name
+     else:
+          meta['title'] = name + ' ' + '(' + str(year) + ')'
+
      if thumb == '':
           thumb = meta['cover_url']
-     if thumb == '':
-          thumb = artwork + 'nothumb.png'
 
-     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types}
+
+     params = {'url':url, 'mode':mode, 'name':title[0], 'thumb':thumb, 'year':year, 'types':'movie'}
 
      contextMenuItems.append(('Movie Information', 'XBMC.Action(Info)'))
      
@@ -59,12 +81,13 @@ def addMDir(name,url,mode,thumb,year):
                         contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=51&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
 
      addon.add_directory(params, meta, contextMenuItems, img= thumb, fanart=meta['backdrop_url'])
-
+     
 
 def addSDir(name,url,mode,thumb):
      contextMenuItems = []
      
-     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types}
+     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'show':name}
+
      meta = grab.get_meta('tvshow',name)
 
      if thumb == '':
@@ -81,8 +104,8 @@ def addSDir(name,url,mode,thumb):
      
      addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=meta['backdrop_url'])
 
-def addHDir(name,url,mode,thumb,hthumb):   
-     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types}
+def addHDir(name,url,mode,thumb,hthumb):
+     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'season':season, 'episode':episode, 'show':show}
      addon.add_directory(params, {'title':name}, img= hthumb)
 
 def addEDir(name,url,mode,thumb,show):
@@ -90,6 +113,7 @@ def addEDir(name,url,mode,thumb,show):
      meta = grab.get_meta('tvshow',show)
      ep_meta = None
      show_id = meta['imdb_id']
+     othumb = thumb
 
      s,e = GET_EPISODE_NUMBERS(name)
      try:
@@ -97,20 +121,26 @@ def addEDir(name,url,mode,thumb,show):
      except:
           ep_meta=0
 
-     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'show':show, 'season':season, 'episode':episode}        
+     try:
+          thumb = str(ep_meta['cover_url'])
+          
+     except:
+          if thumb == '':
+               thumb = othumb
+          #if thumb == '':
+               #thumb = artwork + '/main/noepisode.png'
+          
+
+     
+
+     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'season':s, 'episode':e, 'show':show, 'types':'episode'}        
      
      if ep_meta==0:
           addon.add_directory(params, {'title':name}, img=thumb) 
      else:
           ep_meta['title'] = name
-          addon.add_directory(params, ep_meta, fanart=meta['backdrop_url'], img=ep_meta['cover_url'])
+          addon.add_directory(params, ep_meta, fanart=meta['backdrop_url'], img=thumb)
 
-def GET_SHOW_THUMB(show_name):
-     meta = grab.get_meta('tvshow',show_name)
-     thumb = meta['cover_url']
-     if thumb == '':
-          thumb = meta['banner_url']  
-     return(thumb)
      
 def GET_EPISODE_NUMBERS(ep_name):
      s = None
@@ -197,21 +227,33 @@ def GETHOSTTHUMB(host):
         return(host)
      
 def RESOLVE(name,url,thumb):
-        hmf = urlresolver.HostedMediaFile(url)
-        host = ''
-        if hmf:
-             url = urlresolver.resolve(url)
-             host = hmf.get_host()
-        else:
-             url = OTHER_RESOLVERS(url)
+     meta=0
+     try:
+          meta = getMeta(types,name,year,show,season,episode)
+     except:
+          meta=0
+     hmf = urlresolver.HostedMediaFile(url)
+     host = ''
+     if hmf:
+          url = urlresolver.resolve(url)
+          host = hmf.get_host()
+     else:
+          url = OTHER_RESOLVERS(url)
              
-        params = {'url':url, 'name':name, 'thumb':thumb}
-        addon.add_item(params, {'title':name}, img= thumb)
+     params = {'url':url, 'name':name, 'thumb':thumb}
+     if meta == 0:
+          addon.add_video_item(params, {'title':name}, img=thumb)
+          liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=thumb)
 
-        xbmc.sleep(1000)
+     else:
+          addon.add_video_item(params, {'title':name}, img=meta['cover_url'])
+          liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=meta['cover_url'])
+          liz.setInfo('video',infoLabels=meta)
+
+     xbmc.sleep(1000)
         
-        liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=thumb)
-        xbmc.Player ().play(url, liz, False)
+     
+     xbmc.Player ().play(url, liz, False)
 
 def OTHER_RESOLVERS(url):
      if 'vidx.to' in url:
@@ -219,7 +261,7 @@ def OTHER_RESOLVERS(url):
 
         response1 = br.open(url)
 
-        xbmc.sleep(11000)
+        addon.show_countdown(20,'VidX.to','')
         
         br.select_form(nr=0)
         response2 = br.submit()

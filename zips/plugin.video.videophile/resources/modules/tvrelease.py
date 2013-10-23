@@ -60,7 +60,27 @@ def INDEX(url):
                         if 'Filech' in name:
                                 continue
                         else:
-                                main.addDir(name,url,129,'')
+                                types = None
+                                show = re.split('[Ss]\d\d[Ee]\d\d',name)
+                
+                                if len(show) == 2:
+                                        types = 'episode'
+                                else:
+                                        types = 'movie'
+
+                                if types == 'episode':
+                                        try:        
+                                                main.addEDir(name,url,129,'',show[0])
+                                        except:
+                                                continue
+                                        main.AUTOVIEW('episodes')
+                        
+                                if types == 'movie':
+                                        try:        
+                                                main.addMDir(name,url,129,'','')      
+                                        except:
+                                                continue
+                                        main.AUTOVIEW('movies')
                 except:
                         continue
 
