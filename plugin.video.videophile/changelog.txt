@@ -53,3 +53,6 @@ Small Fixes
 
 Version 1.0.8.2
 Fixed password reset issue
+
+Version 1.0.8.3
+Small Fixes
