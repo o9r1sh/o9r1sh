@@ -44,7 +44,10 @@ Lots Of Code Clean Up
 Global Fanart
 Full Graphics Overhaul Compliments of Marquerite (Thank You)
 
-
 Version 1.0.8
 Fixed mode in Youtube Module that I forgot to rename
 Replace missing image Icons with VideoPhile Icon.
+
+
+Version 1.0.8.1
+Small Fixes
