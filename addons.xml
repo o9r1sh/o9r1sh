@@ -61,8 +61,8 @@
 
 <addon id="plugin.video.videophile"
        name="VideoPhile"
-       version="1.0.6"
-       provider-name="o9r1sh">
+       version="1.0.7"
+       provider-name="o9r1sh, Graphics by Marquerite">
   <requires>
     <import addon="xbmc.python" version="1.0"/>
     <import addon="script.module.urlresolver" version="2.0.9"/>
@@ -76,7 +76,9 @@
   </extension>
   <extension point="xbmc.addon.metadata">
     <summary>Play content from an ever growing list of sources</summary>
-    <description>VideoPhile is a video site aggregator that enables you to watch content from many different sources.</description>
+    <description>VideoPhile is a video site aggregator that enables you to watch content from many different sources.
+
+Special thanks to Marquerite for the outstanding work on the graphics.</description>
     <platform>all</platform>
   </extension>
 </addon>

@@ -17,6 +17,7 @@ season = addon.queries.get('season', '')
 episode = addon.queries.get('episode', '')
 show = addon.queries.get('show', '')
 types = addon.queries.get('types', '')
+fanart = addon.queries.get('fanart', '')
 
 settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
@@ -44,7 +45,7 @@ def getMeta(types,name,year,show,season,episode):
 
 def addDir(name,url,mode,thumb):   
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'movie'}
-     addon.add_directory(params, {'title':name}, img= thumb)
+     addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
 
 def addMDir(name,url,mode,thumb,year):
      contextMenuItems = []
@@ -53,7 +54,8 @@ def addMDir(name,url,mode,thumb,year):
 
      if title[0] == '':
           title = name
-     meta = getMeta('movie',title[0],year,'','','')
+     if settings.getSetting('metadata') == 'true':
+          meta = getMeta('movie',title[0],year,'','','')
      year = re.sub('[()]','',year)
      if year == '':
           try:
@@ -62,15 +64,23 @@ def addMDir(name,url,mode,thumb,year):
                year = ''
      if year == 0:
           year = ''
+     if settings.getSetting('metadata') == 'true':
 
-     if year == '':
-          meta['title'] = name
+          if year == '':
+               meta['title'] = name
 
-     else:
-          meta['title'] = name + ' ' + '(' + str(year) + ')'
+          else:
+               meta['title'] = name + ' ' + '(' + str(year) + ')'
+     
+          if thumb == '':
+               thumb = meta['cover_url']
 
-     if thumb == '':
-          thumb = meta['cover_url']
+          if meta['backdrop_url'] == '':
+                  fanart = artwork + '/main/fanart.jpg'
+          else:
+                  fanart = meta['backdrop_url']
+                  
+               
 
 
      params = {'url':url, 'mode':mode, 'name':title[0], 'thumb':thumb, 'year':year, 'types':'movie'}
@@ -79,68 +89,95 @@ def addMDir(name,url,mode,thumb,year):
      
      if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
                         contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=51&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
+     if settings.getSetting('metadata') == 'true':
+          addon.add_directory(params, meta, contextMenuItems, img= thumb, fanart=fanart)
+     else:
+               addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
 
-     addon.add_directory(params, meta, contextMenuItems, img= thumb, fanart=meta['backdrop_url'])
-     
+          
 
 def addSDir(name,url,mode,thumb):
      contextMenuItems = []
+     meta = None
      
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'show':name}
 
-     meta = grab.get_meta('tvshow',name)
+     if settings.getSetting('metadata') == 'true':
+          meta = grab.get_meta('tvshow',name)
 
-     if thumb == '':
-          thumb = meta['cover_url']
-     if thumb == '':
-          thumb = meta['banner_url']
-     if thumb == '':
-          thumb = artwork + 'nothumb.png'
+     if meta['backdrop_url'] == '':
+          fanart = artwork + '/main/fanart.jpg'
+     else:
+          fanart = meta['backdrop_url']
+     
+     if settings.getSetting('metadata') == 'true':
+               if settings.getSetting('banners') == 'false':
+                    if thumb == '':
+                         thumb = meta['cover_url']
+               else:
+                    thumb = meta['banner_url']
+     
+   
 
      contextMenuItems.append(('Show Information', 'XBMC.Action(Info)'))
 
      if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
                         contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
-     
-     addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=meta['backdrop_url'])
+     if settings.getSetting('metadata') == 'true':
+          addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
+     else:
+          addon.add_directory(params, {'title':name}, img= thumb, fanart=fanart)
 
 def addHDir(name,url,mode,thumb,hthumb):
+     fanart = artwork + '/main/fanart.jpg'
+     name = re.sub('[()]','',name)
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'season':season, 'episode':episode, 'show':show}
-     addon.add_directory(params, {'title':name}, img= hthumb)
+     addon.add_directory(params, {'title':name}, img=hthumb, fanart=fanart)
 
 def addEDir(name,url,mode,thumb,show):
-     
-     meta = grab.get_meta('tvshow',show)
      ep_meta = None
-     show_id = meta['imdb_id']
+     show_id = None
+     meta = None
      othumb = thumb
-
-     s,e = GET_EPISODE_NUMBERS(name)
-     try:
-          ep_meta = grab.get_episode_meta(show,show_id,int(s),int(e))
-     except:
-          ep_meta=0
-
-     try:
-          thumb = str(ep_meta['cover_url'])
-          
-     except:
-          if thumb == '':
-               thumb = othumb
-          #if thumb == '':
-               #thumb = artwork + '/main/noepisode.png'
-          
-
+     if settings.getSetting('metadata') == 'true':
+          meta = grab.get_meta('tvshow',show)
+          show_id = meta['imdb_id']
      
+     s,e = GET_EPISODE_NUMBERS(name)
+
+     if settings.getSetting('metadata') == 'true':
+          try:
+               ep_meta = grab.get_episode_meta(show,show_id,int(s),int(e))
+          except:
+               ep_meta=0
+
+          try:
+               thumb = str(ep_meta['cover_url'])
+          
+          except:
+               if thumb == '':
+                    thumb = othumb
+     else:
+          thumb = othumb
+          
 
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'season':s, 'episode':e, 'show':show, 'types':'episode'}        
-     
-     if ep_meta==0:
-          addon.add_directory(params, {'title':name}, img=thumb) 
-     else:
-          ep_meta['title'] = name
-          addon.add_directory(params, ep_meta, fanart=meta['backdrop_url'], img=thumb)
+     if settings.getSetting('metadata') == 'true':
 
+          if ep_meta==0:
+               fanart = artwork + '/main/fanart.jpg'
+               addon.add_directory(params, {'title':name}, img=thumb, fanart=fanart) 
+          else:
+               if meta['backdrop_url'] == '':
+                    fanart = artwork + '/main/fanart.jpg'
+               else:
+                    fanart = meta['backdrop_url']
+               ep_meta['title'] = name
+               addon.add_directory(params, ep_meta, fanart=fanart, img=thumb)
+     else:
+          addon.add_directory(params, {'title':name}, img=thumb, fanart=fanart) 
+
+          
      
 def GET_EPISODE_NUMBERS(ep_name):
      s = None
@@ -270,6 +307,7 @@ def OTHER_RESOLVERS(url):
         xbmc.sleep(1000)
         match=re.compile('file: "(.+?)"').findall(link)
         url = match[0]
+
      return str(url)
      
 

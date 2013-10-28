@@ -1,21 +1,12 @@
 #VideoPhile addon by o9r1sh
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon
-from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease
+from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
+from resources.modules import channelcut
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
-addon = Addon(addon_id, sys.argv)
-
-mode = addon.queries['mode']
-url = addon.queries.get('url', '')
-name = addon.queries.get('name', '')
-thumb = addon.queries.get('thumb', '')
-year = addon.queries.get('year', '')
-season = addon.queries.get('season', '')
-episode = addon.queries.get('episode', '')
-show = addon.queries.get('show', '')
-types = addon.queries.get('types', '')
+addon = main.addon
 
 settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
@@ -37,68 +28,87 @@ if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plu
            
 def CATEGORIES():
         if settings.getSetting('adult') == 'true':
-                main.addDir('Adults Only','none',6,artwork + '/main/adult.png')
+                main.addDir('Adults Only','none','adultSections',artwork + '/main/adult.png')
         if settings.getSetting('movies') == 'true':
-                main.addDir('Movies','none',1,artwork + '/main/movie.png')
+                main.addDir('Movies','none','movieSections',artwork + '/main/movie.png')
         if settings.getSetting('hdmovies') == 'true':
-                main.addDir('HD Movies','none',4,artwork + '/main/hd.png')
+                main.addDir('HD Movies','none','hdSections',artwork + '/main/hd.png')
         if settings.getSetting('shows') == 'true':        
-                main.addDir('TV Shows','none',2,artwork + '/main/tv.png')
+                main.addDir('TV Shows','none','tvSections',artwork + '/main/tv.png')
         if settings.getSetting('docs') == 'true':
-                main.addDir('Documentaries','none',3,artwork + '/main/docs.png')
+                main.addDir('Documentaries','none','docSections',artwork + '/main/docs.png')
+        if settings.getSetting('cartoons') == 'true':
+                main.addDir('Cartoons','none','cartoonSections',artwork + '/main/cartoons.png')
+        if settings.getSetting('anime') == 'true':
+                main.addDir('Anime','none','animeSections',artwork + '/main/anime.png')
         if settings.getSetting('search') == 'true':
-                main.addDir('VideoPhile Searchs','none',5,artwork + '/main/search.png')
+                main.addDir('VideoPhile Searchs','none','masterSearch',artwork + '/main/search.png')
         if settings.getSetting('resolver') == 'true':
-                main.addDir('Resolver Settings','none',8,artwork + '/main/resolver.png')
-        
+                main.addDir('Resolver Settings','none','resolverSettings',artwork + '/main/resolver.png')
+
 def MOVIESECTIONS():
         if settings.getSetting('mooviemaniac') == 'true':
-                main.addDir('MoovieManiac','none',10,artwork + '/main/mmaniac.png')
+                main.addDir('MoovieManiac','none','moovieManiacCategories',artwork + '/main/mmaniac.png')
         if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks','none',17,artwork + '/main/nmvl.png')
+                main.addDir('NewMyVideoLinks','none','newMyVideoLinksCategories',artwork + '/main/nmvl.png')
         if settings.getSetting('freemoviesaddict') == 'true':
-                main.addDir('FreeMoviesAddict','none',22,artwork + '/main/fma.png')
+                main.addDir('FreeMoviesAddict','none','fmaCategories',artwork + '/main/fma.png')
         if settings.getSetting('zmovie') == 'true':
-                main.addDir('Watch-Movies / Z-Movie','none',35,artwork + '/main/zmovie.png')
+                main.addDir('Watch-Movies / Z-Movie','none','zmovieCategories',artwork + '/main/zmovie.png')
         if settings.getSetting('wwmf') == 'true':
-                main.addDir('WeWatchMoviesFree','none',38,artwork + '/main/wwmf.png')
+                main.addDir('WeWatchMoviesFree','none','wwmfCategories',artwork + '/main/wwmf.png')
         if settings.getSetting('videocloud') == 'true':
-                main.addDir('VideoCloud','none',48,artwork + '/main/videocloud.png')
+                main.addDir('VideoCloud','none','videoCloudCategories',artwork + '/main/videocloud.png')
         if settings.getSetting('iwatchonline') == 'true':
-               main.addDir('I-WatchOnline','none',50,artwork + '/main/iwatchonline.png')
+               main.addDir('I-WatchOnline','none','iwoCategories',artwork + '/main/iwatchonline.png')
         if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none',131,artwork + '/main/tvrelease.png')
+                main.addDir('TV Release','none','tvreleaseMovieCategories',artwork + '/main/tvrelease.png')
 
 def HDMOVIESECTIONS():
         if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks Yify Movies','none',127,artwork + '/main/nmvl.png')
+                main.addDir('NewMyVideoLinks Yify Movies','none','newMyVideoLinksHDMovies',artwork + '/main/nmvl.png')
         if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none',126,artwork + '/main/tvrelease.png')
+                main.addDir('TV Release','none','tvreleaseHDMovies',artwork + '/main/tvrelease.png')
         
 def TVSECTIONS():
         if settings.getSetting('wsoeu') == 'true':
-                main.addDir('WatchSeries-Online','none',11,artwork + '/main/wso.png')
+                main.addDir('WatchSeries-Online','none','watchSeriesOnlineCategories',artwork + '/main/wso.png')
         if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks','none',20,artwork + '/main/nmvl.png')
+                main.addDir('NewMyVideoLinks','none','newMyVideoLinksTVCategories',artwork + '/main/nmvl.png')
         if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none',132,artwork + '/main/tvrelease.png')
-
+                main.addDir('TV Release','none','tvreleaseTVCategories',artwork + '/main/tvrelease.png')
+        if settings.getSetting('channelcut') == 'true':
+                main.addDir('ChannelCut','none','channelCutCategories',artwork + '/main/channelcut.png')
+        if settings.getSetting('iwatchonline') == 'true':
+               main.addDir('I-WatchOnline','none','iwoSeriesCategories',artwork + '/main/iwatchonline.png')
+        
 def DOCSECTIONS():
         if settings.getSetting('youtubedocs') == 'true':
-                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic&oq=national+geographic&gs_l=youtube.3..35i39l2j0l8.1350.5331.0.5427.19.19.0.0.0.0.106.1194.17j2.19.0...0.0...1ac.1.11.youtube._BEl_uoU7Bk',16,artwork + '/main/natgeo.png')
-                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc&oq=bbc&gs_l=youtube.3..0l7j0i3j0l2.11848138.11848424.0.11848594.3.3.0.0.0.0.116.301.1j2.3.0...0.0...1ac.1.11.youtube.de569af2UXE',16,artwork + '/main/bbc.png')
-                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel+documentary&oq=history+&gs_l=youtube.1.0.0l10.24739.26444.0.29034.8.6.0.2.2.0.121.583.5j1.6.0...0.0...1ac.1.11.youtube.9fDvAjIM7ug',16,artwork + '/main/history.png')
-                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_query=discovery+channel+documentary&oq=discovery+channel+documentary&gs_l=youtube.3..0l10.243928.245622.0.246576.10.10.0.0.0.0.110.743.9j1.10.0...0.0...1ac.1.11.youtube.oK45qI8tlys',16,artwork + '/main/discovery.png')
+                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic&oq=national+geographic&gs_l=youtube.3..35i39l2j0l8.1350.5331.0.5427.19.19.0.0.0.0.106.1194.17j2.19.0...0.0...1ac.1.11.youtube._BEl_uoU7Bk','youtubeIndex',artwork + '/main/natgeo.png')
+                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc&oq=bbc&gs_l=youtube.3..0l7j0i3j0l2.11848138.11848424.0.11848594.3.3.0.0.0.0.116.301.1j2.3.0...0.0...1ac.1.11.youtube.de569af2UXE','youtubeIndex',artwork + '/main/bbc.png')
+                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel+documentary&oq=history+&gs_l=youtube.1.0.0l10.24739.26444.0.29034.8.6.0.2.2.0.121.583.5j1.6.0...0.0...1ac.1.11.youtube.9fDvAjIM7ug','youtubeIndex',artwork + '/main/history.png')
+                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_query=discovery+channel+documentary&oq=discovery+channel+documentary&gs_l=youtube.3..0l10.243928.245622.0.246576.10.10.0.0.0.0.110.743.9j1.10.0...0.0...1ac.1.11.youtube.oK45qI8tlys','youtubeIndex',artwork + '/main/discovery.png')
 
 def MASTERSEARCH():
         if settings.getSetting('wsoeu') == 'true':
-                main.addDir('WatchSeries-Online','none',15,artwork + '/main/wso.png')
+                main.addDir('WatchSeries-Online','none','watchSeriesOnlineSearch',artwork + '/main/wso.png')
         if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks','none',21,artwork + '/main/nmvl.png')
+                main.addDir('NewMyVideoLinks','none','newMyVideoLinksSearch',artwork + '/main/nmvl.png')
         if settings.getSetting('wwmf') == 'true':
-                main.addDir('WeWatchMoviesFree','none',42,artwork + '/main/wwmf.png')
+                main.addDir('WeWatchMoviesFree','none','wwmfSearch',artwork + '/main/wwmf.png')
         if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none',128,artwork + '/main/tvrelease.png')
+                main.addDir('TV Release','none','tvreleaseSearch',artwork + '/main/tvrelease.png')
+        if settings.getSetting('channelcut') == 'true':
+                main.addDir('ChannelCut','none','channelCutSearch',artwork + '/main/channelcut.png')
+
+def CARTOONSECTIONS():
+        if settings.getSetting('cartoonfreak') == 'true':
+                main.addDir('Cartoon Freak','none','cartoonFreakToons',artwork + '/main/cartoonfreak.png')
+
+def ANIMESECTIONS():
+        if settings.getSetting('cartoonfreak') == 'true':
+                main.addDir('Cartoon Freak','none','cartoonFreakAnime',artwork + '/main/cartoonfreak.png')
+        
 def ADULT():
         pin = ''
         keyboard = xbmc.Keyboard(pin,'Please Enter Your Password')
@@ -108,496 +118,734 @@ def ADULT():
         text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "r")
         line = file.readline(text_file)
         if pin == line:
-                main.addDir('FreeoMovie','none',133,artwork + '/main/freeomovie.png')
+                main.addDir('FreeoMovie','none','freeOMovieCategories',artwork + '/main/freeomovie.png')
+                main.addDir('TubePirate','none','tubePirateCategories',artwork + '/main/tubepirate.png')
         else:
                 notice = xbmcgui.Dialog().ok('Wrong Password','The password you entered is incorrect')
 
-def get_params():
-        param=[]
-        paramstring=sys.argv[2]
-        if len(paramstring)>=2:
-                params=sys.argv[2]
-                cleanedparams=params.replace('?','')
-                if (params[len(params)-1]=='/'):
-                        params=params[0:len(params)-2]
-                pairsofparams=cleanedparams.split('&')
-                param={}
-                for i in range(len(pairsofparams)):
-                        splitparams={}
-                        splitparams=pairsofparams[i].split('=')
-                        if (len(splitparams))==2:
-                                param[splitparams[0]]=splitparams[1]
-                                
-        return param
-          
-params=get_params()
-url=None
-name=None
-mode=None
+mode = addon.queries['mode']
+url = addon.queries.get('url', '')
+name = addon.queries.get('name', '')
+thumb = addon.queries.get('thumb', '')
+year = addon.queries.get('year', '')
+season = addon.queries.get('season', '')
+episode = addon.queries.get('episode', '')
+show = addon.queries.get('show', '')
+types = addon.queries.get('types', '')
 
-try:
-        url=urllib.unquote_plus(params["url"])
-except:
-        pass
-try:
-        name=urllib.unquote_plus(params["name"])
-except:
-        pass
-try:
-        mode=int(params["mode"])
-except:
-        pass
-
-print "Mode: "+str(mode)
-print "URL: "+str(url)
-print "Name: "+str(name)
+print "Mode is: "+str(mode)
+print "URL is: "+str(url)
+print "Name is: "+str(name)
+print "Thumb is: "+str(thumb)
+print "Year is: "+str(year)
+print "Season is: "+str(season)
+print "Episode is: "+str(episode)
+print "Show is: "+str(show)
+print "Type is: "+str(types)
 
 #Default modes__________________________________________________________________
 if mode==None or url==None or len(url)<1:
         print ""
         CATEGORIES()
        
-elif mode==1:
+elif mode=='movieSections':
         print ""+url
         MOVIESECTIONS()
 
-elif mode==2:
+elif mode=='tvSections':
         print ""+url
         TVSECTIONS()
 
-elif mode==3:
+elif mode=='docSections':
         print ""+url
         DOCSECTIONS()
 
-elif mode==4:
+elif mode=='hdSections':
         print ""+url
         HDMOVIESECTIONS()
 
-elif mode==5:
+elif mode=='masterSearch':
         print ""+url
         MASTERSEARCH()
 
-elif mode==6:
+elif mode=='adultSections':
         print ""+url
         ADULT()
 
-elif mode==8:
+elif mode=='resolverSettings':
         print ""+url
         urlresolver.display_settings()
+
+elif mode=='cartoonSections':
+        print ""+url
+        CARTOONSECTIONS()
+
+elif mode=='animeSections':
+        print ""+url
+        ANIMESECTIONS()
 #Main modes_____________________________________________________________________
-elif mode==9:
+elif mode=='resolve':
         print ""+url
         main.RESOLVE(name,url,thumb)
 #MoovieManic modes______________________________________________________________
-elif mode==10:
+elif mode=='moovieManiacCategories':
         print ""+url
         mooviemaniac.CATEGORIES()
 
-elif mode==47:
+elif mode=='moovieManiacIndex':
         print ""+url
         mooviemaniac.INDEX(url)
 #WatchSeries-Online modes_______________________________________________________
-elif mode==11:
+elif mode=='watchSeriesOnlineCategories':
         print ""+url
         wsoeu.CATEGORIES()
 
-elif mode==12:
+elif mode=='watchSeriesOnlineSeriesIndex':
         print ""+url
         wsoeu.INDEXSHOWS(url)
 
-elif mode==13:
+elif mode=='watchSeriesOnlineEpisodesIndex':
         print ""+url
         wsoeu.INDEXEPS(url,name)
 
-elif mode==14:
+elif mode=='watchSeriesOnlineVideoLinks':
         print ""+url
         wsoeu.VIDEOLINKS(url,name,thumb)
 
-elif mode==15:
+elif mode=='watchSeriesOnlineSearch':
         print ""+url
         wsoeu.SEARCH()
 
-elif mode==44:
+elif mode=='watchSeriesOnlineLetters':
         print ""+url
         wsoeu.LETTERS()
 
-elif mode==45:
-        print ""+url
-        wsoeu.SEARCHINDEX(url)
-
-elif mode==46:
+elif mode=='watchSeriesOnlineRecentEpisodes':
         print ""+url
         wsoeu.RECENTEPS(url)
 #Youtube documentaries modes____________________________________________________
-elif mode==16:
+elif mode=='youtubeIndex':
         print ""+url
         youtube.INDEX(url)
 #NewMyVideoLinks modes__________________________________________________________
-elif mode==17:
+elif mode=='newMyVideoLinksCategories':
         print ""+url
         nmvl.CATEGORIES()
 
-elif mode==18:
+elif mode=='newMyVideoLinksIndex':
         print ""+url
         nmvl.INDEX(url)
         
-elif mode==19:
+elif mode=='newMyVideoLinksVideoLinks':
         print ""+url
         nmvl.VIDEOLINKS(name,url,thumb,year)
 
-elif mode==20:
+elif mode=='newMyVideoLinksTVCategories':
         print ""+url
         nmvl.TVCATEGORIES()
 
-elif mode==21:
+elif mode=='newMyVideoLinksSearch':
         print ""+url
         nmvl.SEARCH()
 
-elif mode==127:
+elif mode=='newMyVideoLinksHDMovies':
         print ""+url
         nmvl.HDMOVIES()
 
 #Free Movies Addict modes_______________________________________________________
-elif mode==22:
+elif mode=='fmaCategories':
         print ""+url
         fma.CATEGORIES()
 
-elif mode==26:
+elif mode=='fmaIndex':
         print ""+url
         fma.INDEX(url)
 
-elif mode==27:
+elif mode=='fmaVideoLinks':
         print ""+url
         fma.VIDEOLINKS(name,url,thumb)
 
-elif mode==28:
+elif mode=='fmaGenres':
         print ""+url
         fma.GENRES()
 
-elif mode==29:
+elif mode=='fmaYears':
         print ""+url
         fma.YEARS()
 
-elif mode==30:
+elif mode=='fmaLetters':
         print ""+url
         fma.LETTERS()
 #Z-Movie modes__________________________________________________________________
-elif mode==32:
+elif mode=='zmovieIndex':
         print ""+url
         zmovie.INDEX(url)
 
-elif mode==33:
+elif mode=='zmovieLetters':
         print ""+url
         zmovie.LETTERS()
 
-elif mode==34:
+elif mode=='zmovieGenres':
         print ""+url
         zmovie.GENRES()
 
-elif mode==35:
+elif mode=='zmovieCategories':
         print ""+url
         zmovie.CATEGORIES()
 
-elif mode==36:
+elif mode=='zmovieVideoLinks':
         print ""+url
         zmovie.VIDEOLINKS(name,url,thumb)
 #We Watch Movies Free___________________________________________________________
-elif mode==38:
+elif mode=='wwmfCategories':
         print ""+url
         wwmf.CATEGORIES()
         
-elif mode==39:
+elif mode=='wwmfIndex':
         print ""+url
         wwmf.INDEX(url)
 
-elif mode==40:
+elif mode=='wwmfLetters':
         print ""+url
         wwmf.LETTERS()
 
-elif mode==41:
+elif mode=='wwmfGenres':
         print ""+url
         wwmf.GENRES()
 
-elif mode==42:
+elif mode=='wwmfSearch':
         print ""+url
         wwmf.SEARCH()
 
-elif mode==43:
+elif mode=='wwmfVideoLinks':
         print ""+url
         wwmf.VIDEOLINKS(name,url,thumb)
 #Videocloud modes_______________________________________________________________
-elif mode==48:
+elif mode=='videoCloudCategories':
         print ""+url
         videocloud.CATEGORIES()
 
-elif mode==49:
+elif mode=='videoCloudIndex':
         print ""+url
         videocloud.INDEX(url)
 #I-WatchOnline modes____________________________________________________________
-elif mode==50:
+elif mode=='iwoCategories':
         print ""+url
         iwo.MOVIE_CATEGORIES()
 
-elif mode==51:
+elif mode=='iwoSeriesCategories':
+        print ""+url
+        iwo.SERIES_CATEGORIES()
+
+elif mode=='iwoSeriesGenres':
+        print ""+url
+        iwo.SERIES_GENRES()
+
+elif mode=='iwoSeriesLetters':
+        print ""+url
+        iwo.SERIES_LETTERS()
+
+elif mode=='iwoIndex':
         print ""+url
         iwo.MOVIE_INDEX(url)
 
-elif mode==52:
+elif mode=='iwoSeriesIndex':
+        print ""+url
+        iwo.SERIES_INDEX(url)
+
+elif mode=='iwoEpisodesIndex':
+        print ""+url
+        iwo.EPISODES_INDEX(url,name)
+
+elif mode=='iwoVideoLinks':
         print ""+url
         iwo.VIDEOLINKS(name,url,thumb)
 
-elif mode==53:
+elif mode=='iwoHDMovies':
         print ""+url
         iwo.HD_MOVIES()
 
-elif mode==54:
+elif mode=='iwoLetters':
         print ""+url
         iwo.LETTERS()
 
-elif mode==55:
+elif mode=='iwoHDLetters':
         print ""+url
         iwo.HD_LETTERS()
 
-elif mode==56:
+elif mode=='iwoGenres':
         print ""+url
         iwo.GENRES()
 
-elif mode==57:
+elif mode=='iwoHDGenres':
         print ""+url
         iwo.HD_GENRES()
 
-elif mode==58:
+elif mode=='iwoAction':
         print ""+url
         iwo.ACTION()
 
-elif mode==59:
+elif mode=='iwoAdventure':
         print ""+url
         iwo.ADVENTURE()
 
-elif mode==60:
+elif mode=='iwoAnimation':
         print ""+url
         iwo.ANIMATION()
 
-elif mode==61:
+elif mode=='iwoBiography':
         print ""+url
         iwo.BIOGRAPHY()
 
-elif mode==62:
+elif mode=='iwoComedy':
         print ""+url
         iwo.COMEDY()
 
-elif mode==63:
+elif mode=='iwoCrime':
         print ""+url
         iwo.CRIME()
 
-elif mode==64:
+elif mode=='iwoDocumentary':
         print ""+url
         iwo.DOCUMENTARY()
 
-elif mode==65:
+elif mode=='iwoDrama':
         print ""+url
         iwo.DRAMA()
 
-elif mode==66:
+elif mode=='iwoFamily':
         print ""+url
         iwo.FAMILY()
 
-elif mode==67:
+elif mode=='iwoFantasy':
         print ""+url
         iwo.FANTASY()
 
-elif mode==68:
+elif mode=='iwoFilmNoir':
         print ""+url
         iwo.FILMNOIR()
 
-elif mode==69:
+elif mode=='iwoHistory':
         print ""+url
         iwo.HISTORY()
 
-elif mode==70:
+elif mode=='iwoHorror':
         print ""+url
         iwo.HORROR()
 
-elif mode==71:
+elif mode=='iwoMusic':
         print ""+url
         iwo.MUSIC()
 
-elif mode==72:
+elif mode=='iwoMusical':
         print ""+url
         iwo.MUSICAL()
 
-elif mode==73:
+elif mode=='iwoMystery':
         print ""+url
         iwo.MYSTERY()
 
-elif mode==74:
+elif mode=='iwoNews':
         print ""+url
         iwo.NEWS()
 
-elif mode==75:
+elif mode=='iwoRomance':
         print ""+url
         iwo.ROMANCE()
 
-elif mode==76:
+elif mode=='iwoSciFi':
         print ""+url
         iwo.SCIFI()
 
-elif mode==77:
+elif mode=='iwoShort':
         print ""+url
         iwo.SHORT()
 
-elif mode==78:
+elif mode=='iwoSport':
         print ""+url
         iwo.SPORT()
 
-elif mode==79:
+elif mode=='iwoThriller':
         print ""+url
         iwo.THRILLER()
 
-elif mode==80:
+elif mode=='iwoWar':
         print ""+url
         iwo.WAR()
 
-elif mode==81:
+elif mode=='iwoWestern':
         print ""+url
         iwo.WESTERN()
 
 
-elif mode==82:
+elif mode=='iwoHDAction':
         print ""+url
         iwo.HD_ACTION()
 
-elif mode==83:
+elif mode=='iwoHDAdventure':
         print ""+url
         iwo.HD_ADVENTURE()
 
-elif mode==84:
+elif mode=='iwoHDAnimation':
         print ""+url
         iwo.HD_ANIMATION()
 
-elif mode==85:
+elif mode=='iwoHDBiography':
         print ""+url
         iwo.HD_BIOGRAPHY()
 
-elif mode==86:
+elif mode=='iwoHDComedy':
         print ""+url
         iwo.HD_COMEDY()
 
-elif mode==87:
+elif mode=='iwoHDCrime':
         print ""+url
         iwo.HD_CRIME()
 
-elif mode==88:
+elif mode=='iwoHDDocumentary':
         print ""+url
         iwo.HD_DOCUMENTARY()
 
-elif mode==89:
+elif mode=='iwoHDDrama':
         print ""+url
         iwo.HD_DRAMA()
 
-elif mode==90:
+elif mode=='iwoHDFamily':
         print ""+url
         iwo.HD_FAMILY()
 
-elif mode==91:
+elif mode=='iwoHDFantasy':
         print ""+url
         iwo.HD_FANTASY()
 
-elif mode==92:
+elif mode=='iwoHDFilmNoir':
         print ""+url
         iwo.HD_FILMNOIR()
 
-elif mode==93:
+elif mode=='iwoHDHistory':
         print ""+url
         iwo.HD_HISTORY()
 
-elif mode==94:
+elif mode=='iwoHDHorror':
         print ""+url
         iwo.HD_HORROR()
 
-elif mode==95:
+elif mode=='iwoHDMusic':
         print ""+url
         iwo.HD_MUSIC()
 
-elif mode==96:
+elif mode=='iwoHDMusical':
         print ""+url
         iwo.HD_MUSICAL()
 
-elif mode==97:
+elif mode=='iwoHDMystery':
         print ""+url
         iwo.HD_MYSTERY()
 
-elif mode==98:
+elif mode=='iwoHDNews':
         print ""+url
         iwo.HD_NEWS()
 
-elif mode==99:
+elif mode=='IwoHDRomance':
         print ""+url
         iwo.HD_ROMANCE()
 
-elif mode==100:
+elif mode=='iwoHDSciFi':
         print ""+url
         iwo.HD_SCIFI()
 
-elif mode==101:
+elif mode=='iwoHDShort':
         print ""+url
         iwo.HD_SHORT()
 
-elif mode==102:
+elif mode=='iwoHDSport':
         print ""+url
         iwo.HD_SPORT()
 
-elif mode==103:
+elif mode=='iwoHDThriller':
         print ""+url
         iwo.HD_THRILLER()
 
-elif mode==104:
+elif mode=='iwoHDWar':
         print ""+url
         iwo.HD_WAR()
 
-elif mode==105:
+elif mode=='iwoHDWestern':
         print ""+url
         iwo.HD_WESTERN()
-
-
-elif mode==126:
+#TV Release Modes_______________________________________________________________
+elif mode=='tvreleaseHDMovies':
         print ""+url
         tvrelease.HDMOVIES()
 
-elif mode==128:
+elif mode=='tvreleaseSearch':
         print ""+url
         tvrelease.SEARCH()
         
-elif mode==129:
+elif mode=='tvreleaseVideoLinks':
         print ""+url
         tvrelease.VIDEOLINKS(name,url,thumb)
 
-elif mode==130:
+elif mode=='tvreleaseIndex':
         print ""+url
         tvrelease.INDEX(url) 
 
-elif mode==131:
+elif mode=='tvreleaseMovieCategories':
         print ""+url
         tvrelease.MOVIE_CATEGORIES() 
 
-elif mode==132:
+elif mode=='tvreleaseTVCategories':
         print ""+url
-        tvrelease.TV_CATEGORIES()               
-
-elif mode==133:
+        tvrelease.TV_CATEGORIES()
+#FreeOMovie Modes_______________________________________________________________
+elif mode=='freeOMovieCategories':
         print ""+url
         freeomovie.CATEGORIES()
 
-elif mode==134:
+elif mode=='freeOMovieGenres':
         print ""+url
         freeomovie.GENRES()
 
-elif mode==135:
+elif mode=='freeOMovieIndex':
         print ""+url
         freeomovie.INDEX(url)
 
-elif mode==136:
+elif mode=='freeOMovieVideoLinks':
         print ""+url
         freeomovie.VIDEOLINKS(name,url,thumb)
+#TubePirate Modes_______________________________________________________________
+elif mode=='tubePirateCategories':
+        print ""+url
+        tubepirate.CATEGORIES()
+
+elif mode=='tubePirateIndex':
+        print ""+url
+        tubepirate.INDEX(url)
+
+elif mode=='tubePirateMostViewed':
+        print ""+url
+        tubepirate.MOST_VIEWED()
+
+elif mode=='tubePirateTopRated':
+        print ""+url
+        tubepirate.TOP_RATED()
+
+elif mode=='tubePirateActors':
+        print ""+url
+        tubepirate.ACTORS()
+
+elif mode=='tubePirateLetters':
+        print ""+url
+        tubepirate.LETTERS()
+
+elif mode=='tubePirateTopRatedActors':
+        print ""+url
+        tubepirate.TOP_RATED_ACTORS()
+
+elif mode=='tubePirateMostViewedActors':
+        print ""+url
+        tubepirate.MOST_VIEWED_ACTORS()
+
+elif mode=='tubePirateMostActorIndex':
+        print ""+url
+        tubepirate.ACTOR_INDEX(url)
+
+elif mode=='tubePirateGenres':
+        print ""+url
+        tubepirate.GENRES()
+#CartoonFreak Modes_____________________________________________________________
+elif mode=='cartoonFreakToons':
+        print ""+url
+        cartoonfreak.CARTOONS()
+
+elif mode=='cartoonFreakAnime':
+        print ""+url
+        cartoonfreak.ANIME()
+
+elif mode=='cartoonFreakAnimeSeries':
+        print ""+url
+        cartoonfreak.ANIMESERIES()
+
+elif mode=='cartoonFreakAnimeMovies':
+        print ""+url
+        cartoonfreak.ANIMEMOVIES()
+
+elif mode=='cartoonFreakIndex':
+        print ""+url
+        cartoonfreak.INDEX(url)
+
+elif mode=='cartoonFreakMovieIndex':
+        print ""+url
+        cartoonfreak.MOVIEINDEX(url)
+
+elif mode=='cartoonFreakEpisodes':
+        print ""+url
+        cartoonfreak.EPISODES(url)
+
+elif mode=='cartoonFreakAnimeEpisodes':
+        print ""+url
+        cartoonfreak.ANIMEEPISODES(url,thumb)
+
+elif mode=='cartoonFreakMovieEpisodes':
+        print ""+url
+        cartoonfreak.MOVIEEPISODES(url,thumb)
+
+elif mode=='cartoonFreakVideoLinks':
+        print ""+url
+        cartoonfreak.VIDEOLINKS(name,url,thumb)
+#ChannelCut Modes_______________________________________________________________
+elif mode=='channelCutIndex':
+        print ""+url
+        channelcut.INDEX(url)
+
+elif mode=='channelCutCategories':
+        print ""+url
+        channelcut.CATEGORIES()
+
+elif mode=='channelCutLetters':
+        print ""+url
+        channelcut.LETTERS()
+
+elif mode=='channelCutEpisodes':
+        print ""+url
+        channelcut.EPISODES(url)
+
+elif mode=='channelCutRecentEpisodes':
+        print ""+url
+        channelcut.RECENTEPISODES(url)
+
+elif mode=='channelCutVideoLinks':
+        print ""+url
+        channelcut.VIDEOLINKS(name,url)
+
+elif mode=='channelCutNum':
+        print ""+url
+        channelcut.NUM()
+
+elif mode=='channelCutA':
+        print ""+url
+        channelcut.A()
+
+elif mode=='channelCutB':
+        print ""+url
+        channelcut.B()
+
+elif mode=='channelCutC':
+        print ""+url
+        channelcut.C()
+
+elif mode=='channelCutD':
+        print ""+url
+        channelcut.D()
+
+elif mode=='channelCutE':
+        print ""+url
+        channelcut.E()
+
+elif mode=='channelCutF':
+        print ""+url
+        channelcut.F()
+
+elif mode=='channelCutG':
+        print ""+url
+        channelcut.G()
+
+elif mode=='channelCutH':
+        print ""+url
+        channelcut.H()
+
+elif mode=='channelCutI':
+        print ""+url
+        channelcut.I()
+
+elif mode=='channelCutJ':
+        print ""+url
+        channelcut.J()
+
+elif mode=='channelCutK':
+        print ""+url
+        channelcut.K()
+
+elif mode=='channelCutL':
+        print ""+url
+        channelcut.L()
+
+elif mode=='channelCutM':
+        print ""+url
+        channelcut.M()
+
+elif mode=='channelCutN':
+        print ""+url
+        channelcut.N()
+
+elif mode=='channelCutO':
+        print ""+url
+        channelcut.O()
+
+elif mode=='channelCutP':
+        print ""+url
+        channelcut.P()
+
+elif mode=='channelCutQ':
+        print ""+url
+        channelcut.Q()
+
+elif mode=='channelCutR':
+        print ""+url
+        channelcut.R()
+
+elif mode=='channelCutS':
+        print ""+url
+        channelcut.S()
+
+elif mode=='channelCutT':
+        print ""+url
+        channelcut.T()
+
+elif mode=='channelCutU':
+        print ""+url
+        channelcut.U()
+
+elif mode=='channelCutV':
+        print ""+url
+        channelcut.V()
+
+elif mode=='channelCutW':
+        print ""+url
+        channelcut.W()
+
+elif mode=='channelCutX':
+        print ""+url
+        channelcut.X()
+
+elif mode=='channelCutY':
+        print ""+url
+        channelcut.Y()
+
+elif mode=='channelCutZ':
+        print ""+url
+        channelcut.Z()
+
+elif mode=='channelCutSearch':
+        print ""+url
+        channelcut.SEARCH()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

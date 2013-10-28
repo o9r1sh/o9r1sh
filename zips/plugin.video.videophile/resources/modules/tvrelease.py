@@ -8,23 +8,23 @@ artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.vi
 base_url = 'http://tv-release.net'
 
 def TV_CATEGORIES():
-        main.addDir('XVID Episodes',base_url + '/category/tvshows/tvxvid/',130,artwork + '/main/xvidtv.png')
-        main.addDir('MP4 Episodes',base_url + '/category/tvshows/tvmp4/',130,artwork + '/main/mp4tv.png')
-        main.addDir('480P Episodes',base_url + '/category/tvshows/tv480p',130,artwork + '/main/sdtv.png')
-        main.addDir('720P Episodes',base_url + '/category/tvshows/tv720p/',130,artwork + '/main/hdtv.png')
-        main.addDir('Foreign Episodes',base_url + '/category/tvshows/tv-foreign',130,artwork + '/main/foreign.png')
-        main.addDir('Search',base_url + 'none',128,artwork + '/main/search.png')
+        main.addDir('XVID Episodes',base_url + '/category/tvshows/tvxvid/','tvreleaseIndex',artwork + '/main/xvidtv.png')
+        main.addDir('MP4 Episodes',base_url + '/category/tvshows/tvmp4/','tvreleaseIndex',artwork + '/main/mp4tv.png')
+        main.addDir('480P Episodes',base_url + '/category/tvshows/tv480p','tvreleaseIndex',artwork + '/main/sdtv.png')
+        main.addDir('720P Episodes',base_url + '/category/tvshows/tv720p/','tvreleaseIndex',artwork + '/main/hdtv.png')
+        main.addDir('Foreign Episodes',base_url + '/category/tvshows/tv-foreign','tvreleaseIndex',artwork + '/main/foreign.png')
+        main.addDir('Search',base_url + 'none','tvreleaseSearch',artwork + '/main/search.png')
 
 def HDMOVIES():
         INDEX(base_url + '/category/movies/movies720p')
 
         
 def MOVIE_CATEGORIES():
-        main.addDir('XVID Movies',base_url + '/category/movies/moviesxvid',130,artwork + '/main/xvidmovies.png')
-        main.addDir('480P Movies',base_url + '/category/movies/movies480p',130,artwork + '/main/sdmovies.png')
-        main.addDir('720P Movies',base_url + '/category/movies/movies720p',130,artwork + '/main/hdmovies.png')
-        main.addDir('DVD-R Movies',base_url + '/category/movies/moviesdvdr',130,artwork + '/main/dvdrmovies.png')
-        main.addDir('Foreign Movies',base_url + '/category/movies/moviesforeign',130,artwork + '/main/foreign.png')
+        main.addDir('XVID Movies',base_url + '/category/movies/moviesxvid','tvreleaseIndex',artwork + '/main/xvidmovies.png')
+        main.addDir('480P Movies',base_url + '/category/movies/movies480p','tvreleaseIndex',artwork + '/main/sdmovies.png')
+        main.addDir('720P Movies',base_url + '/category/movies/movies720p','tvreleaseIndex',artwork + '/main/hdmovies.png')
+        main.addDir('DVD-R Movies',base_url + '/category/movies/moviesdvdr','tvreleaseIndex',artwork + '/main/dvdrmovies.png')
+        main.addDir('Foreign Movies',base_url + '/category/movies/moviesforeign','tvreleaseIndex',artwork + '/main/foreign.png')
         
 def INDEX(url):
         req = urllib2.Request(url)
@@ -53,7 +53,7 @@ def INDEX(url):
 
                 
                         
-                main.addDir('Next Page',np_url,130,artwork + '/main/next.png')
+                main.addDir('Next Page',np_url,'tvreleaseIndex',artwork + '/main/next.png')
 
         for url,name in match:
                 try:
@@ -70,14 +70,14 @@ def INDEX(url):
 
                                 if types == 'episode':
                                         try:        
-                                                main.addEDir(name,url,129,'',show[0])
+                                                main.addEDir(name,url,'tvreleaseVideoLinks','',show[0])
                                         except:
                                                 continue
                                         main.AUTOVIEW('episodes')
                         
                                 if types == 'movie':
                                         try:        
-                                                main.addMDir(name,url,129,'','')      
+                                                main.addMDir(name,url,'tvreleaseVideoLinks','','')      
                                         except:
                                                 continue
                                         main.AUTOVIEW('movies')
@@ -96,7 +96,7 @@ def VIDEOLINKS(name,url,thumb):
                         if hmf:
                                 host = hmf.get_host()
                                 hthumb = main.GETHOSTTHUMB(host)
-                                main.addHDir(name,url,9,thumb,hthumb)
+                                main.addHDir(name,url,'resolve',thumb,hthumb)
 
 def SEARCH():
         search = ''

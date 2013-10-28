@@ -1,4 +1,9 @@
 <settings>
+	<category label="Meta-Data">
+		<setting id="metadata" type="bool" label="Enable Metahandlers " default="true"/>
+			<setting id="banners" type="bool" label="Prefer Banners For TV Shows" default="false" enable="!eq(-1,false)"/>
+	</category>
+
 	<category label="Auto-View">
 		<setting id="auto-view" type="bool" label="Enable Autoview" default="false"/>
 		<setting id="movies-view" type="number" label="Movies View" 				default="503" enable="!eq(-1,false)"/>
@@ -18,6 +23,9 @@
      <setting id="youtubedocs" type="bool" label="Youtube Documentaries" default="true"/>
 	<setting id="iwatchonline" type="bool" label="I-WatchOnline" default="true"/>
 	<setting id="tvrelease" type="bool" label="TV Release" default="true"/>
+	<setting id="channelcut" type="bool" label="Channel Cut" default="true"/>
+	<setting id="cartoonfreak" type="bool" label="Cartoon Freak" default="true"/>
+
 
    </category>
 
@@ -29,6 +37,8 @@
      <setting id="search" type="bool" label="VideoPhile Search" default="true"/>
      <setting id="resolver" type="bool" label="Resolver Settings" default="true"/>
      <setting id="hdmovies" type="bool" label="HD Movies" default="true"/>
+     <setting id="cartoons" type="bool" label="Cartoons" default="true"/>
+     <setting id="anime" type="bool" label="Anime" default="true"/>
    </category>
    
 

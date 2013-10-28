@@ -8,17 +8,17 @@ artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.vi
 base_url = 'http://www.myvideolinks.eu'
 
 def CATEGORIES():
-        main.addDir('Yify Movies',base_url + '/category/movies/yify/',18,artwork + '/main/yify.png')
-        main.addDir('Recent Movies',base_url + '/category/movies/',18,artwork + '/main/recentlyadded.png')
-        main.addDir('Search','none',21,artwork + '/main/search.png')
+        main.addDir('Yify Movies',base_url + '/category/movies/yify/','newMyVideoLinksIndex',artwork + '/main/yify.png')
+        main.addDir('Recent Movies',base_url + '/category/movies/','newMyVideoLinksIndex',artwork + '/main/recentlyadded.png')
+        main.addDir('Search','none','newMyVideoLinksSearch',artwork + '/main/search.png')
 
 def HDMOVIES():
         INDEX(base_url + '/category/movies/yify/')
 
 
 def TVCATEGORIES():
-        main.addDir('Recent Episodes',base_url + '/category/tv-shows/',18,artwork + '/main/recentlyadded.png')
-        main.addDir('Search','none',21,artwork + '/main/search.png')
+        main.addDir('Recent Episodes',base_url + '/category/tv-shows/','newMyVideoLinksIndex',artwork + '/main/recentlyadded.png')
+        main.addDir('Search','none','newMyVideoLinksSearch',artwork + '/main/search.png')
         
 def INDEX(url):
         req = urllib2.Request(url)
@@ -40,7 +40,7 @@ def INDEX(url):
                         else:
                                 a,b,c = url.partition('/page/')
                                 next_page = url + a + b + str(nex)
-                        main.addDir('Next Page',next_page,18,artwork + '/main/next.png')
+                        main.addDir('Next Page',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
 
         for url,thumbnail,name in match:
                 types = None
@@ -53,14 +53,14 @@ def INDEX(url):
 
                 if types == 'episode':
                         try:        
-                                main.addEDir(name,url,19,thumbnail,show[0])
+                                main.addEDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,show[0])
                         except:
                                 continue
                         main.AUTOVIEW('episodes')
                         
                 if types == 'movie':
                         try:        
-                                main.addMDir(name,url,19,thumbnail,'')      
+                                main.addMDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,'')      
                         except:
                                 continue
                         main.AUTOVIEW('movies')
@@ -80,7 +80,7 @@ def VIDEOLINKS(name,url,thumb,year):
                                 if hmf:
                                         host = hmf.get_host()
                                         hthumb = main.GETHOSTTHUMB(host)
-                                        main.addHDir(name,url,9,thumb,hthumb)
+                                        main.addHDir(name,url,'resolve',thumb,hthumb)
 
 def SEARCH():
         search = ''
