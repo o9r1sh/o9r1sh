@@ -15,13 +15,13 @@ text_file = None
 if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/")):
         os.makedirs(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/"))
 
-        if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0")):
-                pin = ''
-                notice = xbmcgui.Dialog().ok('Notice','VideoPhile now contains an adult section, for safety reasons','after pressing ok you will be asked to set a password','that will be used to gain access to the adult section')
-                keyboard = xbmc.Keyboard(pin,'Please Choose A New Password')
-                keyboard.doModal()
-                if keyboard.isConfirmed():
-                        pin = keyboard.getText()
+if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0")):
+        pin = ''
+        notice = xbmcgui.Dialog().ok('Notice','VideoPhile now contains an adult section, for safety reasons','after pressing ok you will be asked to set a password','that will be used to gain access to the adult section')
+        keyboard = xbmc.Keyboard(pin,'Please Choose A New Password')
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+                pin = keyboard.getText()
         text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "w")
         text_file.write(pin)
         text_file.close()
