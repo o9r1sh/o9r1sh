@@ -23,7 +23,6 @@ settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 grab=metahandlers.MetaData()
 
-
 def getMeta(types,name,year,show,season,episode):
      show_meta = 0
      meta = 0
@@ -43,7 +42,9 @@ def getMeta(types,name,year,show,season,episode):
                meta = grab.get_episode_meta(show,imdb_id,season,episode)
      return(meta)
 
-def addDir(name,url,mode,thumb):   
+def addDir(name,url,mode,thumb):
+     if thumb == '':
+          thumb = artwork + '/main/noepisode.png'
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'movie'}
      addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
 
@@ -80,9 +81,6 @@ def addMDir(name,url,mode,thumb,year):
           else:
                   fanart = meta['backdrop_url']
                   
-               
-
-
      params = {'url':url, 'mode':mode, 'name':title[0], 'thumb':thumb, 'year':year, 'types':'movie'}
 
      contextMenuItems.append(('Movie Information', 'XBMC.Action(Info)'))
@@ -93,8 +91,6 @@ def addMDir(name,url,mode,thumb,year):
           addon.add_directory(params, meta, contextMenuItems, img= thumb, fanart=fanart)
      else:
                addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
-
-          
 
 def addSDir(name,url,mode,thumb):
      contextMenuItems = []
@@ -116,9 +112,9 @@ def addSDir(name,url,mode,thumb):
                          thumb = meta['cover_url']
                else:
                     thumb = meta['banner_url']
+     if thumb == '':
+          thumb = artwork + '/main/noepisode.png'
      
-   
-
      contextMenuItems.append(('Show Information', 'XBMC.Action(Info)'))
 
      if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
@@ -148,19 +144,19 @@ def addEDir(name,url,mode,thumb,show):
      if settings.getSetting('metadata') == 'true':
           try:
                ep_meta = grab.get_episode_meta(show,show_id,int(s),int(e))
+               if ep_meta['cover_url'] == '':
+                    thumb = artwork + '/main/noepisode.png'
+               else:
+                    thumb = str(ep_meta['cover_url'])
           except:
                ep_meta=0
-
-          try:
-               thumb = str(ep_meta['cover_url'])
-          
-          except:
-               if thumb == '':
-                    thumb = othumb
+               thumb = artwork + '/main/noepisode.png'
+             
      else:
           thumb = othumb
-          
-
+          if thumb == '':
+               thumb = artwork + '/main/noepisode.png'
+     
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'season':s, 'episode':e, 'show':show, 'types':'episode'}        
      if settings.getSetting('metadata') == 'true':
 
@@ -177,8 +173,6 @@ def addEDir(name,url,mode,thumb,show):
      else:
           addon.add_directory(params, {'title':name}, img=thumb, fanart=fanart) 
 
-          
-     
 def GET_EPISODE_NUMBERS(ep_name):
      s = None
      e = None
@@ -289,7 +283,6 @@ def RESOLVE(name,url,thumb):
 
      xbmc.sleep(1000)
         
-     
      xbmc.Player ().play(url, liz, False)
 
 def OTHER_RESOLVERS(url):
@@ -310,8 +303,6 @@ def OTHER_RESOLVERS(url):
 
      return str(url)
      
-
-          
 def AUTOVIEW(content):
         if content:
                 xbmcplugin.setContent(int(sys.argv[1]), content)

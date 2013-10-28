@@ -46,7 +46,7 @@ def INDEX(url):
                 if name != '__title__':
                         if time > 22:
                                 try:
-                                        main.addDir(name,url,9,thumb)
+                                        main.addDir(name,url,'resolve',thumb)
                                 except:
                                         continue
                 

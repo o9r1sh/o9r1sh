@@ -1,0 +1,50 @@
+Version 1.0
+Initial Release
+
+Version 1.0.1
+Small fix for auto-view
+
+Version 1.0.2
+Removed a space from Z-Movie regex that should never have been.
+Added small delay to resolve fuction to prevent video occasionally wanting to loop
+
+Version 1.0.3
+Added years to movie names where available
+Added shortcuts to all available searches to the main menu
+Added fanart to movies and shows where available
+Added metadata for episodes in WatchSeries-Onlines main index's
+Passed show thumbs to video player where available
+Added options to disable unwanted sites
+Added options to disable unwanted sections
+
+Version 1.0.4
+Added HD Movies Section
+Added Password Protected Adult Content Section 
+Added I-WatchOnline Module for movies
+Added TV Release module for TV Shows and Movies
+Added FreeOMovie module for adult content
+
+Version 1.0.5
+Fixed and overlooked indentation error.
+
+Version 1.0.6
+Implemented scraping of all TV Show, Movie and Episode sections in all relevant modules
+Made necessary adjustments to get trakt.tv scrobbling working with supported media types
+
+Version 1.0.7
+Added CartoonFreak Module
+Added ChannelCut Module
+Added I-Watch Online TV Shows Module
+Added TubePirate Module
+Added Anime Section
+Added Cartoon Section
+Added Meta-Data Customization Options
+Changed All Mode ID's From Integers To Text
+Lots Of Code Clean Up
+Global Fanart
+Full Graphics Overhaul Compliments of Marquerite (Thank You)
+
+
+Version 1.0.8
+Fixed mode in Youtube Module that I forgot to rename
+Replace missing image Icons with VideoPhile Icon.
