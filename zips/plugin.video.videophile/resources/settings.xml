@@ -13,7 +13,7 @@
     </category>
 
    <category label="Enable / Disable Sites">
-     <setting id="mooviemaniac" type="bool" label="MoovieManiac" default="false"/>
+     <setting id="mooviemaniac" type="bool" label="MoovieManiac" default="true"/>
      <setting id="newmyvideolinks" type="bool" label="NewMyVideoLinks" default="true"/>
      <setting id="freemoviesaddict" type="bool" label="FreeMoviesAddict" default="true"/>
      <setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true"/>
@@ -39,6 +39,7 @@
      <setting id="hdmovies" type="bool" label="HD Movies" default="true"/>
      <setting id="cartoons" type="bool" label="Cartoons" default="true"/>
      <setting id="anime" type="bool" label="Anime" default="true"/>
+     <setting id="favorites" type="bool" label="Favorites" default="true"/>
    </category>
    
 

@@ -8,6 +8,13 @@ addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
 addon = Addon(addon_id, sys.argv)
 
+try:
+     import StorageServer
+except:
+     import storageserverdummy as StorageServer
+
+cache = StorageServer.StorageServer("VideoPhile", 0)
+
 mode = addon.queries['mode']
 url = addon.queries.get('url', '')
 name = addon.queries.get('name', '')
@@ -18,11 +25,71 @@ episode = addon.queries.get('episode', '')
 show = addon.queries.get('show', '')
 types = addon.queries.get('types', '')
 fanart = addon.queries.get('fanart', '')
+rmode = addon.queries.get('rmode', '')
+imdb_id = addon.queries.get('imdb_id', '')
 
 settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 grab=metahandlers.MetaData()
 
+def addFavorite():
+     saved_favs = cache.get('favourites_' + types)
+     print'ppppppppp'+types
+     favs = []
+     if saved_favs:
+          favs = eval(saved_favs)
+          if favs:
+               if (name, url ,rmode, thumb, show, year, season, episode) in favs:
+                    addon.show_small_popup(title='Item Already In Favorites', msg=name + ' Is Already In Your Favorites', delay=int(5000), image=thumb)
+                    return
+     favs.append((name, url ,rmode, thumb, show, year, season, episode))         
+     cache.set('favourites_' + types, str(favs))
+     addon.show_small_popup(title='Item Added To Favorites', msg=name + ' Was Added To Your Favorites', delay=int(5000), image=thumb)
+
+def removeFavorite():
+    saved_favs = cache.get('favourites_' + types)
+    if saved_favs:
+        favs = eval(saved_favs)
+        favs.remove((name, url ,rmode, thumb, show, year, season, episode))   
+        cache.set('favourites_' + types, str(favs))
+        xbmc.executebuiltin("XBMC.Container.Refresh")
+
+def getFavorites(url):
+     if url == 'movie':
+          saved_favs = cache.get('favourites_' + 'movie')
+          if saved_favs:
+               favs = sorted(eval(saved_favs), key=lambda fav: fav[1])
+               for fav in favs:
+                         addMDir(fav[0], fav[1] ,fav[2], fav[3], fav[4], True)
+          AUTOVIEW('movies')
+
+     elif url == 'tvshow':
+          saved_favs = cache.get('favourites_' + 'tvshow')
+          if saved_favs:
+               favs = sorted(eval(saved_favs), key=lambda fav: fav[1])
+               for fav in favs:
+                         addSDir(fav[0], fav[1] ,fav[2], fav[3], True)
+                    
+          AUTOVIEW('tvshows')
+
+     elif url == 'cartoon':
+          saved_favs = cache.get('favourites_' + 'cartoon')
+          if saved_favs:
+               favs = sorted(eval(saved_favs), key=lambda fav: fav[1])
+               for fav in favs:
+                         addToonDir(fav[0], fav[1] ,fav[2], fav[3], True)
+                    
+          AUTOVIEW('tvshows')
+
+     elif url == 'anime':
+          saved_favs = cache.get('favourites_' + 'anime')
+          if saved_favs:
+               favs = sorted(eval(saved_favs), key=lambda fav: fav[1])
+               for fav in favs:
+                         addAnimeDir(fav[0], fav[1] ,fav[2], fav[3], True)
+                    
+          AUTOVIEW('tvshows')
+     
 def getMeta(types,name,year,show,season,episode):
      show_meta = 0
      meta = 0
@@ -48,7 +115,8 @@ def addDir(name,url,mode,thumb):
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'movie'}
      addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
 
-def addMDir(name,url,mode,thumb,year):
+def addMDir(name,url,mode,thumb,year,isfav):
+     meta = {}
      contextMenuItems = []
 
      title = re.split('\d\d\d\d',name)
@@ -83,6 +151,12 @@ def addMDir(name,url,mode,thumb,year):
                   
      params = {'url':url, 'mode':mode, 'name':title[0], 'thumb':thumb, 'year':year, 'types':'movie'}
 
+     if isfav == False:
+          contextMenuItems.append(('Add To VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'addFavorite', 'name':name, 'thumb':thumb, 'year':year, 'types':'movie', 'rmode':mode})))
+
+     elif isfav == True:
+          contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'year':year, 'types':'movie', 'rmode':mode})))
+
      contextMenuItems.append(('Movie Information', 'XBMC.Action(Info)'))
      
      if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
@@ -90,21 +164,64 @@ def addMDir(name,url,mode,thumb,year):
      if settings.getSetting('metadata') == 'true':
           addon.add_directory(params, meta, contextMenuItems, img= thumb, fanart=fanart)
      else:
-               addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
+          addon.add_directory(params, {'title':name},contextMenuItems, img=thumb, fanart= artwork + '/main/fanart.jpg')
 
-def addSDir(name,url,mode,thumb):
+def addSDir(name,url,mode,thumb,isfav):
      contextMenuItems = []
-     meta = None
+     meta = {}
      
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'show':name}
 
      if settings.getSetting('metadata') == 'true':
           meta = grab.get_meta('tvshow',name)
-
-     if meta['backdrop_url'] == '':
-          fanart = artwork + '/main/fanart.jpg'
+          if meta['backdrop_url'] == '':
+               fanart = artwork + '/main/fanart.jpg'
+          else:
+               fanart = meta['backdrop_url']
      else:
-          fanart = meta['backdrop_url']
+          fanart = artwork + '/main/fanart.jpg'
+          
+
+     if settings.getSetting('metadata') == 'true':
+               if settings.getSetting('banners') == 'false':
+                    if thumb == '':
+                         thumb = meta['cover_url']
+               else:
+                    thumb = meta['banner_url']
+     if thumb == '':
+          thumb = artwork + '/main/noepisode.png'
+     
+     contextMenuItems.append(('Show Information', 'XBMC.Action(Info)'))
+
+     if isfav == False:
+          contextMenuItems.append(('Add To VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'addFavorite', 'name':name, 'thumb':thumb, 'types':'tvshow', 'rmode':mode})))
+
+     if isfav == True:
+          contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'types':'tvshow', 'rmode':mode})))
+
+
+     if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
+                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
+     if settings.getSetting('metadata') == 'true':
+          addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
+     else:
+          addon.add_directory(params, {'title':name}, contextMenuItems, img= thumb, fanart=fanart)
+
+def addToonDir(name,url,mode,thumb,isfav):
+     contextMenuItems = []
+     meta = {}
+     
+     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'cartoon', 'show':name}
+
+     if settings.getSetting('metadata') == 'true':
+          meta = grab.get_meta('tvshow',name)
+          if meta['backdrop_url'] == '':
+               fanart = artwork + '/main/fanart.jpg'
+          else:
+               fanart = meta['backdrop_url']
+     else:
+          fanart = artwork + '/main/fanart.jpg'
+          
      
      if settings.getSetting('metadata') == 'true':
                if settings.getSetting('banners') == 'false':
@@ -117,12 +234,66 @@ def addSDir(name,url,mode,thumb):
      
      contextMenuItems.append(('Show Information', 'XBMC.Action(Info)'))
 
+     if isfav == False:
+          contextMenuItems.append(('Add To VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'addFavorite', 'name':name, 'thumb':thumb, 'types':'cartoon', 'rmode':mode})))
+
+     if isfav == True:
+          contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'types':'cartoon', 'rmode':mode})))
+
+
      if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
                         contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
      if settings.getSetting('metadata') == 'true':
           addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
      else:
-          addon.add_directory(params, {'title':name}, img= thumb, fanart=fanart)
+          addon.add_directory(params, {'title':name},contextMenuItems , img= thumb, fanart=fanart)
+
+def addAnimeDir(name,url,mode,thumb, isfav):
+     contextMenuItems = []
+     meta = {}
+     
+     params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'anime', 'show':name}
+
+     if settings.getSetting('metadata') == 'true':
+          meta = grab.get_meta('tvshow',name)
+          if meta['backdrop_url'] == '':
+               fanart = artwork + '/main/fanart.jpg'
+          else:
+               fanart = meta['backdrop_url']
+     else:
+          fanart = artwork + '/main/fanart.jpg'
+
+     if settings.getSetting('metadata') == 'true':
+          if meta['backdrop_url'] == '':
+               fanart = artwork + '/main/fanart.jpg'
+          else:
+               fanart = meta['backdrop_url']
+     
+     if settings.getSetting('metadata') == 'true':
+               if settings.getSetting('banners') == 'false':
+                    if thumb == '':
+                         thumb = meta['cover_url']
+               else:
+                    thumb = meta['banner_url']
+     if thumb == '':
+          thumb = artwork + '/main/noepisode.png'
+     
+     contextMenuItems.append(('Show Information', 'XBMC.Action(Info)'))
+
+     if isfav == False:
+          contextMenuItems.append(('Add To VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'addFavorite', 'name':name, 'thumb':thumb, 'types':'anime', 'rmode':mode})))
+
+     if isfav == True:
+          contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'types':'anime', 'rmode':mode})))
+
+
+     if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
+                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
+     if settings.getSetting('metadata') == 'true':
+          addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
+     else:
+          addon.add_directory(params, {'title':name},contextMenuItems, img= thumb, fanart=fanart)
+
 
 def addHDir(name,url,mode,thumb,hthumb):
      fanart = artwork + '/main/fanart.jpg'
@@ -138,6 +309,9 @@ def addEDir(name,url,mode,thumb,show):
      if settings.getSetting('metadata') == 'true':
           meta = grab.get_meta('tvshow',show)
           show_id = meta['imdb_id']
+
+     else:
+          fanart = artwork + '/main/fanart.jpg'
      
      s,e = GET_EPISODE_NUMBERS(name)
 
@@ -160,7 +334,7 @@ def addEDir(name,url,mode,thumb,show):
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'season':s, 'episode':e, 'show':show, 'types':'episode'}        
      if settings.getSetting('metadata') == 'true':
 
-          if ep_meta==0:
+          if ep_meta==None:
                fanart = artwork + '/main/fanart.jpg'
                addon.add_directory(params, {'title':name}, img=thumb, fanart=fanart) 
           else:
@@ -171,7 +345,10 @@ def addEDir(name,url,mode,thumb,show):
                ep_meta['title'] = name
                addon.add_directory(params, ep_meta, fanart=fanart, img=thumb)
      else:
-          addon.add_directory(params, {'title':name}, img=thumb, fanart=fanart) 
+          addon.add_directory(params, {'title':name},fanart=fanart, img=thumb) 
+
+
+
 
 def GET_EPISODE_NUMBERS(ep_name):
      s = None

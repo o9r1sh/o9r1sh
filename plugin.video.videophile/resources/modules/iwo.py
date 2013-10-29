@@ -445,7 +445,7 @@ def MOVIE_INDEX(url):
                 name = name.title()
         
                 try:
-                        main.addMDir(name,url,'iwoVideoLinks',thumbnail,year)
+                        main.addMDir(name,url,'iwoVideoLinks',thumbnail,year,False)
                 except:
                         continue
         main.AUTOVIEW('movies')
@@ -480,7 +480,7 @@ def SERIES_INDEX(url):
                         name = 'Battlestar Galactica (2003)'
         
                 try:
-                        main.addSDir(name,url,'iwoEpisodesIndex',thumbnail)
+                        main.addSDir(name,url,'iwoEpisodesIndex',thumbnail,False)
                 except:
                         continue
         main.AUTOVIEW('tvshows')

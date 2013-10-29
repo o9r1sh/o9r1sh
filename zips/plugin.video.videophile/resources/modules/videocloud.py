@@ -50,7 +50,7 @@ def INDEX(url):
                         except:
                                 continue
                         try:       
-                                main.addMDir(name,vid_link[0],'resolve',thumbnail,year)
+                                main.addMDir(name,vid_link[0],'resolve',thumbnail,year,False)
                         except:
                                 continue
 

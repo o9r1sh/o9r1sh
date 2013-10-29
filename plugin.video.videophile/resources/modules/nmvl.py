@@ -21,6 +21,7 @@ def TVCATEGORIES():
         main.addDir('Search','none','newMyVideoLinksSearch',artwork + '/main/search.png')
         
 def INDEX(url):
+        types = None
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -43,7 +44,6 @@ def INDEX(url):
                         main.addDir('Next Page',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
 
         for url,thumbnail,name in match:
-                types = None
                 show = re.split('[Ss]\d\d[Ee]\d\d',name)
                 
                 if len(show) == 2:
@@ -56,16 +56,16 @@ def INDEX(url):
                                 main.addEDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,show[0])
                         except:
                                 continue
-                        main.AUTOVIEW('episodes')
                         
                 if types == 'movie':
                         try:        
-                                main.addMDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,'')      
+                                main.addMDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,'',False)      
                         except:
                                 continue
-                        main.AUTOVIEW('movies')
-        
-
+        if types == 'episode':
+                main.AUTOVIEW('episodes')
+        else:
+                main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb,year):
         req = urllib2.Request(url)

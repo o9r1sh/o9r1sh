@@ -56,3 +56,8 @@ Fixed password reset issue
 
 Version 1.0.8.3
 Small Fixes
+
+Version 1.0.9
+Fixed WatchSeries Online
+Found and repaired some error I came ascross while browsing with meta disabled
+Added Favorties

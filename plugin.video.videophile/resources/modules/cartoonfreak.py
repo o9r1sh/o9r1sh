@@ -88,13 +88,13 @@ def INDEX(url):
         for vid,url,thumbnail,name in match:
                 if 'anime' in o_url:       
                         try:
-                                main.addSDir(name,url,'cartoonFreakAnimeEpisodes',thumbnail)
+                                main.addAnimeDir(name,url,'cartoonFreakAnimeEpisodes',thumbnail,False)
                         except:
                                 continue
                 else:
                                 
                         try:
-                                main.addSDir(name,url,'cartoonFreakEpisodes',thumbnail)
+                                main.addToonDir(name,url,'cartoonFreakEpisodes',thumbnail,False)
                         except:
                                 continue
                 
@@ -114,7 +114,7 @@ def MOVIEINDEX(url):
                 main.addDir('Next Page',next_page,'cartoonFreakMovieIndex',artwork + '/main/next.png')
         for vid,url,thumbnail,name in match:
                 try:
-                        main.addMDir(name,url,'cartoonFreakMovieEpisodes',thumbnail,'')
+                        main.addMDir(name,url,'cartoonFreakMovieEpisodes',thumbnail,'',False)
                 except:
                         continue
                 
@@ -158,7 +158,7 @@ def ANIMEEPISODES(url,thumb):
         match=re.compile('<li class=".+?"><a href="(.+?)"><i class="icon-chevron-right"></i>(.+?)</a></li>').findall(link)
         for url, name in match:
                 try:
-                        main.addSDir(name,url,'cartoonFreakVideoLinks',thumb)
+                        main.addEDir(name,url,'cartoonFreakVideoLinks',thumb,'')
                 except:
                         continue
         main.AUTOVIEW('episodes')

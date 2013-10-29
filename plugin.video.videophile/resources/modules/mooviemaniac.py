@@ -32,7 +32,7 @@ def INDEX(url):
                         name = head[:-5]
                         year = head[-5:] + sep
                 try:       
-                        main.addMDir(name,url,'resolve',thumbnail,year)
+                        main.addMDir(name,url,'resolve',thumbnail,year,False)
                 except:
                         continue
 

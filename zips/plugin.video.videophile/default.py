@@ -41,6 +41,8 @@ def CATEGORIES():
                 main.addDir('Cartoons','none','cartoonSections',artwork + '/main/cartoons.png')
         if settings.getSetting('anime') == 'true':
                 main.addDir('Anime','none','animeSections',artwork + '/main/anime.png')
+        if settings.getSetting('favorites') == 'true':
+                main.addDir('Favorites','none','favorites',artwork + '/main/favorites.png')
         if settings.getSetting('search') == 'true':
                 main.addDir('VideoPhile Searchs','none','masterSearch',artwork + '/main/search.png')
         if settings.getSetting('resolver') == 'true':
@@ -123,6 +125,18 @@ def ADULT():
         else:
                 notice = xbmcgui.Dialog().ok('Wrong Password','The password you entered is incorrect')
 
+def FAVORITES():
+        if settings.getSetting('movies') == 'true':
+                main.addDir('Movies','movie','getFavorites',artwork + '/main/movie.png')
+        if settings.getSetting('shows') == 'true':
+                main.addDir('TV Shows','tvshow','getFavorites',artwork + '/main/tv.png')
+        if settings.getSetting('cartoons') == 'true':
+                main.addDir('Cartoons','cartoon','getFavorites',artwork + '/main/cartoons.png')
+        if settings.getSetting('anime') == 'true':
+                main.addDir('Anime','anime','getFavorites',artwork + '/main/anime.png')
+
+
+        
 mode = addon.queries['mode']
 url = addon.queries.get('url', '')
 name = addon.queries.get('name', '')
@@ -147,7 +161,24 @@ print "Type is: "+str(types)
 if mode==None or url==None or len(url)<1:
         print ""
         CATEGORIES()
-       
+
+elif mode=='addFavorite':
+        print ""+url
+        main.addFavorite()
+
+elif mode=='removeFavorite':
+        print ""+url
+        main.removeFavorite()
+
+
+elif mode=='getFavorites':
+        print ""+url
+        main.getFavorites(url)
+
+elif mode=='favorites':
+        print ""+url
+        FAVORITES()
+        
 elif mode=='movieSections':
         print ""+url
         MOVIESECTIONS()

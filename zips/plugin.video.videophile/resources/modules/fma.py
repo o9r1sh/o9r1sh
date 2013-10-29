@@ -108,7 +108,7 @@ def INDEX(url):
                 url = base_url + url
 
                 try:
-                        main.addMDir(name,url,'fmaVideoLinks',thumbnail,'')
+                        main.addMDir(name,url,'fmaVideoLinks',thumbnail,'',False)
                 except:
                         continue
                 

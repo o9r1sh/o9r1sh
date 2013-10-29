@@ -27,6 +27,7 @@ def MOVIE_CATEGORIES():
         main.addDir('Foreign Movies',base_url + '/category/movies/moviesforeign','tvreleaseIndex',artwork + '/main/foreign.png')
         
 def INDEX(url):
+        types = None
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -60,7 +61,6 @@ def INDEX(url):
                         if 'Filech' in name:
                                 continue
                         else:
-                                types = None
                                 show = re.split('[Ss]\d\d[Ee]\d\d',name)
                 
                                 if len(show) == 2:
@@ -73,16 +73,20 @@ def INDEX(url):
                                                 main.addEDir(name,url,'tvreleaseVideoLinks','',show[0])
                                         except:
                                                 continue
-                                        main.AUTOVIEW('episodes')
                         
                                 if types == 'movie':
                                         try:        
-                                                main.addMDir(name,url,'tvreleaseVideoLinks','','')      
+                                                main.addMDir(name,url,'tvreleaseVideoLinks','','',False)      
                                         except:
                                                 continue
-                                        main.AUTOVIEW('movies')
                 except:
                         continue
+        if types == 'episode':
+                main.AUTOVIEW('episodes')
+        else:
+                main.AUTOVIEW('movies')
+
+
 
 def VIDEOLINKS(name,url,thumb):
         req = urllib2.Request(url)

@@ -54,7 +54,7 @@ def NUM():
                 name = re.sub('-', ' ', name)
                 if str(name[0]).isdigit():
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -73,7 +73,7 @@ def A():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'A':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -92,7 +92,7 @@ def B():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'B':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -111,7 +111,7 @@ def C():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'C':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -130,7 +130,7 @@ def D():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'D':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -149,7 +149,7 @@ def E():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'E':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -168,7 +168,7 @@ def F():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'F':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -187,7 +187,7 @@ def G():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'G':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -206,7 +206,7 @@ def H():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'H':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -225,7 +225,7 @@ def I():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'I':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -244,7 +244,7 @@ def J():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'K':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -263,7 +263,7 @@ def K():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'K':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -282,7 +282,7 @@ def L():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'L':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -301,7 +301,7 @@ def M():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'M':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -320,7 +320,7 @@ def N():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'N':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -339,7 +339,7 @@ def O():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'O':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -358,7 +358,7 @@ def P():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'P':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -377,7 +377,7 @@ def Q():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'Q':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')        
@@ -396,7 +396,7 @@ def R():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'R':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -415,7 +415,7 @@ def S():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'S':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -434,7 +434,7 @@ def T():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'T':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -453,7 +453,7 @@ def U():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'U':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -472,7 +472,7 @@ def V():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'V':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -491,7 +491,7 @@ def W():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'W':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -522,14 +522,14 @@ def Y():
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
+        match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link,False)
         for name in match:
                 name = re.sub(' ', '-', name)
                 url = base_url +'/category/' + name
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'Y':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')
@@ -548,7 +548,7 @@ def Z():
                 name = re.sub('-', ' ', name)
                 if str(name[0]) == 'Z':
                         try:
-                                main.addSDir(name,url,'channelCutEpisodes','')
+                                main.addSDir(name,url,'channelCutEpisodes','',False)
                         except:
                                continue
         main.AUTOVIEW('tvshows')

@@ -60,107 +60,107 @@ def INDEXSHOWS(url):
                         if inc < stop:
                                 if az == "A":
                                         if letter == 'A':
-                                                main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "B":
                                           if letter == 'B':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "C":
                                           if letter == 'C':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "D":
                                           if letter == 'D':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "E":
                                           if letter == 'E':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "F":
                                           if letter == 'F':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "G":
                                           if letter == 'G':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "H":
                                           if letter == 'H':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "I":
                                           if letter == 'J':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "K":
                                           if letter == 'K':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "L":
                                           if letter == 'L':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "M":
                                           if letter == 'M':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "N":
                                           if letter == 'N':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "O":
                                           if letter == 'O':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "P":
                                           if letter == 'P':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "Q":
                                           if letter == 'Q':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "R":
                                           if letter == 'R':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "S":
                                           if letter == 'S':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "T":
                                           if letter == 'T':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "U":
                                           if letter == 'U':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "V":
                                           if letter == 'V':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "W":
                                           if letter == 'W':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "X":
                                           if letter == 'X':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "Y":
                                           if letter == 'Y':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "Z":
                                           if letter == 'Z':
-                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                  main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
 
                                 elif az == "'":
                                         if letter.isdigit():
-                                                main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','')
+                                                main.addSDir(name,url,'watchSeriesOnlineEpisodesIndex','',False)
                                  
         main.AUTOVIEW('tvshows')
 
@@ -231,7 +231,7 @@ def VIDEOLINKS(url,name,thumb):
                                 response = urllib2.urlopen(req)
                                 links=response.read()
                                 response.close()
-                                reallink=re.compile('<a class="myButton" href="(.+?)">Click Here to Play</a>').findall(links)
+                                reallink=re.compile("href='(.+?)'>Click Here to Play</a>").findall(links)
                                 if len(reallink) > 0:
                                         file_link = reallink[0]
 

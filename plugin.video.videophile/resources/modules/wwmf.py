@@ -80,7 +80,7 @@ def INDEX(url):
         
         for url,thumbnail,name in match:
                 try:
-                        main.addMDir(name,url,'wwmfVideoLinks',thumbnail,'')
+                        main.addMDir(name,url,'wwmfVideoLinks',thumbnail,'',False)
                         print year
                 except:
                         continue
