@@ -338,7 +338,7 @@ def addEDir(name,url,mode,thumb,show):
                else:
                     thumb = str(ep_meta['cover_url'])
           except:
-               ep_meta=0
+               ep_meta=None
                thumb = artwork + '/main/noepisode.png'
              
      else:

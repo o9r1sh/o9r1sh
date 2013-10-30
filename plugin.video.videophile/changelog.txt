@@ -64,3 +64,6 @@ Added Favorties
 
 Version 1.0.9.1
 Fixed a bug in CartoonFreak's Next Page url.
+
+Version 1.0.9.2
+Fixed a bug in CartoonFreak's Episode Index
