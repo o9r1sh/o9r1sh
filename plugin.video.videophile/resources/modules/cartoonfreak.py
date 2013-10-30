@@ -84,6 +84,7 @@ def INDEX(url):
         if len(np) > 0:
                 np_url = np[0]
                 next_page = base_url + np_url
+                next_page = next_page.replace('&#038;','&')
                 main.addDir('Next Page',next_page,'cartoonFreakIndex',artwork + '/main/next.png')
         for vid,url,thumbnail,name in match:
                 if 'anime' in o_url:       
@@ -111,6 +112,7 @@ def MOVIEINDEX(url):
         if len(np) > 0:
                 np_url = np[0]
                 next_page = base_url + np_url
+                next_page = next_page.replace('&#038;','&')
                 main.addDir('Next Page',next_page,'cartoonFreakMovieIndex',artwork + '/main/next.png')
         for vid,url,thumbnail,name in match:
                 try:

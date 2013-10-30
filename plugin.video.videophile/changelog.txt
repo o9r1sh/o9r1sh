@@ -61,3 +61,6 @@ Version 1.0.9
 Fixed WatchSeries Online
 Found and repaired some error I came ascross while browsing with meta disabled
 Added Favorties
+
+Version 1.0.9.1
+Fixed a bug in CartoonFreak's Next Page url.

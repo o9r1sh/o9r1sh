@@ -1,20 +1,25 @@
 # -*- coding: utf-8 -*-
 #Main VideoPhile module by o9r1sh
 
+#Imports_____________________________________________________________________________________________________________________________
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,urlresolver,xbmc,os,xbmcaddon,mechanize
 from metahandler import metahandlers
 
-addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
-addon = Addon(addon_id, sys.argv)
 
 try:
      import StorageServer
 except:
      import storageserverdummy as StorageServer
 
+#Define common.addon_____________________________________________________________________________________________________________________________
+addon_id = 'plugin.video.videophile'
+addon = Addon(addon_id, sys.argv)
+
+#Define Cache for favorites_____________________________________________________________________________________________________________________________
 cache = StorageServer.StorageServer("VideoPhile", 0)
 
+#Define queries for common.addon_____________________________________________________________________________________________________________________________
 mode = addon.queries['mode']
 url = addon.queries.get('url', '')
 name = addon.queries.get('name', '')
@@ -28,13 +33,14 @@ fanart = addon.queries.get('fanart', '')
 rmode = addon.queries.get('rmode', '')
 imdb_id = addon.queries.get('imdb_id', '')
 
+#Define othe needed global variables_____________________________________________________________________________________________________________________________
 settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 grab=metahandlers.MetaData()
 
+#Functions for handling favorites_____________________________________________________________________________________________________________________________
 def addFavorite():
      saved_favs = cache.get('favourites_' + types)
-     print'ppppppppp'+types
      favs = []
      if saved_favs:
           favs = eval(saved_favs)
@@ -89,7 +95,8 @@ def getFavorites(url):
                          addAnimeDir(fav[0], fav[1] ,fav[2], fav[3], True)
                     
           AUTOVIEW('tvshows')
-     
+
+#Metadata Function_____________________________________________________________________________________________________________________________     
 def getMeta(types,name,year,show,season,episode):
      show_meta = 0
      meta = 0
@@ -109,12 +116,16 @@ def getMeta(types,name,year,show,season,episode):
                meta = grab.get_episode_meta(show,imdb_id,season,episode)
      return(meta)
 
+#Directory Functions_____________________________________________________________________________________________________________________________
+
+#Standard directory funtion to be used when not doing scrapes on the directory_____________________________________________________________________________________________________________________________
 def addDir(name,url,mode,thumb):
      if thumb == '':
           thumb = artwork + '/main/noepisode.png'
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'movie'}
      addon.add_directory(params, {'title':name}, img= thumb, fanart= artwork + '/main/fanart.jpg')
 
+#Movie directory function to be used when adding a movie, all metadata scrapes and context menu items are handled within_____________________________________________________________________________________________________________________________
 def addMDir(name,url,mode,thumb,year,isfav):
      meta = {}
      contextMenuItems = []
@@ -166,6 +177,7 @@ def addMDir(name,url,mode,thumb,year,isfav):
      else:
           addon.add_directory(params, {'title':name},contextMenuItems, img=thumb, fanart= artwork + '/main/fanart.jpg')
 
+#TV Show directory function to be used when adding a TV Show, all metadata scrapes and context menu items are handled within__________
 def addSDir(name,url,mode,thumb,isfav):
      contextMenuItems = []
      meta = {}
@@ -207,6 +219,7 @@ def addSDir(name,url,mode,thumb,isfav):
      else:
           addon.add_directory(params, {'title':name}, contextMenuItems, img= thumb, fanart=fanart)
 
+#Cartoon directory function to be used when adding a Cartoon Series, all metadata scrapes and context menu items are handled within___
 def addToonDir(name,url,mode,thumb,isfav):
      contextMenuItems = []
      meta = {}
@@ -248,6 +261,7 @@ def addToonDir(name,url,mode,thumb,isfav):
      else:
           addon.add_directory(params, {'title':name},contextMenuItems , img= thumb, fanart=fanart)
 
+#Anime directory function to be used when adding a Anime Series, all metadata scrapes and context menu items are handled within______
 def addAnimeDir(name,url,mode,thumb, isfav):
      contextMenuItems = []
      meta = {}
@@ -294,13 +308,14 @@ def addAnimeDir(name,url,mode,thumb, isfav):
      else:
           addon.add_directory(params, {'title':name},contextMenuItems, img= thumb, fanart=fanart)
 
-
+#Host directory function to be used when adding a file Host, hthumb stands for host thumb and should be grabbed using the 'GETHOSTTHUMB(host)' function before hand
 def addHDir(name,url,mode,thumb,hthumb):
      fanart = artwork + '/main/fanart.jpg'
      name = re.sub('[()]','',name)
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'season':season, 'episode':episode, 'show':show}
      addon.add_directory(params, {'title':name}, img=hthumb, fanart=fanart)
 
+#Episode directory function to be used when adding a Episode, all metadata scrapes and context menu items are handled within_________
 def addEDir(name,url,mode,thumb,show):
      ep_meta = None
      show_id = None
@@ -347,8 +362,7 @@ def addEDir(name,url,mode,thumb,show):
      else:
           addon.add_directory(params, {'title':name},fanart=fanart, img=thumb) 
 
-
-
+#Called within the addEDir function, returns needed season and episode numbers needed for metadata scraping___________________________
 
 def GET_EPISODE_NUMBERS(ep_name):
      s = None
@@ -404,6 +418,7 @@ def GET_EPISODE_NUMBERS(ep_name):
           
      return s,e
 
+#Returns the host thumbnail so that you can pass it as and argument to the addHDir function__________________________________________
 def GETHOSTTHUMB(host):
         if host.endswith('.com'):
              host = host[:-4]
@@ -433,7 +448,8 @@ def GETHOSTTHUMB(host):
              host = 'movzap'
         host = artwork + '/hosts/' + host +'.png'
         return(host)
-     
+
+#Function used for resolving video urls before  playback_____________________________________________________________________________     
 def RESOLVE(name,url,thumb):
      meta=0
      try:
@@ -462,6 +478,7 @@ def RESOLVE(name,url,thumb):
         
      xbmc.Player ().play(url, liz, False)
 
+#Used to resolve urls that urlresolver doesn't support________________________________________________________________________________
 def OTHER_RESOLVERS(url):
      if 'vidx.to' in url:
         br = mechanize.Browser()
@@ -479,20 +496,18 @@ def OTHER_RESOLVERS(url):
         url = match[0]
 
      return str(url)
-     
+
+#Sets the desired view type___________________________________________________________________________________________________________     
 def AUTOVIEW(content):
         if content:
                 xbmcplugin.setContent(int(sys.argv[1]), content)
                 if settings.getSetting('auto-view') == 'true':
                         if content == 'movies':
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('movies-view'))
-
                         elif content == 'tvshows':
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('shows-view'))
-
                         elif content == 'episodes':
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('episodes-view'))      
-     
                         else:
                                 xbmc.executebuiltin("Container.SetViewMode(%s)" % settings.getSetting('default-view'))
                 else:
