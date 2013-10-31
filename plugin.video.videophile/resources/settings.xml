@@ -25,6 +25,7 @@
 	<setting id="tvrelease" type="bool" label="TV Release" default="true"/>
 	<setting id="channelcut" type="bool" label="Channel Cut" default="true"/>
 	<setting id="cartoonfreak" type="bool" label="Cartoon Freak" default="true"/>
+     	<setting id="mmline" type="bool" label="MegaMovieLine" default="true"/>
 
 
    </category>

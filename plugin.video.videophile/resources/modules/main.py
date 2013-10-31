@@ -6,11 +6,22 @@ import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,urlresolver,xbmc,os,xbmcaddon,me
 from metahandler import metahandlers
 
 from t0mm0.common.addon import Addon
+from t0mm0.common.net import Net
 
 try:
      import StorageServer
 except:
      import storageserverdummy as StorageServer
+
+import threading
+
+class Thread(threading.Thread):
+    def __init__(self, target, *args):
+        self._target = target
+        self._args = args
+        threading.Thread.__init__(self)
+    def run(self):
+        self._target(*self._args)
 
 #Define common.addon_____________________________________________________________________________________________________________________________
 addon_id = 'plugin.video.videophile'
@@ -33,11 +44,46 @@ fanart = addon.queries.get('fanart', '')
 rmode = addon.queries.get('rmode', '')
 imdb_id = addon.queries.get('imdb_id', '')
 
-#Define othe needed global variables_____________________________________________________________________________________________________________________________
+#Define other needed global variables_____________________________________________________________________________________________________________________________
 settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 grab=metahandlers.MetaData()
+net = Net()
 
+def resolvable(url):
+     resolvable = False
+     hmf = urlresolver.HostedMediaFile(url)
+     if hmf:
+          resolvable = True
+
+     if 'uploadcrazy' in url:
+          resolvable = True
+
+     if 'vidcrazy' in url:
+          resolvable = True
+
+     if 'vidx.to' in url:
+          resolvable = True
+
+     return(resolvable)
+
+def getHost(url):
+     host = None
+     hmf = urlresolver.HostedMediaFile(url)
+     if hmf:
+          host = hmf.get_host()
+
+     if 'uploadcrazy' in url:
+          host = 'uploadcrazy'
+
+     if 'vidcrazy' in url:
+          host = 'vidcrazy'
+
+     if 'vidx.to' in url:
+          host = 'vidx'
+     
+     return(host)
+          
 #Functions for handling favorites_____________________________________________________________________________________________________________________________
 def addFavorite():
      saved_favs = cache.get('favourites_' + types)
@@ -321,6 +367,10 @@ def addEDir(name,url,mode,thumb,show):
      show_id = None
      meta = None
      othumb = thumb
+
+     name = name.replace("&#8217;","")
+     name = name.replace("&#8211;"," ")
+                
      if settings.getSetting('metadata') == 'true':
           meta = grab.get_meta('tvshow',show)
           show_id = meta['imdb_id']
@@ -420,34 +470,41 @@ def GET_EPISODE_NUMBERS(ep_name):
 
 #Returns the host thumbnail so that you can pass it as and argument to the addHDir function__________________________________________
 def GETHOSTTHUMB(host):
-        if host.endswith('.com'):
-             host = host[:-4]
-        if host.endswith('.org'):
-             host = host[:-4]
-        if host.endswith('.eu'):
-             host = host[:-3]
-        if host.endswith('.ch'):
-             host = host[:-3]
-        if host.endswith('.in'):
-             host = host[:-3]
-        if host.endswith('.es'):
-             host = host[:-3]
-        if host.endswith('.tv'):
-             host = host[:-3]
-        if host.endswith('.net'):
-             host = host[:-4]
-        if host.endswith('.me'):
-             host = host[:-3]
-        if host.endswith('.ws'):
-             host = host[:-3]
-        if host.endswith('.sx'):
-             host = host[:-3]
-        if host.startswith('www.'):
+     if host.endswith('.com'):
+          host = host[:-4]
+     if host.endswith('.org'):
+          host = host[:-4]
+     if host.endswith('.eu'):
+          host = host[:-3]
+     if host.endswith('.ch'):
+          host = host[:-3]
+     if host.endswith('.in'):
+          host = host[:-3]
+     if host.endswith('.es'):
+          host = host[:-3]
+     if host.endswith('.tv'):
+          host = host[:-3]
+     if host.endswith('.net'):
+          host = host[:-4]
+     if host.endswith('.me'):
+          host = host[:-3]
+     if host.endswith('.ws'):
+          host = host[:-3]
+     if host.endswith('.sx'):
+          host = host[:-3]
+     if host.startswith('www.'):
              host = host[4:]
-        if 'movzap' in host:
-             host = 'movzap'
-        host = artwork + '/hosts/' + host +'.png'
-        return(host)
+     if 'movzap' in host:
+          host = 'movzap'
+
+     if 'uploadcrazy' in host:
+          host = 'uploadcrazy'
+
+     if 'vidcrazy' in host:
+          host = 'vidcrazy'
+     
+     host = artwork + '/hosts/' + host +'.png'
+     return(host)
 
 #Function used for resolving video urls before  playback_____________________________________________________________________________     
 def RESOLVE(name,url,thumb):
@@ -494,6 +551,24 @@ def OTHER_RESOLVERS(url):
         xbmc.sleep(1000)
         match=re.compile('file: "(.+?)"').findall(link)
         url = match[0]
+
+     if 'uploadcrazy' in url:
+          link = net.http_GET(url).content
+          links=re.compile("file': '(.+?)'").findall(link)
+          if len(links) > 0:
+                    url = links[0]
+
+     if 'vidcrazy' in url:
+          link = net.http_GET(url).content
+          links=re.compile("file': '(.+?)'").findall(link)
+          if len(links) > 0:
+                    url = links[0]
+
+     if 'animeonair' in url:
+          link = net.http_GET(url).content
+          links=re.compile("file': '(.+?)'").findall(link)
+          if len(links) > 0:
+                    url = links[0]
 
      return str(url)
 

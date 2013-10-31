@@ -621,3 +621,7 @@ def SEARCH():
                 
                 EPISODES(url)
 
+def MASTERSEARCH(search):
+                url = base_url + '/?s=' + search + '&searchsubmit=Search'
+                EPISODES(url)
+

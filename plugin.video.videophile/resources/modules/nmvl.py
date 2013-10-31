@@ -91,6 +91,9 @@ def SEARCH():
                 search = search.replace(' ','+')
                 
                 url = base_url + '/index.php?s=' + search
-                print url
-                
+                INDEX(url)
+
+
+def MASTERSEARCH(search):
+                url = base_url + '/index.php?s=' + search
                 INDEX(url)

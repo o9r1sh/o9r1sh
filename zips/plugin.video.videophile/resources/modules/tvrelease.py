@@ -112,3 +112,8 @@ def SEARCH():
                 url = base_url + '/?s=' + search + '&cat='
                 
                 INDEX(url)
+
+def MASTERSEARCH(search):
+        url = base_url + '/?s=' + search + '&cat='    
+        INDEX(url)
+

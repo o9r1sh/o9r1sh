@@ -235,7 +235,6 @@ def VIDEOLINKS(url,name,thumb):
                                 if len(reallink) > 0:
                                         file_link = reallink[0]
 
-                        
                                         hmf = urlresolver.HostedMediaFile(str(file_link))
                                         if hmf:
                                                 host = hmf.get_host()
@@ -279,6 +278,10 @@ def SEARCH():
                 print url
                 
                 SEARCHINDEX(url)
+
+def MASTERSEARCH(search):
+      url = base_url + '/?s=' + search + '&search='
+      SEARCHINDEX(url)
 
 
                 

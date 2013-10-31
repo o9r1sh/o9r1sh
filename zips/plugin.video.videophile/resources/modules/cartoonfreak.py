@@ -1,7 +1,9 @@
 #Cartoon Freak Module by o9r1sh October 2013
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
-import urlresolver
+
+from t0mm0.common.net import Net
+net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.cartoonfreak.net'
@@ -42,7 +44,6 @@ def ANIMESERIES():
         main.addDir('Y', base_url + '/anime/?alpha=y','cartoonFreakIndex',artwork + '/letters/y.png')
         main.addDir('Z', base_url + '/anime/?alpha=z','cartoonFreakIndex',artwork + '/letters/z.png')
 
-
 def ANIMEMOVIES():
         main.addDir('All', base_url + '/movie/','cartoonFreakMovieIndex',artwork + '/main/a.png')
         main.addDir('A', base_url + '/movie/?alpha=a','cartoonFreakMovieIndex',artwork + '/letters/a.png')
@@ -74,11 +75,7 @@ def ANIMEMOVIES():
     
 def INDEX(url):
         o_url = url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li id="(.+?)"><div class="anime-list-item"><a href="(.+?)" class="thumbnail"><img data-src=".+?" alt=".+?" src="(.+?)" class="primary" /><span class="play"></span><span class=".+?">(.+?)</span><span class="anime-data">').findall(link)
         np=re.compile('<a class="pagination-next btn btn-inverse" href="(.+?)">').findall(link)
         if len(np) > 0:
@@ -92,8 +89,7 @@ def INDEX(url):
                                 main.addAnimeDir(name,url,'cartoonFreakAnimeEpisodes',thumbnail,False)
                         except:
                                 continue
-                else:
-                                
+                else:  
                         try:
                                 main.addToonDir(name,url,'cartoonFreakEpisodes',thumbnail,False)
                         except:
@@ -102,11 +98,7 @@ def INDEX(url):
         main.AUTOVIEW('tvshows')
 
 def MOVIEINDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li id="(.+?)"><div class="anime-list-item"><a href="(.+?)" class="thumbnail"><img data-src=".+?" alt=".+?" src="(.+?)" class="primary" /><span class="play"></span><span class=".+?">(.+?)</span><span class="anime-data">').findall(link)
         np=re.compile('<a class="pagination-next btn btn-inverse" href="(.+?)">').findall(link)
         if len(np) > 0:
@@ -123,28 +115,20 @@ def MOVIEINDEX(url):
         main.AUTOVIEW('movies')
 
 def MOVIEEPISODES(url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li class=".+?"><a href="(.+?)"><i class="icon-chevron-right"></i>(.+?)</a></li>').findall(link)
         for url, name in match:
                 VIDEOLINKS(name,url,thumb)
         main.AUTOVIEW('movies')           
 
 def EPISODES(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li class=".+?"><a href="(.+?)"><i class="icon-chevron-right"></i>(.+?)</a></li>').findall(link)
         for url, name in match:
-                name = re.sub(' Episode ','x',name)
+                if 'Season' in name:
+                        name = re.sub(' Episode ','x',name)
                 show,sep,numbers = name.partition('Season')
                 name = show + '' + numbers
-                name = name.replace("&#8217;","")
                 try:
                         main.addEDir(name,url,'cartoonFreakVideoLinks','',show)
                 except:
@@ -152,11 +136,7 @@ def EPISODES(url):
         main.AUTOVIEW('episodes')
 
 def ANIMEEPISODES(url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li class=".+?"><a href="(.+?)"><i class="icon-chevron-right"></i>(.+?)</a></li>').findall(link)
         for url, name in match:
                 try:
@@ -166,37 +146,16 @@ def ANIMEEPISODES(url,thumb):
         main.AUTOVIEW('episodes')
         
 def VIDEOLINKS(name,url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<iframe src="(.+?)" width=".+?" height=".+?" scrolling=".+?" frameborder=".+?"></iframe>').findall(link)
-        htumb = None
         for url in match:
-                try:
-                        req = urllib2.Request(url)
-                        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-                        response = urllib2.urlopen(req)
-                        link=response.read()
-                        response.close()
-                        links=re.compile("file': '(.+?)'").findall(link)
-                        if len(links) > 0:
-                                vid = links[0]
-                                if 'uploadcrazy' in url:
-                                        hthumb = artwork + '/hosts/uploadcrazy.png'
-
-                                if 'vidcrazy' in url:
-                                        hthumb = artwork + '/hosts/vidcrazy.png'
-
-                                if 'animeonair' in url:
-                                        hthumb = artwork + '/hosts/vidboxone.png'
-                                
-
-                                try:
-                                        main.addHDir(name,vid,'resolve',thumb,hthumb)
-                                except:
-                                        continue
+                try:       
+                        try:
+                                if main.resolvable(url):
+                                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
+                                        main.addHDir(name,url,'resolve',thumb,hthumb)
+                        except:
+                                continue
                 except:
                         continue
                         

@@ -2,7 +2,7 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut
+from resources.modules import channelcut,mmline
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
@@ -44,7 +44,7 @@ def CATEGORIES():
         if settings.getSetting('favorites') == 'true':
                 main.addDir('Favorites','none','favorites',artwork + '/main/favorites.png')
         if settings.getSetting('search') == 'true':
-                main.addDir('VideoPhile Searchs','none','masterSearch',artwork + '/main/search.png')
+                main.addDir('Master Search','none','masterSearch',artwork + '/main/search.png')
         if settings.getSetting('resolver') == 'true':
                 main.addDir('Resolver Settings','none','resolverSettings',artwork + '/main/resolver.png')
 
@@ -65,6 +65,8 @@ def MOVIESECTIONS():
                main.addDir('I-WatchOnline','none','iwoCategories',artwork + '/main/iwatchonline.png')
         if settings.getSetting('tvrelease') == 'true':
                 main.addDir('TV Release','none','tvreleaseMovieCategories',artwork + '/main/tvrelease.png')
+        if settings.getSetting('mmline') == 'true':
+                main.addDir('MegaMovieLine','none','mmlineCategories',artwork + '/main/mmline.png')
 
 def HDMOVIESECTIONS():
         if settings.getSetting('newmyvideolinks') == 'true':
@@ -83,7 +85,7 @@ def TVSECTIONS():
                 main.addDir('ChannelCut','none','channelCutCategories',artwork + '/main/channelcut.png')
         if settings.getSetting('iwatchonline') == 'true':
                main.addDir('I-WatchOnline','none','iwoSeriesCategories',artwork + '/main/iwatchonline.png')
-        
+
 def DOCSECTIONS():
         if settings.getSetting('youtubedocs') == 'true':
                 main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic&oq=national+geographic&gs_l=youtube.3..35i39l2j0l8.1350.5331.0.5427.19.19.0.0.0.0.106.1194.17j2.19.0...0.0...1ac.1.11.youtube._BEl_uoU7Bk','youtubeIndex',artwork + '/main/natgeo.png')
@@ -92,17 +94,46 @@ def DOCSECTIONS():
                 main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_query=discovery+channel+documentary&oq=discovery+channel+documentary&gs_l=youtube.3..0l10.243928.245622.0.246576.10.10.0.0.0.0.110.743.9j1.10.0...0.0...1ac.1.11.youtube.oK45qI8tlys','youtubeIndex',artwork + '/main/discovery.png')
 
 def MASTERSEARCH():
-        if settings.getSetting('wsoeu') == 'true':
-                main.addDir('WatchSeries-Online','none','watchSeriesOnlineSearch',artwork + '/main/wso.png')
-        if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks','none','newMyVideoLinksSearch',artwork + '/main/nmvl.png')
-        if settings.getSetting('wwmf') == 'true':
-                main.addDir('WeWatchMoviesFree','none','wwmfSearch',artwork + '/main/wwmf.png')
-        if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none','tvreleaseSearch',artwork + '/main/tvrelease.png')
-        if settings.getSetting('channelcut') == 'true':
-                main.addDir('ChannelCut','none','channelCutSearch',artwork + '/main/channelcut.png')
+        search = ''
+        keyboard = xbmc.Keyboard(search,'Search')
+        keyboard.doModal()
+        if keyboard.isConfirmed():
+                search = keyboard.getText()
+                search = search.replace(' ','+')
 
+        threads = []
+        if settings.getSetting('mmline') == 'true':
+                threads.append(main.Thread(mmline.MASTERSEARCH(search)))
+        if settings.getSetting('wwmf') == 'true':
+                threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
+        if settings.getSetting('newmyvideolinks') == 'true':
+                threads.append(main.Thread(nmvl.MASTERSEARCH(search)))
+        if settings.getSetting('channelcut') == 'true':
+                threads.append(main.Thread(channelcut.MASTERSEARCH(search)))
+        if settings.getSetting('wsoeu') == 'true':
+                threads.append(main.Thread(wsoeu.MASTERSEARCH(search)))
+        if settings.getSetting('tvrelease') == 'true':
+                threads.append(main.Thread(tvrelease.MASTERSEARCH(search)))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+
+def COLLECTIVESEARCH(search):
+        threads = []
+        if settings.getSetting('mmline') == 'true':
+                threads.append(main.Thread(mmline.MASTERSEARCH(search)))
+        if settings.getSetting('wwmf') == 'true':
+                threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
+        if settings.getSetting('newmyvideolinks') == 'true':
+                threads.append(main.Thread(nmvl.MASTERSEARCH(search)))
+        if settings.getSetting('channelcut') == 'true':
+                threads.append(main.Thread(channelcut.MASTERSEARCH(search)))
+        if settings.getSetting('wsoeu') == 'true':
+                threads.append(main.Thread(wsoeu.MASTERSEARCH(search)))
+        if settings.getSetting('tvrelease') == 'true':
+                threads.append(main.Thread(tvrelease.MASTERSEARCH(search)))
+        [i.start() for i in threads]
+        [i.join() for i in threads]
+                
 def CARTOONSECTIONS():
         if settings.getSetting('cartoonfreak') == 'true':
                 main.addDir('Cartoon Freak','none','cartoonFreakToons',artwork + '/main/cartoonfreak.png')
@@ -134,9 +165,7 @@ def FAVORITES():
                 main.addDir('Cartoons','cartoon','getFavorites',artwork + '/main/cartoons.png')
         if settings.getSetting('anime') == 'true':
                 main.addDir('Anime','anime','getFavorites',artwork + '/main/anime.png')
-
-
-        
+      
 mode = addon.queries['mode']
 url = addon.queries.get('url', '')
 name = addon.queries.get('name', '')
@@ -198,6 +227,10 @@ elif mode=='hdSections':
 elif mode=='masterSearch':
         print ""+url
         MASTERSEARCH()
+
+elif mode=='collectiveSearch':
+        print ""+url
+        COLLECTIVESEARCH(search)
 
 elif mode=='adultSections':
         print ""+url
@@ -861,6 +894,117 @@ elif mode=='channelCutSearch':
         print ""+url
         channelcut.SEARCH()
 
+elif mode=='mmlineCategories':
+        print ""+url
+        mmline.CATEGORIES()
+
+elif mode=='mmlineIndex':
+        print ""+url
+        mmline.INDEX(url)
+
+elif mode=='mmlineGenres':
+        print ""+url
+        mmline.GENRES()
+
+elif mode=='mmlineVideoLinks':
+        print ""+url
+        mmline.VIDEOLINKS(name,url,thumb)
+
+elif mode=='mmlineSearch':
+        print ""+url
+        mmline.SEARCH()
+
+elif mode=='mmlineAction':
+        print ""+url
+        mmline.ACION()
+
+elif mode=='mmlineAdventure':
+        print ""+url
+        mmline.ADVENTURE()
+        
+elif mode=='mmlineAnimation':
+        print ""+url
+        mmline.ANIMATION()
+        
+elif mode=='mmlineBiography':
+        print ""+url
+        mmline.BIOGRAPHY()
+        
+elif mode=='mmlineComedy':
+        print ""+url
+        mmline.COMEDY()
+        
+elif mode=='mmlineCrime':
+        print ""+url
+        mmline.CRIME()
+        
+elif mode=='mmlineDocumentary':
+        print ""+url
+        mmline.DOCUMENTARY()
+        
+elif mode=='mmlineDrama':
+        print ""+url
+        mmline.DRAMA()
+        
+elif mode=='mmlineFamily':
+        print ""+url
+        mmline.FAMILY()
+
+elif mode=='mmlineHistory':
+        print ""+url
+        mmline.HISTORY()
+        
+elif mode=='mmlineHorror':
+        print ""+url
+        mmline.HORROR()
+        
+elif mode=='mmlineMusic':
+        print ""+url
+        mmline.MUSIC()
+        
+elif mode=='mmlineMusical':
+        print ""+url
+        mmline.MUSICAL()
+        
+elif mode=='mmlineMystery':
+        print ""+url
+        mmline.MYSTERY()
+        
+elif mode=='mmlineRomance':
+        print ""+url
+        mmline.ROMANCE()
+        
+elif mode=='mmlineScifi':
+        print ""+url
+        mmline.SCIFI()
+        
+elif mode=='mmlineSport':
+        print ""+url
+        mmline.SPORT()
+        
+elif mode=='mmlineThriller':
+        print ""+url
+        mmline.THRILLER()
+
+elif mode=='mmlineWar':
+        print ""+url
+        mmline.WAR()
+        
+elif mode=='mmlineWestern':
+        print ""+url
+        mmline.WESTERN()
+        
+elif mode=='mmlineIndian':
+        print ""+url
+        mmline.INDIAN()
+        
+elif mode=='mmlineShort':
+        print ""+url
+        mmline.SHORT()
+
+elif mode=='mmlineClassic':
+        print ""+url
+        mmline.CLASSIC()
 
 
 

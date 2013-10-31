@@ -116,3 +116,7 @@ def SEARCH():
                 
                 INDEX(url)
 
+def MASTERSEARCH(search):
+        url = base_url + '/?s=' + search 
+        INDEX(url)
+
