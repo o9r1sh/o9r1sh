@@ -1,3 +1,7 @@
+Version 1.0.9.4
+Added Epornik Module to adult section
+Added Filmikz Module to adult section
+
 Version 1.0.9.3
 Added master search
 Added master search for The Collective to use

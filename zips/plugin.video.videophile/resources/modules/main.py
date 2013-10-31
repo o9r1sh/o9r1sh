@@ -65,6 +65,9 @@ def resolvable(url):
      if 'vidx.to' in url:
           resolvable = True
 
+     if 'epornik' in url:
+          resolvable = True
+
      return(resolvable)
 
 def getHost(url):
@@ -81,6 +84,9 @@ def getHost(url):
 
      if 'vidx.to' in url:
           host = 'vidx'
+
+     if 'epornik' in url:
+          host = 'epornik'
      
      return(host)
           
@@ -502,6 +508,9 @@ def GETHOSTTHUMB(host):
 
      if 'vidcrazy' in host:
           host = 'vidcrazy'
+
+     if 'epornik' in host:
+          host = 'epornik'
      
      host = artwork + '/hosts/' + host +'.png'
      return(host)
@@ -569,6 +578,14 @@ def OTHER_RESOLVERS(url):
           links=re.compile("file': '(.+?)'").findall(link)
           if len(links) > 0:
                     url = links[0]
+
+     if 'epornik' in url:
+          link = net.http_GET(url).content
+          links=re.compile('s1.addVariable(.+?);').findall(link)
+          dirty = re.sub("[',)(]", '', (links[5]))
+          url =   dirty[7:-1]
+
+
 
      return str(url)
 

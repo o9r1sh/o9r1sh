@@ -2,7 +2,7 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,mmline
+from resources.modules import channelcut,mmline,filmikz,epornik
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
@@ -151,6 +151,8 @@ def ADULT():
         text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "r")
         line = file.readline(text_file)
         if pin == line:
+                main.addDir('Epornik','none','epornikCategories',artwork + '/main/epornik.png')
+                main.addDir('Filmikz','none','filmikzAdultCategories',artwork + '/main/filmikz.png')
                 main.addDir('FreeoMovie','none','freeOMovieCategories',artwork + '/main/freeomovie.png')
                 main.addDir('TubePirate','none','tubePirateCategories',artwork + '/main/tubepirate.png')
         else:
@@ -1005,7 +1007,34 @@ elif mode=='mmlineShort':
 elif mode=='mmlineClassic':
         print ""+url
         mmline.CLASSIC()
+#Filmikz Modes___________________________________________________________________
+elif mode=='filmikzAdultCategories':
+        print ""+url
+        filmikz.ADULT_CATEGORIES()
 
+elif mode=='filmikzAdultIndex':
+        print ""+url
+        filmikz.ADULT_INDEX(url)
+
+elif mode=='filmikzVideoLinks':
+        print ""+url
+        filmikz.VIDEOLINKS(url,name,thumb)
+
+elif mode=='filmikzAdultSearch':
+        print ""+url
+        filmikz.ADULT_SEARCH()
+#Epornik Modes__________________________________________________________________
+elif mode=='epornikCategories':
+        print ""+url
+        epornik.CATEGORIES()
+
+elif mode=='epornikIndex':
+        print ""+url
+        epornik.INDEX(url)
+
+elif mode=='epornikSearch':
+        print ""+url
+        epornik.SEARCH()
 
 
 

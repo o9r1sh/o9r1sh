@@ -1,8 +1,9 @@
-#WatchSeriesOnline module by o9r1sh
+#'' module by o9r1sh
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
-import requests
+from t0mm0.common.net import Net
+net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = ''
@@ -42,13 +43,9 @@ def LETTERS():
         main.addDir("Z",base_url + 'url','mode',artwork + '/letters/z.png')
                        
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" title="(.+?)"><img src="(.+?)" width="130" border=".+?" height=".+?" /></a>').findall(link)
-           
+
         for url,name,thumbnail in match:
                 url = base_url + url
                 main.addSDir(name,url,'mode','',False)
@@ -57,14 +54,9 @@ def INDEX(url):
 
 
 def INDEXEPS(url,name):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li>(.+?)<a href="(.+?)">').findall(link)
                         
-
         for name,url in match:
                 url = base_url + url
                 try:
@@ -75,14 +67,11 @@ def INDEXEPS(url,name):
         main.AUTOVIEW('episodes')
 
 def VIDEOLINKS(url,name,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a target="_blank" id="hovered" href="(.+?)">.+?</a>').findall(link)
         for url in match:
-               
+                if main.resolvable(url):
+                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
                 try:
                         main.addHDir(name,hmf.get_url(),'resolve',thumb,hthumb)
                 except:
@@ -100,7 +89,7 @@ def SEARCH():
                 url = base_url + '/?s=' + search + '&search='
                 print url
                 
-                SEARCHINDEX(url)
+                INDEX(url)
 
 
                 
