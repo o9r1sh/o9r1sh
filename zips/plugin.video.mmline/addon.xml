@@ -16,5 +16,6 @@
     <summary>Watch Movies from MegaMovieLine.com</summary>
     <description>Watch Movies from MegaMovieLine.com</description>
     <platform>all</platform>
+    <broken>This addon has been Converted into a module for VideoPhile and will no longer be updated. Please install VideoPhile from my repo for continued use. </broken>
   </extension>
 </addon>
