@@ -75,6 +75,7 @@ def getHost(url):
      hmf = urlresolver.HostedMediaFile(url)
      if hmf:
           host = hmf.get_host()
+          print 'ssssssss'+host
 
      if 'uploadcrazy' in url:
           host = 'uploadcrazy'

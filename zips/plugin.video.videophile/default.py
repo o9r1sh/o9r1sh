@@ -117,20 +117,20 @@ def MASTERSEARCH():
         [i.start() for i in threads]
         [i.join() for i in threads]
 
-def COLLECTIVESEARCH(search):
+def COLLECTIVESEARCH(name):
         threads = []
         if settings.getSetting('mmline') == 'true':
-                threads.append(main.Thread(mmline.MASTERSEARCH(search)))
+                threads.append(main.Thread(mmline.MASTERSEARCH(name)))
         if settings.getSetting('wwmf') == 'true':
-                threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
+                threads.append(main.Thread(wwmf.MASTERSEARCH(name)))
         if settings.getSetting('newmyvideolinks') == 'true':
-                threads.append(main.Thread(nmvl.MASTERSEARCH(search)))
+                threads.append(main.Thread(nmvl.MASTERSEARCH(name)))
         if settings.getSetting('channelcut') == 'true':
-                threads.append(main.Thread(channelcut.MASTERSEARCH(search)))
+                threads.append(main.Thread(channelcut.MASTERSEARCH(name)))
         if settings.getSetting('wsoeu') == 'true':
-                threads.append(main.Thread(wsoeu.MASTERSEARCH(search)))
+                threads.append(main.Thread(wsoeu.MASTERSEARCH(name)))
         if settings.getSetting('tvrelease') == 'true':
-                threads.append(main.Thread(tvrelease.MASTERSEARCH(search)))
+                threads.append(main.Thread(tvrelease.MASTERSEARCH(name)))
         [i.start() for i in threads]
         [i.join() for i in threads]
                 
@@ -232,7 +232,7 @@ elif mode=='masterSearch':
 
 elif mode=='collectiveSearch':
         print ""+url
-        COLLECTIVESEARCH(search)
+        COLLECTIVESEARCH(name)
 
 elif mode=='adultSections':
         print ""+url

@@ -1,3 +1,6 @@
+Version 1.0.9.5
+Misnamed Variable
+
 Version 1.0.9.4
 Added Epornik Module to adult section
 Added Filmikz Module to adult section
@@ -9,7 +12,6 @@ Added MegaMovieLine module.
 
 Version 1.0.9.2
 Fixed a bug in CartoonFreak's Episode Index
-
 
 Version 1.0.9.1
 Fixed a bug in CartoonFreak's Next Page url.
