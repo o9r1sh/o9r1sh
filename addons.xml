@@ -44,7 +44,7 @@
        version="1.9.2"
        provider-name="o9r1sh">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.python" version="10000.22.22"/>
     <import addon="script.module.urlresolver" version="1.0.0"/>
     <import addon="script.module.metahandler" version="1.0.0" />
   </requires>
@@ -53,8 +53,8 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Watch Movies from MegaMovieLine.com</summary>
-    <description>Watch Movies from MegaMovieLine.com</description>
+    <summary>Deprecated</summary>
+    <description>This addon has been Converted into a module for VideoPhile and will no longer be updated. Please install VideoPhile from my repo for continued use. </description>
     <platform>all</platform>
     <broken>This addon has been Converted into a module for VideoPhile and will no longer be updated. Please install VideoPhile from my repo for continued use. </broken>
   </extension>
