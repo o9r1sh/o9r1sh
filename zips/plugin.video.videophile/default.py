@@ -103,34 +103,70 @@ def MASTERSEARCH():
 
         threads = []
         if settings.getSetting('mmline') == 'true':
-                threads.append(main.Thread(mmline.MASTERSEARCH(search)))
+                try:
+                        threads.append(main.Thread(mmline.MASTERSEARCH(search)))
+                except:
+                        pass
         if settings.getSetting('wwmf') == 'true':
-                threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
+                try:
+                        threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
+                except:
+                        pass
         if settings.getSetting('newmyvideolinks') == 'true':
-                threads.append(main.Thread(nmvl.MASTERSEARCH(search)))
+                try:
+                        threads.append(main.Thread(nmvl.MASTERSEARCH(search)))
+                except:
+                        pass
         if settings.getSetting('channelcut') == 'true':
-                threads.append(main.Thread(channelcut.MASTERSEARCH(search)))
+                try:
+                        threads.append(main.Thread(channelcut.MASTERSEARCH(search)))
+                except:
+                        pass
         if settings.getSetting('wsoeu') == 'true':
-                threads.append(main.Thread(wsoeu.MASTERSEARCH(search)))
+                try:
+                        threads.append(main.Thread(wsoeu.MASTERSEARCH(search)))
+                except:
+                        pass
         if settings.getSetting('tvrelease') == 'true':
-                threads.append(main.Thread(tvrelease.MASTERSEARCH(search)))
+                try:
+                        threads.append(main.Thread(tvrelease.MASTERSEARCH(search)))
+                except:
+                        pass
         [i.start() for i in threads]
         [i.join() for i in threads]
 
 def COLLECTIVESEARCH(name):
         threads = []
         if settings.getSetting('mmline') == 'true':
-                threads.append(main.Thread(mmline.MASTERSEARCH(name)))
+                try:
+                        threads.append(main.Thread(mmline.MASTERSEARCH(name)))
+                except:
+                        pass
         if settings.getSetting('wwmf') == 'true':
-                threads.append(main.Thread(wwmf.MASTERSEARCH(name)))
+                try:
+                        threads.append(main.Thread(wwmf.MASTERSEARCH(name)))
+                except:
+                        pass
         if settings.getSetting('newmyvideolinks') == 'true':
-                threads.append(main.Thread(nmvl.MASTERSEARCH(name)))
+                try:
+                        threads.append(main.Thread(nmvl.MASTERSEARCH(name)))
+                except:
+                        pass
         if settings.getSetting('channelcut') == 'true':
-                threads.append(main.Thread(channelcut.MASTERSEARCH(name)))
+                try:
+                        threads.append(main.Thread(channelcut.MASTERSEARCH(name)))
+                except:
+                        pass
         if settings.getSetting('wsoeu') == 'true':
-                threads.append(main.Thread(wsoeu.MASTERSEARCH(name)))
+                try:
+                        threads.append(main.Thread(wsoeu.MASTERSEARCH(name)))
+                except:
+                        pass
         if settings.getSetting('tvrelease') == 'true':
-                threads.append(main.Thread(tvrelease.MASTERSEARCH(name)))
+                try:
+                        threads.append(main.Thread(tvrelease.MASTERSEARCH(name)))
+                except:
+                        pass
         [i.start() for i in threads]
         [i.join() for i in threads]
                 
