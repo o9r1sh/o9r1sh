@@ -1,0 +1,24 @@
+[B]Version 0.1 Beta[/B]
+Initial Beta Release
+
+[B]Version 0.2 Beta[/B]
+
+Added video44.net processor
+Added Next Page option for series with large numbers of episodes
+
+[B]Version 0.3 Beta[/B]
+Fixed bug that prevented videolink list from loading if videoweed file was no longer available
+Added Posters for shows
+
+[B]Version 0.3b Beta[/B]
+Removed a few unused imports.
+Edited addon.xml so dependancies install.
+
+
+[B]Version 0.4 Beta[/B]
+Added New Series Section.
+Made New Artwork Tiles.
+
+
+
+-

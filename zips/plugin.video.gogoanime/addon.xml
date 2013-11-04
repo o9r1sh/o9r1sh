@@ -4,7 +4,7 @@
        version="0.4"
        provider-name="o9r1sh">
   <requires>
-    <import addon="xbmc.python" version="1.0"/>
+    <import addon="xbmc.python" version="12.2.2.2.2"/>
     <import addon="script.module.urlresolver" version="1.0.0"/>
     <import addon="script.module.mechanize" version="0.2.5"/>
   </requires>
@@ -13,8 +13,8 @@
         <provides>video</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <summary>Watch Anime from gogoanime.com</summary>
-    <description>gogoanime.com</description>
+    <summary>Deprecated</summary>
+    <description>GoGo Anime has been converted to a module for the VideoPhile Addon rendering this plugin Deprecated. If you would like to continue  Accessing GoGo Anime please install the VideoPhile Addon. Thanks</description>
     <platform>all</platform>
   </extension>
 </addon>
