@@ -454,11 +454,12 @@ def GET_EPISODE_NUMBERS(ep_name):
      SSXEEE = re.findall('\d\d[Xx]\d\d\d',ep_name)
      
      if S00E00:
+          print 'Naming Style Is ' + 'S00E00'
           S00E00 = str(S00E00)
           S00E00.strip('[Ss][Ee]')
           e = S00E00[-4:]
           e = e[:-2]
-          s = S00E00[:5]
+          s = S00E00[:6]
           s = s[-2:]
 
      if SXE:
@@ -490,7 +491,8 @@ def GET_EPISODE_NUMBERS(ep_name):
           SSXEEE = str(SSXEEE)
           s = SSXEEE[2] + SSXEE[3]
           e = SSXEEE[5] + SSXEEE[6] + SSXEEE[7]
-          
+
+     
      return s,e
 
 #Returns the host thumbnail so that you can pass it as and argument to the addHDir function__________________________________________
