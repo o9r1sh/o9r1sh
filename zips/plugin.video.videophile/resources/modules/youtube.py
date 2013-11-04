@@ -26,12 +26,7 @@ def INDEX(url):
                         name = match[inc]
                 except:
                         name = ''
-                try:
-                        time = times[inc]
-                        time = time[:5]
-                        time = time[:-3]
-                except:
-                        time = 0
+                
                 try:
                         vid = ids[inc]
                 except:
@@ -44,11 +39,10 @@ def INDEX(url):
 
                 url = base_url + '/watch?v=' + vid
                 if name != '__title__':
-                        if time > 22:
-                                try:
-                                        main.addDir(name,url,'resolve',thumb)
-                                except:
-                                        continue
+                        try:
+                                main.addDir(name,url,'resolve',thumb)
+                        except:
+                                continue
                 
                 inc += 1
 

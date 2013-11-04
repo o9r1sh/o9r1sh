@@ -45,7 +45,7 @@ rmode = addon.queries.get('rmode', '')
 imdb_id = addon.queries.get('imdb_id', '')
 
 #Define other needed global variables_____________________________________________________________________________________________________________________________
-settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
+settings = xbmcaddon.Addon(id=addon_id)
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 grab=metahandlers.MetaData()
 net = Net()
@@ -68,6 +68,15 @@ def resolvable(url):
      if 'epornik' in url:
           resolvable = True
 
+     if 'video44' in url:
+          resolvable = True
+
+     if 'play44' in url:
+          resolvable = True
+
+     if 'cheesestream' in url:
+          resolvable = True
+
      return(resolvable)
 
 def getHost(url):
@@ -88,6 +97,15 @@ def getHost(url):
 
      if 'epornik' in url:
           host = 'epornik'
+
+     if 'video44' in url:
+          host = 'video44'
+
+     if 'play44' in url:
+          host = 'play44'
+
+     if 'cheesestream' in url:
+          host = 'cheesestream'
      
      return(host)
           
@@ -586,7 +604,28 @@ def OTHER_RESOLVERS(url):
           dirty = re.sub("[',)(]", '', (links[5]))
           url =   dirty[7:-1]
 
+     if 'video44' in url:
+          url = url.replace('&#038;','&')
+          link = net.http_GET(url).content
+          match=re.compile('file: "(.+?)"').findall(link)
+          url = match[0]
 
+     if 'play44' in url:
+          url = url.replace('&#038;','&')
+          link = net.http_GET(url).content
+          match=re.compile("\n\t\t\t\t\t\t\t\t\t\t\t\turl: \'(.+?)'").findall(link)
+          url = match[0]
+          url = url.replace('%2F','/')
+          url = url.replace('%3F','?')
+          url = url.replace('%3D','=')
+          url = url.replace('%26','&')
+
+     if 'cheesestream' in url:
+          link = net.http_GET(url).content
+          match=re.compile('<source src="(.+?)"').findall(link)
+          url = match[0]
+
+               
 
      return str(url)
 

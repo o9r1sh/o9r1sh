@@ -1,14 +1,14 @@
 #VideoPhile addon by o9r1sh
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,mmline,filmikz,epornik
+from resources.modules import channelcut,mmline,filmikz,epornik,gogoanime
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
 addon = main.addon
 
-settings = xbmcaddon.Addon(id='<plugin.video.videophile>')
+settings = xbmcaddon.Addon(id=addon_id)
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 
 text_file = None
@@ -88,11 +88,11 @@ def TVSECTIONS():
 
 def DOCSECTIONS():
         if settings.getSetting('youtubedocs') == 'true':
-                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic&oq=national+geographic&gs_l=youtube.3..35i39l2j0l8.1350.5331.0.5427.19.19.0.0.0.0.106.1194.17j2.19.0...0.0...1ac.1.11.youtube._BEl_uoU7Bk','youtubeIndex',artwork + '/main/natgeo.png')
-                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc&oq=bbc&gs_l=youtube.3..0l7j0i3j0l2.11848138.11848424.0.11848594.3.3.0.0.0.0.116.301.1j2.3.0...0.0...1ac.1.11.youtube.de569af2UXE','youtubeIndex',artwork + '/main/bbc.png')
-                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel+documentary&oq=history+&gs_l=youtube.1.0.0l10.24739.26444.0.29034.8.6.0.2.2.0.121.583.5j1.6.0...0.0...1ac.1.11.youtube.9fDvAjIM7ug','youtubeIndex',artwork + '/main/history.png')
-                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_query=discovery+channel+documentary&oq=discovery+channel+documentary&gs_l=youtube.3..0l10.243928.245622.0.246576.10.10.0.0.0.0.110.743.9j1.10.0...0.0...1ac.1.11.youtube.oK45qI8tlys','youtubeIndex',artwork + '/main/discovery.png')
-
+                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?filters=video%2C+long&search_query=national+geographic+documentary','youtubeIndex',artwork + '/main/natgeo.png')
+                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc+documentary&filters=video%2C+long&lclk=long','youtubeIndex',artwork + '/main/bbc.png')
+                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel++documentary&filters=video%2C+long&lclk=long','youtubeIndex',artwork + '/main/history.png')
+                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?filters=video%2C+long&search_query=discovery+channel++documentary&lclk=long','youtubeIndex',artwork + '/main/discovery.png')
+              
 def MASTERSEARCH():
         search = ''
         keyboard = xbmc.Keyboard(search,'Search')
@@ -177,7 +177,9 @@ def CARTOONSECTIONS():
 def ANIMESECTIONS():
         if settings.getSetting('cartoonfreak') == 'true':
                 main.addDir('Cartoon Freak','none','cartoonFreakAnime',artwork + '/main/cartoonfreak.png')
-        
+        if settings.getSetting('gogoanime') == 'true':
+                main.addDir('GoGo Anime','none','gogoAnimeCategories',artwork + '/main/gogoanime.png')
+
 def ADULT():
         pin = ''
         keyboard = xbmc.Keyboard(pin,'Please Enter Your Password')
@@ -1072,18 +1074,137 @@ elif mode=='epornikSearch':
         print ""+url
         epornik.SEARCH()
 
+elif mode=='gogoAnimeCategories':
+        print ""+url
+        gogoanime.CATEGORIES()
 
+elif mode=='gogoAnimeLetters':
+        print ""+url
+        gogoanime.LETTERS()
 
+elif mode=='gogoAnimeRecentIndex':
+        print ""+url
+        gogoanime.RECENTINDEX(url)
 
+elif mode=='gogoAnimeVideoLinks':
+        print ""+url
+        gogoanime.VIDEOLINKS(url,name,thumb)
 
+elif mode=='gogoAnimeEpisodes':
+        print ""+url
+        gogoanime.INDEXEPS(url,name)
 
+elif mode=='gogoAnimeSearch':
+        print ""+url
+        gogoanime.SEARCH()
 
+elif mode=='gogoAnimeNum':
+        print ""+url
+        gogoanime.NUM(url)
 
+elif mode=='gogoAnimeA':
+        print ""+url
+        gogoanime.A(url)
 
+elif mode=='gogoAnimeB':
+        print ""+url
+        gogoanime.B(url)
 
+elif mode=='gogoAnimeC':
+        print ""+url
+        gogoanime.C(url)
 
+elif mode=='gogoAnimeD':
+        print ""+url
+        gogoanime.C(url)
 
+elif mode=='gogoAnimeE':
+        print ""+url
+        gogoanime.E(url)
 
+elif mode=='gogoAnimeF':
+        print ""+url
+        gogoanime.F(url)
+
+elif mode=='gogoAnimeG':
+        print ""+url
+        gogoanime.G(url)
+
+elif mode=='gogoAnimeH':
+        print ""+url
+        gogoanime.H(url)
+
+elif mode=='gogoAnimeI':
+        print ""+url
+        gogoanime.I(url)
+
+elif mode=='gogoAnimeJ':
+        print ""+url
+        gogoanime.J(url)
+
+elif mode=='gogoAnimeK':
+        print ""+url
+        gogoanime.K(url)
+
+elif mode=='gogoAnimeL':
+        print ""+url
+        gogoanime.L(url)
+
+elif mode=='gogoAnimeM':
+        print ""+url
+        gogoanime.M(url)
+
+elif mode=='gogoAnimeN':
+        print ""+url
+        gogoanime.N(url)
+
+elif mode=='gogoAnimeO':
+        print ""+url
+        gogoanime.O(url)
+
+elif mode=='gogoAnimeP':
+        print ""+url
+        gogoanime.P(url)
+
+elif mode=='gogoAnimeQ':
+        print ""+url
+        gogoanime.Q(url)
+
+elif mode=='gogoAnimeR':
+        print ""+url
+        gogoanime.R(url)
+
+elif mode=='gogoAnimeS':
+        print ""+url
+        gogoanime.S(url)
+
+elif mode=='gogoAnimeT':
+        print ""+url
+        gogoanime.T(url)
+
+elif mode=='gogoAnimeU':
+        print ""+url
+        gogoanime.U(url)
+
+elif mode=='gogoAnimeV':
+        print ""+url
+        gogoanime.V(url)
+
+elif mode=='gogoAnimeW':
+        print ""+url
+        gogoanime.W(url)
+
+elif mode=='gogoAnimeX':
+        print ""+url
+        gogoanime.X(url)
+
+elif mode=='gogoAnimeY':
+        print ""+url
+        gogoanime.Y(url)
+
+elif mode=='gogoAnimeZ':
+        print ""+url
+        gogoanime.Z(url)
 
 
 
