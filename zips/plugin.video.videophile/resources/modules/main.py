@@ -454,40 +454,48 @@ def GET_EPISODE_NUMBERS(ep_name):
      SSXEEE = re.findall('\d\d[Xx]\d\d\d',ep_name)
      
      if S00E00:
-          print 'Naming Style Is ' + 'S00E00'
+          print 'Naming Style Is S00E00'
           S00E00 = str(S00E00)
           S00E00.strip('[Ss][Ee]')
+          S00E00 = S00E00.replace("u","")
           e = S00E00[-4:]
           e = e[:-2]
-          s = S00E00[:6]
+          s = S00E00[:5]
           s = s[-2:]
+          
 
      if SXE:
+          print 'Naming Style Is SXE'
           SXE = str(SXE)
           s = SXE[2]
           e = SXE[4]
 
      if SXEE:
+          print 'Naming Style Is SXEE'
           SXEE = str(SXEE)
           s = SXEE[2]
           e = SXEE[4] + SXEE[5]
 
      if SXEEE:
+          print 'Naming Style Is SXEEE'
           SXEEE = str(SXEEE)
           s = SXEEE[2]
           e = SXEEE[4] + SXEEE[5] + SXEEE[6]
 
      if SSXE:
+          print 'Naming Style Is SSXE'
           SSXE = str(SSXE)
           s = SSXE[2] + SSXE[3]
           e = SSXE[5]
 
      if SSXEE:
+          print 'Naming Style Is SSXEE'
           SSXEE = str(SSXEE)
           s = SSXEE[2] + SSXEE[3]
           e = SSXEE[5] + SSXEE[6]
 
      if SSXEEE:
+          print 'Naming Style Is SSXEEE'
           SSXEEE = str(SSXEEE)
           s = SSXEEE[2] + SSXEE[3]
           e = SSXEEE[5] + SSXEEE[6] + SSXEEE[7]
