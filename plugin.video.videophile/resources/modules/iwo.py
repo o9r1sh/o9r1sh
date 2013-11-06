@@ -11,8 +11,8 @@ net = Net()
 
 
 def MOVIE_CATEGORIES():
-        main.addDir('Recently Added',base_url +'///movies?sort=latest','iwoIndex',artwork + '/main/recentlyadded.png')
-        main.addDir('Popular',base_url + '///movies?sort=popular','iwoIndex',artwork + '/main/popular.png')
+        main.addDir('Recently Added',base_url +'/movies?sort=latest','iwoIndex',artwork + '/main/recentlyadded.png')
+        main.addDir('Popular',base_url + '/movies?sort=popular','iwoIndex',artwork + '/main/popular.png')
         main.addDir('A-Z','none','iwoLetters',artwork + '/main/a-z.png')
         main.addDir('HD Movies','none','iwoHDMovies',artwork + '/main/hd.png')
         main.addDir('Genres','none','iwoGenres',artwork + '/main/genres.png')
