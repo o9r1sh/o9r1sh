@@ -219,8 +219,8 @@ def INDEX(url):
         match=re.compile('<a href="(.+?)"><img src="(.+?)" width=".+?" title=".+?" alt="(.+?)"></a>').findall(link)
         np=re.compile('<a href="/(.+?) " >').findall(link)
         if len(np) > 0:
-                np_url = np[0]
-                main.addDir('Next Page',np_url,'freeOMovieIndex',artwork + '/main/next.png')
+                np_url = base_url + '/' + str(np[0])
+                main.addDir('Next Page',np_url,'mmlineIndex',artwork + '/main/next.png')
         inc = 0
         if len(match) > 0:
                 for url,thumbnail,name in match:

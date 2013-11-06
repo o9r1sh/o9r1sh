@@ -27,6 +27,7 @@
 	<setting id="cartoonfreak" type="bool" label="Cartoon Freak" default="true"/>
 	<setting id="gogoanime" type="bool" label="GoGo Anime" default="true"/>
      	<setting id="mmline" type="bool" label="MegaMovieLine" default="true"/>
+ 	<setting id="fullepisode" type="bool" label="FullEpisode.info" default="true"/>
 
 
    </category>

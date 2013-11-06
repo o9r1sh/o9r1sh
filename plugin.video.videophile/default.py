@@ -2,7 +2,7 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,mmline,filmikz,epornik,gogoanime
+from resources.modules import channelcut,mmline,filmikz,epornik,gogoanime,fullepisode
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
@@ -85,6 +85,8 @@ def TVSECTIONS():
                 main.addDir('ChannelCut','none','channelCutCategories',artwork + '/main/channelcut.png')
         if settings.getSetting('iwatchonline') == 'true':
                main.addDir('I-WatchOnline','none','iwoSeriesCategories',artwork + '/main/iwatchonline.png')
+        if settings.getSetting('fullepisode') == 'true':
+                main.addDir('FullEpisode.Info','none','fullEpisodeCategories',artwork + '/main/fullepisode.png')
 
 def DOCSECTIONS():
         if settings.getSetting('youtubedocs') == 'true':
@@ -132,6 +134,11 @@ def MASTERSEARCH():
                         threads.append(main.Thread(tvrelease.MASTERSEARCH(search)))
                 except:
                         pass
+        if settings.getSetting('fullepisode') == 'true':
+                try:
+                        threads.append(main.Thread(fullepisode.MASTERSEARCH(search)))
+                except:
+                        pass
         [i.start() for i in threads]
         [i.join() for i in threads]
 
@@ -165,6 +172,11 @@ def COLLECTIVESEARCH(name):
         if settings.getSetting('tvrelease') == 'true':
                 try:
                         threads.append(main.Thread(tvrelease.MASTERSEARCH(name)))
+                except:
+                        pass
+        if settings.getSetting('fullepisode') == 'true':
+                try:
+                        threads.append(main.Thread(fullepisode.MASTERSEARCH(name)))
                 except:
                         pass
         [i.start() for i in threads]
@@ -1205,6 +1217,22 @@ elif mode=='gogoAnimeY':
 elif mode=='gogoAnimeZ':
         print ""+url
         gogoanime.Z(url)
+
+elif mode=='fullEpisodeCategories':
+        print ""+url
+        fullepisode.CATEGORIES()
+
+elif mode=='fullEpisodeIndex':
+        print ""+url
+        fullepisode.INDEX(url)
+
+elif mode=='fullEpisodeVideoLinks':
+        print ""+url
+        fullepisode.VIDEOLINKS(url,name,thumb)
+
+elif mode=='fullEpisodeSearch':
+        print ""+url
+        fullepisode.SEARCH()
 
 
 

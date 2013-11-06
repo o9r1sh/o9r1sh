@@ -106,6 +106,33 @@ def getHost(url):
 
      if 'cheesestream' in url:
           host = 'cheesestream'
+
+     if 'uploadc' in url:
+          host = 'uploadc'
+
+     if 'filefactory' in url:
+          host = 'filefactory'
+
+     if 'go4up' in url:
+          host = 'go4up'
+
+     if 'netload' in url:
+          host = 'netload'
+
+     if 'turbobit' in url:
+          host = 'turbobit'
+
+     if 'uploaded' in url:
+          host = 'uploaded'
+
+     if 'videobam' in url:
+          host = 'videobam'
+
+     if 'mixturecloud' in url:
+          host = 'mixturecloud'
+
+     if 'nowvideo' in url:
+          host = 'nowvideo'
      
      return(host)
           
@@ -463,44 +490,54 @@ def GET_EPISODE_NUMBERS(ep_name):
           s = S00E00[:5]
           s = s[-2:]
           
-
      if SXE:
           print 'Naming Style Is SXE'
           SXE = str(SXE)
+          SXE = SXE.replace("u","")
+          print 'Numer String is ' + SXE
           s = SXE[2]
           e = SXE[4]
 
      if SXEE:
           print 'Naming Style Is SXEE'
           SXEE = str(SXEE)
+          SXEE = SXEE.replace("u","")
+          print 'Numer String is ' + SXEE
           s = SXEE[2]
           e = SXEE[4] + SXEE[5]
 
      if SXEEE:
           print 'Naming Style Is SXEEE'
           SXEEE = str(SXEEE)
+          SXEEE = SXEEE.replace("u","")
+          print 'Numer String is ' + SXEEEE
           s = SXEEE[2]
           e = SXEEE[4] + SXEEE[5] + SXEEE[6]
 
      if SSXE:
           print 'Naming Style Is SSXE'
           SSXE = str(SSXE)
+          SSXE = SSXE.replace("u","")
+          print 'Numer String is ' + SSXE
           s = SSXE[2] + SSXE[3]
           e = SSXE[5]
 
      if SSXEE:
           print 'Naming Style Is SSXEE'
           SSXEE = str(SSXEE)
+          SSXEE = SSXEE.replace("u","")
+          print 'Numer String is ' + SSXEE
           s = SSXEE[2] + SSXEE[3]
           e = SSXEE[5] + SSXEE[6]
 
      if SSXEEE:
           print 'Naming Style Is SSXEEE'
           SSXEEE = str(SSXEEE)
+          SSXEEE = SSXEEE.replace("u","")
+          print 'Numer String is ' + SSXEEE
           s = SSXEEE[2] + SSXEE[3]
           e = SSXEEE[5] + SSXEEE[6] + SSXEEE[7]
 
-     
      return s,e
 
 #Returns the host thumbnail so that you can pass it as and argument to the addHDir function__________________________________________
@@ -532,6 +569,9 @@ def GETHOSTTHUMB(host):
      if 'movzap' in host:
           host = 'movzap'
 
+     if 'go4up' in host:
+          host = 'go4up'
+
      if 'uploadcrazy' in host:
           host = 'uploadcrazy'
 
@@ -540,6 +580,9 @@ def GETHOSTTHUMB(host):
 
      if 'epornik' in host:
           host = 'epornik'
+
+     if host == '':
+          host = 'nowvideo'
      
      host = artwork + '/hosts/' + host +'.png'
      return(host)
