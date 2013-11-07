@@ -2,7 +2,7 @@
 <addon id="script.module.urlresolver" 
      name="urlresolver" 
      version="2.1.1.1" 
-     provider-name="XBMCHub.com">
+     provider-name="BLAZETAMER WAS HERE">
   <requires>
     <import addon="xbmc.python" version="2.0" />
     <import addon="script.module.t0mm0.common" version="1.0.0"/>
