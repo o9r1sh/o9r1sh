@@ -27,7 +27,7 @@ def INDEX(url):
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        match=re.compile('<a href="(.+?)" rel=".+?" title=".+?"> <img src="(.+?)" width=".+?" height=".+?" title="(.+?)" class=".+?"></a>').findall(link)
+        match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a>').findall(link)
         np=re.compile("<span class='pages'>Page (.+?)</span>").findall(link)
         if len(np) > 0:
                 numbers = np[0]
@@ -43,25 +43,28 @@ def INDEX(url):
                                 next_page = url + a + b + str(nex)
                         main.addDir('Next Page',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
 
-        for url,thumbnail,name in match:
-                show = re.split('[Ss]\d\d[Ee]\d\d',name)
-                
-                if len(show) == 2:
-                        types = 'episode'
+        for url,name in match:
+                if '<img src=' in name:
+                        continue
                 else:
-                        types = 'movie'
-
-                if types == 'episode':
-                        try:        
-                                main.addEDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,show[0])
-                        except:
-                                continue
+                        show = re.split('[Ss]\d\d[Ee]\d\d',name)
                         
-                if types == 'movie':
-                        try:        
-                                main.addMDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,'',False)      
-                        except:
-                                continue
+                        if len(show) == 2:
+                                types = 'episode'
+                        else:
+                                types = 'movie'
+
+                        if types == 'episode':
+                                try:        
+                                        main.addEDir(name,url,'newMyVideoLinksVideoLinks','',show[0])
+                                except:
+                                        continue
+                                
+                        if types == 'movie':
+                                try:        
+                                        main.addMDir(name,url,'newMyVideoLinksVideoLinks','','',False)      
+                                except:
+                                        continue
         if types == 'episode':
                 main.AUTOVIEW('episodes')
         else:

@@ -149,15 +149,18 @@ def VIDEOLINKS(name,url,thumb):
         link = net.http_GET(url).content
         match=re.compile('<iframe src="(.+?)" width=".+?" height=".+?" scrolling=".+?" frameborder=".+?"></iframe>').findall(link)
         for url in match:
-                try:       
-                        try:
-                                if main.resolvable(url):
-                                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
-                                        main.addHDir(name,url,'resolve',thumb,hthumb)
+                if url == '/300x250.html':
+                        continue
+                else:
+                        try:       
+                                try:
+                                        if main.resolvable(url):
+                                                hthumb = main.GETHOSTTHUMB(main.getHost(url))
+                                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                                except:
+                                        continue
                         except:
                                 continue
-                except:
-                        continue
                         
 
 

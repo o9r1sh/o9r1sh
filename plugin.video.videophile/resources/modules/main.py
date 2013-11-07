@@ -86,9 +86,6 @@ def getHost(url):
           host = hmf.get_host()
           print 'ssssssss'+host
 
-     if 'uploadcrazy' in url:
-          host = 'uploadcrazy'
-
      if 'vidcrazy' in url:
           host = 'vidcrazy'
 
@@ -133,6 +130,9 @@ def getHost(url):
 
      if 'nowvideo' in url:
           host = 'nowvideo'
+
+     if 'uploadcrazy' in url:
+          host = 'uploadcrazy'
      
      return(host)
           

@@ -1,3 +1,7 @@
+Version 1.1.1.1
+Fixed NewMyVideoLinks
+Small Fixes
+
 Version 1.1.1
 Fixed MegaMovieLine
 Added Fullepisode.info
