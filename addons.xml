@@ -19,47 +19,6 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.gogoanime"
-       name="GoGo Anime"
-       version="0.4"
-       provider-name="o9r1sh">
-  <requires>
-    <import addon="xbmc.python" version="12.2.2.2.2"/>
-    <import addon="script.module.urlresolver" version="1.0.0"/>
-    <import addon="script.module.mechanize" version="0.2.5"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Deprecated</summary>
-    <description>GoGo Anime has been converted to a module for the VideoPhile Addon rendering this plugin Deprecated. If you would like to continue  Accessing GoGo Anime please install the VideoPhile Addon. Thanks</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.mmline"
-       name="MegaMovieLine"
-       version="1.9.2"
-       provider-name="o9r1sh">
-  <requires>
-    <import addon="xbmc.python" version="10000.22.22"/>
-    <import addon="script.module.urlresolver" version="1.0.0"/>
-    <import addon="script.module.metahandler" version="1.0.0" />
-  </requires>
-  <extension point="xbmc.python.pluginsource"
-            library="default.py">
-        <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Deprecated</summary>
-    <description>This addon has been Converted into a module for VideoPhile and will no longer be updated. Please install VideoPhile from my repo for continued use. </description>
-    <platform>all</platform>
-    <broken>This addon has been Converted into a module for VideoPhile and will no longer be updated. Please install VideoPhile from my repo for continued use. </broken>
-  </extension>
-</addon>
-
 <addon id="plugin.video.videophile"
        name="VideoPhile"
        version="1.1.1.2"

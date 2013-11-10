@@ -1,6 +1,0 @@
-Version 1.0
-Initial Release
-
-Version 1.1
-Added movie descriptions
-Added Next Page thumbnail that I forgot to make for inital release
