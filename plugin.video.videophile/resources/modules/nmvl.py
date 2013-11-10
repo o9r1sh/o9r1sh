@@ -61,8 +61,10 @@ def INDEX(url):
                                         continue
                                 
                         if types == 'movie':
+                                split = re.split('(\d\d\d\d)',name)
+                                year =  str(split[1])
                                 try:        
-                                        main.addMDir(name,url,'newMyVideoLinksVideoLinks','','',False)      
+                                        main.addMDir(name,url,'newMyVideoLinksVideoLinks','',year,False)      
                                 except:
                                         continue
         if types == 'episode':

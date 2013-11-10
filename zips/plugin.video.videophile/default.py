@@ -2,7 +2,7 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,mmline,filmikz,epornik,gogoanime,fullepisode
+from resources.modules import channelcut,mmline,filmikz,epornik,gogoanime,fullepisode,toonjet
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
@@ -11,23 +11,28 @@ addon = main.addon
 settings = xbmcaddon.Addon(id=addon_id)
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 
-text_file = None
-if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/")):
-        os.makedirs(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/"))
-
-if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0")):
-        pin = ''
-        notice = xbmcgui.Dialog().ok('Notice','VideoPhile now contains an adult section, for safety reasons','after pressing ok you will be asked to set a password','that will be used to gain access to the adult section')
-        keyboard = xbmc.Keyboard(pin,'Please Choose A New Password')
-        keyboard.doModal()
-        if keyboard.isConfirmed():
-                pin = keyboard.getText()
-        text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "w")
-        text_file.write(pin)
-        text_file.close()
-           
 def CATEGORIES():
         if settings.getSetting('adult') == 'true':
+                text_file = None
+                if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/")):
+                        os.makedirs(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/"))
+
+                if not os.path.exists(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0")):
+                        pin = ''
+                        notice = xbmcgui.Dialog().yesno('Would You Like To Set A Password','Would you like to set a password for the adult section?','','')
+                        if notice:
+                                keyboard = xbmc.Keyboard(pin,'Please Choose A New Password')
+                                keyboard.doModal()
+                                if keyboard.isConfirmed():
+                                        pin = keyboard.getText()
+                                text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "w")
+                                text_file.write(pin)
+                                text_file.close()
+                        else:
+                                text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "w")
+                                text_file.write(pin)
+                                text_file.close()
+                                
                 main.addDir('Adults Only','none','adultSections',artwork + '/main/adult.png')
         if settings.getSetting('movies') == 'true':
                 main.addDir('Movies','none','movieSections',artwork + '/main/movie.png')
@@ -49,52 +54,100 @@ def CATEGORIES():
                 main.addDir('Resolver Settings','none','resolverSettings',artwork + '/main/resolver.png')
 
 def MOVIESECTIONS():
-        if settings.getSetting('mooviemaniac') == 'true':
-                main.addDir('MoovieManiac','none','moovieManiacCategories',artwork + '/main/mmaniac.png')
-        if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks','none','newMyVideoLinksCategories',artwork + '/main/nmvl.png')
         if settings.getSetting('freemoviesaddict') == 'true':
                 main.addDir('FreeMoviesAddict','none','fmaCategories',artwork + '/main/fma.png')
-        if settings.getSetting('zmovie') == 'true':
-                main.addDir('Watch-Movies / Z-Movie','none','zmovieCategories',artwork + '/main/zmovie.png')
-        if settings.getSetting('wwmf') == 'true':
-                main.addDir('WeWatchMoviesFree','none','wwmfCategories',artwork + '/main/wwmf.png')
-        if settings.getSetting('videocloud') == 'true':
-                main.addDir('VideoCloud','none','videoCloudCategories',artwork + '/main/videocloud.png')
-        if settings.getSetting('iwatchonline') == 'true':
-               main.addDir('I-WatchOnline','none','iwoCategories',artwork + '/main/iwatchonline.png')
-        if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none','tvreleaseMovieCategories',artwork + '/main/tvrelease.png')
+
+        if settings.getSetting('iwatchonlinemovies') == 'true':
+                main.addDir('I-WatchOnline','none','iwoCategories',artwork + '/main/iwatchonline.png')
+
         if settings.getSetting('mmline') == 'true':
                 main.addDir('MegaMovieLine','none','mmlineCategories',artwork + '/main/mmline.png')
 
+        if settings.getSetting('mooviemaniac') == 'true':
+                main.addDir('MoovieManiac','none','moovieManiacCategories',artwork + '/main/mmaniac.png')
+
+        if settings.getSetting('newmyvideolinksmovies') == 'true':
+                main.addDir('NewMyVideoLinks','none','newMyVideoLinksCategories',artwork + '/main/nmvl.png')
+
+        if settings.getSetting('tvreleasemovies') == 'true':
+                main.addDir('TV Release','none','tvreleaseMovieCategories',artwork + '/main/tvrelease.png')
+
+        if settings.getSetting('videocloud') == 'true':
+                main.addDir('VideoCloud','none','videoCloudCategories',artwork + '/main/videocloud.png')
+        
+        if settings.getSetting('zmovie') == 'true':
+                main.addDir('Watch-Movies / Z-Movie','none','zmovieCategories',artwork + '/main/zmovie.png')
+
+        if settings.getSetting('wwmf') == 'true':
+                main.addDir('WeWatchMoviesFree','none','wwmfCategories',artwork + '/main/wwmf.png')
+        
 def HDMOVIESECTIONS():
-        if settings.getSetting('newmyvideolinks') == 'true':
+        if settings.getSetting('newmyvideolinksmovies') == 'true':
                 main.addDir('NewMyVideoLinks Yify Movies','none','newMyVideoLinksHDMovies',artwork + '/main/nmvl.png')
-        if settings.getSetting('tvrelease') == 'true':
+
+        if settings.getSetting('tvreleasemovies') == 'true':
                 main.addDir('TV Release','none','tvreleaseHDMovies',artwork + '/main/tvrelease.png')
         
 def TVSECTIONS():
-        if settings.getSetting('wsoeu') == 'true':
-                main.addDir('WatchSeries-Online','none','watchSeriesOnlineCategories',artwork + '/main/wso.png')
-        if settings.getSetting('newmyvideolinks') == 'true':
-                main.addDir('NewMyVideoLinks','none','newMyVideoLinksTVCategories',artwork + '/main/nmvl.png')
-        if settings.getSetting('tvrelease') == 'true':
-                main.addDir('TV Release','none','tvreleaseTVCategories',artwork + '/main/tvrelease.png')
         if settings.getSetting('channelcut') == 'true':
                 main.addDir('ChannelCut','none','channelCutCategories',artwork + '/main/channelcut.png')
-        if settings.getSetting('iwatchonline') == 'true':
-               main.addDir('I-WatchOnline','none','iwoSeriesCategories',artwork + '/main/iwatchonline.png')
+
         if settings.getSetting('fullepisode') == 'true':
                 main.addDir('FullEpisode.Info','none','fullEpisodeCategories',artwork + '/main/fullepisode.png')
 
+        if settings.getSetting('iwatchonlineshows') == 'true':
+                main.addDir('I-WatchOnline','none','iwoSeriesCategories',artwork + '/main/iwatchonline.png')
+
+        if settings.getSetting('newmyvideolinksshows') == 'true':
+                main.addDir('NewMyVideoLinks','none','newMyVideoLinksTVCategories',artwork + '/main/nmvl.png')
+
+        if settings.getSetting('tvreleaseshows') == 'true':
+                main.addDir('TV Release','none','tvreleaseTVCategories',artwork + '/main/tvrelease.png')
+               
+        if settings.getSetting('wsoeu') == 'true':
+                main.addDir('WatchSeries-Online','none','watchSeriesOnlineCategories',artwork + '/main/wso.png')
+        
 def DOCSECTIONS():
         if settings.getSetting('youtubedocs') == 'true':
                 main.addDir('National Geographic Documentaries','http://www.youtube.com/results?filters=video%2C+long&search_query=national+geographic+documentary','youtubeIndex',artwork + '/main/natgeo.png')
                 main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc+documentary&filters=video%2C+long&lclk=long','youtubeIndex',artwork + '/main/bbc.png')
                 main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel++documentary&filters=video%2C+long&lclk=long','youtubeIndex',artwork + '/main/history.png')
                 main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?filters=video%2C+long&search_query=discovery+channel++documentary&lclk=long','youtubeIndex',artwork + '/main/discovery.png')
-              
+                              
+def CARTOONSECTIONS():
+        if settings.getSetting('cartoonfreakcartoons') == 'true':
+                main.addDir('Cartoon Freak','none','cartoonFreakToons',artwork + '/main/cartoonfreak.png')
+        if settings.getSetting('toonjet') == 'true':
+                main.addDir('ToonJet','none','toonJetCategories',artwork + '/main/toonjet.png')
+
+def ANIMESECTIONS():
+        if settings.getSetting('cartoonfreakanime') == 'true':
+                main.addDir('Cartoon Freak','none','cartoonFreakAnime',artwork + '/main/cartoonfreak.png')
+        if settings.getSetting('gogoanime') == 'true':
+                main.addDir('GoGo Anime','none','gogoAnimeCategories',artwork + '/main/gogoanime.png')
+
+def ADULT():
+        text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "r")
+        line = file.readline(text_file)
+        pin = ''
+        if not line == '':
+                keyboard = xbmc.Keyboard(pin,'Please Enter Your Password')
+                keyboard.doModal()
+                if keyboard.isConfirmed():
+                        pin = keyboard.getText()
+        
+        if pin == line:
+                if settings.getSetting('epornik') == 'true':
+                        main.addDir('Epornik','none','epornikCategories',artwork + '/main/epornik.png')
+                if settings.getSetting('filmikz') == 'true':
+                        main.addDir('Filmikz','none','filmikzAdultCategories',artwork + '/main/filmikz.png')
+                if settings.getSetting('freeomovie') == 'true':
+                        main.addDir('FreeoMovie','none','freeOMovieCategories',artwork + '/main/freeomovie.png')
+                if settings.getSetting('tubepirate') == 'true':
+                        main.addDir('TubePirate','none','tubePirateCategories',artwork + '/main/tubepirate.png')
+        else:
+                notice = xbmcgui.Dialog().ok('Wrong Password','The password you entered is incorrect')
+
 def MASTERSEARCH():
         search = ''
         keyboard = xbmc.Keyboard(search,'Search')
@@ -181,32 +234,6 @@ def COLLECTIVESEARCH(name):
                         pass
         [i.start() for i in threads]
         [i.join() for i in threads]
-                
-def CARTOONSECTIONS():
-        if settings.getSetting('cartoonfreak') == 'true':
-                main.addDir('Cartoon Freak','none','cartoonFreakToons',artwork + '/main/cartoonfreak.png')
-
-def ANIMESECTIONS():
-        if settings.getSetting('cartoonfreak') == 'true':
-                main.addDir('Cartoon Freak','none','cartoonFreakAnime',artwork + '/main/cartoonfreak.png')
-        if settings.getSetting('gogoanime') == 'true':
-                main.addDir('GoGo Anime','none','gogoAnimeCategories',artwork + '/main/gogoanime.png')
-
-def ADULT():
-        pin = ''
-        keyboard = xbmc.Keyboard(pin,'Please Enter Your Password')
-        keyboard.doModal()
-        if keyboard.isConfirmed():
-                pin = keyboard.getText()
-        text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "r")
-        line = file.readline(text_file)
-        if pin == line:
-                main.addDir('Epornik','none','epornikCategories',artwork + '/main/epornik.png')
-                main.addDir('Filmikz','none','filmikzAdultCategories',artwork + '/main/filmikz.png')
-                main.addDir('FreeoMovie','none','freeOMovieCategories',artwork + '/main/freeomovie.png')
-                main.addDir('TubePirate','none','tubePirateCategories',artwork + '/main/tubepirate.png')
-        else:
-                notice = xbmcgui.Dialog().ok('Wrong Password','The password you entered is incorrect')
 
 def FAVORITES():
         if settings.getSetting('movies') == 'true':
@@ -1233,6 +1260,16 @@ elif mode=='fullEpisodeVideoLinks':
 elif mode=='fullEpisodeSearch':
         print ""+url
         fullepisode.SEARCH()
+
+elif mode=='toonJetCategories':
+        print ""+url
+        toonjet.CATEGORIES()
+
+elif mode=='toonJetIndex':
+        print ""+url
+        toonjet.INDEX(url)
+
+
 
 
 

@@ -55,13 +55,12 @@ def INDEX(url):
         response = urllib2.urlopen(req)
         link=response.read()
         response.close()
-        match=re.compile('<a href="(.+?)" title=".+?">\r\n\r\n\t\t\t\t\t\t\t\t\t\r\n                                    <img src="(.+?)" alt="(.+?)" width=".+?" height=".+?" />').findall(link)
+        match=re.compile('<a href="(.+?)" title="(.+?)">\r\n\r\n\t\t\t\t\t\t\t\t\t\r\n                                    <img src="(.+?)"').findall(link)
         np=re.compile("<link rel='next' href='(.+?)' />").findall(link)
         if len(np) > 0:
                 np_url = np[0]
                 main.addDir('Next Page',np_url,'freeOMovieIndex',artwork + '/main/next.png')
-        for url,thumbnail,name in match:
-                
+        for url,name,thumbnail in match:
                 try:
                         main.addDir(name,url,'freeOMovieVideoLinks',thumbnail)
                 except:

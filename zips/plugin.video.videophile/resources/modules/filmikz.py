@@ -27,21 +27,57 @@ def ADULT_INDEX(url):
                 main.addDir(name,url,'filmikzVideoLinks',thumbnail)
                                  
 def VIDEOLINKS(url,name,thumb):
+        hthumb = ''
         link = net.http_GET(url).content
         match=re.compile('<input type=button value="(.+?)" onClick="javascript:popUp((.+?))">').findall(link)
         for host, url,url2 in match:
                 url = base_url + url
+                print'llllllll'+url
                 url = re.sub("[')(]", '', url)
                 link = net.http_GET(url).content
                 links2=re.compile('<frameset  cols=".+?">\n  <frame src="(.+?)" />\n  <frame src=".+?" />').findall(link)
                 if len(links2) > 0:
                         url = str(links2[0])
+                print host
                 if main.resolvable(url):
-                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
-                try:
-                        main.addHDir(name,url,'resolve',thumb,hthumb)
-                except:
-                        continue
+                        if host == 'Watch Part 1-ePornik':
+                                hthumb = artwork + '/hosts/epornik1.png'
+                        elif host == 'Watch Part 2-ePornik':
+                                hthumb = artwork + '/hosts/epornik2.png'
+                        elif host == 'Watch Part 3-ePornik':
+                                hthumb = artwork + '/hosts/epornik3.png'
+                        elif host == 'Watch Part 4-ePornik':
+                                hthumb = artwork + '/hosts/epornik4.png'                         
+                        elif host == 'Watch Part 1-YouWatch':
+                                hthumb = artwork + '/hosts/youwatch1.png'
+                        elif host == 'Watch Part 2-YouWatch':
+                                hthumb = artwork + '/hosts/youwatch2.png'
+                        elif host == 'Watch Part 3-YouWatch':
+                                hthumb = artwork + '/hosts/youwatch3.png'
+                        elif host == 'Watch Part 4-YouWatch':
+                                hthumb = artwork + '/hosts/youwatch4.png'
+                        elif host == 'Watch Part 1-Billionuploads':
+                                hthumb = artwork + '/hosts/billionuploads1.png'
+                        elif host == 'Watch Part 2-Billionuploads':
+                                hthumb = artwork + '/hosts/billionuploads2.png'
+                        elif host == 'Watch Part 3-Billionuploads':
+                                hthumb = artwork + '/hosts/billionuploads3.png'
+                        elif host == 'Watch Part 4-Billionuploads':
+                                hthumb = artwork + '/hosts/billionuploads4.png'
+                        elif host == 'Watch Part 1-Nosvideo':
+                                hthumb = artwork + '/hosts/nosvideo1.png'
+                        elif host == 'Watch Part 2-Nosvideo':
+                                hthumb = artwork + '/hosts/nosvideo2.png'
+                        elif host == 'Watch Part 3-Nosvideo':
+                                hthumb = artwork + '/hosts/nosvideo3.png'
+                        elif host == 'Watch Part 4-Nosvideo':
+                                hthumb = artwork + '/hosts/nosvideo4.png'
+                        else:
+                                hthumb = main.GETHOSTTHUMB(main.getHost(url))
+                        try:
+                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                        except:
+                                continue
        
          
 def ADULT_SEARCH():

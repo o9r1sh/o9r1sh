@@ -135,7 +135,12 @@ def getHost(url):
           host = 'uploadcrazy'
      
      return(host)
-          
+
+def nameCleaner(name):
+          name = name.replace('&#8211;','')
+          name = name.replace("&#8217;","")
+          return(name)
+     
 #Functions for handling favorites_____________________________________________________________________________________________________________________________
 def addFavorite():
      saved_favs = cache.get('favourites_' + types)
@@ -218,6 +223,7 @@ def getMeta(types,name,year,show,season,episode):
 
 #Standard directory funtion to be used when not doing scrapes on the directory_____________________________________________________________________________________________________________________________
 def addDir(name,url,mode,thumb):
+     name = nameCleaner(name)
      if thumb == '':
           thumb = artwork + '/main/noepisode.png'
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':'movie'}
@@ -225,6 +231,7 @@ def addDir(name,url,mode,thumb):
 
 #Movie directory function to be used when adding a movie, all metadata scrapes and context menu items are handled within_____________________________________________________________________________________________________________________________
 def addMDir(name,url,mode,thumb,year,isfav):
+     name = nameCleaner(name)
      meta = {}
      contextMenuItems = []
 
@@ -277,6 +284,7 @@ def addMDir(name,url,mode,thumb,year,isfav):
 
 #TV Show directory function to be used when adding a TV Show, all metadata scrapes and context menu items are handled within__________
 def addSDir(name,url,mode,thumb,isfav):
+     name = nameCleaner(name)
      contextMenuItems = []
      meta = {}
      
@@ -319,6 +327,7 @@ def addSDir(name,url,mode,thumb,isfav):
 
 #Cartoon directory function to be used when adding a Cartoon Series, all metadata scrapes and context menu items are handled within___
 def addToonDir(name,url,mode,thumb,isfav):
+     name = nameCleaner(name)
      contextMenuItems = []
      meta = {}
      
@@ -361,6 +370,7 @@ def addToonDir(name,url,mode,thumb,isfav):
 
 #Anime directory function to be used when adding a Anime Series, all metadata scrapes and context menu items are handled within______
 def addAnimeDir(name,url,mode,thumb, isfav):
+     name = nameCleaner(name)
      contextMenuItems = []
      meta = {}
      
@@ -415,13 +425,11 @@ def addHDir(name,url,mode,thumb,hthumb):
 
 #Episode directory function to be used when adding a Episode, all metadata scrapes and context menu items are handled within_________
 def addEDir(name,url,mode,thumb,show):
+     name = nameCleaner(name)
      ep_meta = None
      show_id = None
      meta = None
      othumb = thumb
-
-     name = name.replace("&#8217;","")
-     name = name.replace("&#8211;"," ")
                 
      if settings.getSetting('metadata') == 'true':
           meta = grab.get_meta('tvshow',show)
