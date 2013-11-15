@@ -8,6 +8,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.freeomovie.com'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Recent Videos',base_url,'freeOMovieIndex',artwork + '/main/recentlyadded.png')
@@ -53,17 +54,23 @@ def GENRES():
         main.addDir('Teen',base_url + '/category/teen/','freeOMovieIndex',artwork + '/adult/teen.png')
 
 def INDEX(url):
+        np_url = ''
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" title="(.+?)">\r\n\r\n\t\t\t\t\t\t\t\t\t\r\n                                    <img src="(.+?)"').findall(link)
         np=re.compile("<link rel='next' href='(.+?)' />").findall(link)
         if len(np) > 0:
                 np_url = np[0]
-                main.addDir('Next Page',np_url,'freeOMovieIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'freeOMovieIndex',artwork + '/main/next.png')
         for url,name,thumbnail in match:
                 try:
                         main.addDir(name,url,'freeOMovieVideoLinks',thumbnail)
                 except:
                         continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'freeOMovieIndex',artwork + '/main/next.png')
+  
                 
 def VIDEOLINKS(name,url,thumb):
         link = net.http_GET(url).content

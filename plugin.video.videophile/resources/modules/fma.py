@@ -7,6 +7,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.freemoviesaddict.com'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Recent Movies',base_url,'fmaIndex',artwork + '/main/recentlyadded.png')
@@ -95,20 +96,27 @@ def YEARS():
         main.addDir('1990',base_url + '/movies/year/1990','fmaIndex',artwork + '/years/1990.png')
 
 def INDEX(url):
+        next_page = ''
         link = net.http_GET(url).content
         match=re.compile('<a href=\'(.+?)\'>\r\n\t\t<img class=\'movie_img\' src=\'(.+?)\' alt=\'(.+?)\' />').findall(link)
         np=re.compile('class="pagination_next"><a class="pagination_link" href="(.+?)"></a></span>').findall(link)
         if len(np) > 0:
                 np_url = np[0]
                 next_page = base_url + np_url
-                main.addDir('Next Page',next_page,'fmaIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'fmaIndex',artwork + '/main/next.png')
         for url,thumbnail,name in match:
                 url = base_url + url
 
                 try:
                         main.addMDir(name,url,'fmaVideoLinks',thumbnail,'',False)
                 except:
+
                         continue
+        if len(np) > 0:  
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'fmaIndex',artwork + '/main/next.png')
+    
                 
         main.AUTOVIEW('movies')
 

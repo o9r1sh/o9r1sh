@@ -8,6 +8,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.wewatchmoviesfree.net/'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Recently Added',base_url,'wwmfIndex',artwork + '/main/recentlyadded.png')
@@ -75,7 +76,8 @@ def INDEX(url):
         np=re.compile("rel='next' href='(.+?)' /><link").findall(link)
         if len(np) > 0:
                 next_page = np[0]
-                main.addDir('Next Page',next_page,'wwmfIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'wwmfIndex',artwork + '/main/next.png')
         
         for url,thumbnail,name in match:
                 try:
@@ -83,6 +85,12 @@ def INDEX(url):
                         print year
                 except:
                         continue
+
+        if len(np) > 0:
+                next_page = np[0]
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'wwmfIndex',artwork + '/main/next.png')
+
         main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb):

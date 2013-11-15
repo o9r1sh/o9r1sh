@@ -5,6 +5,7 @@ import urlresolver
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.iwatchonline.to'
+settings = main.settings
 
 from t0mm0.common.net import Net
 net = Net()
@@ -422,13 +423,15 @@ def HD_WESTERN():
         main.addDir('Recently Added',base_url + '/movies?gener=western&sort=latest&quality=hd','iwoIndex',artwork + '/main/recentlyadded.png')
         
 def MOVIE_INDEX(url):
+        next_page = ''
         link = net.http_GET(url).content
         np=re.compile('<li class="next pagea"><a href="(.+?)">Next &rarr;</a>').findall(link)
         match=re.compile('<a href="(.+?)" class=".+?" rel=".+?">\r\n\t\t\t\t\t\t\t<img class=".+?" src="(.+?)" alt="">\r\n\t\t\t\t\t\t\t <div class=".+?">.+?</div>\t  \r\n\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t<div class=".+?">.+?').findall(link)
         if len(np) > 0:
                 next_page = np[0]
                 next_page = next_page.replace('&amp;','&')
-                main.addDir('Next Page',next_page,'iwoIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoIndex',artwork + '/main/next.png')
         
         for url,thumbnail in match:
                 head,sep,tail = url.partition('/movie/')
@@ -445,6 +448,10 @@ def MOVIE_INDEX(url):
                         main.addMDir(name,url,'iwoVideoLinks',thumbnail,year,False)
                 except:
                         continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoIndex',artwork + '/main/next.png')
+
         main.AUTOVIEW('movies')
 
 def SERIES_INDEX(url):
@@ -455,7 +462,7 @@ def SERIES_INDEX(url):
                 next_page = np[0]
                 next_page = next_page.replace('&amp;','&')
                 next_page = next_page.replace('movies','tv-show')
-                main.addDir('Next Page',next_page,'iwoSeriesIndex',artwork + '/main/next.png')
+                main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoSeriesIndex',artwork + '/main/next.png')
         
         for url,thumbnail in match:
                 head,sep,tail = url.partition('/tv-shows/')

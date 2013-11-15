@@ -4,8 +4,10 @@ import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.youtube.com'
+settings = main.settings
 
 def INDEX(url):
+        next_page = ''
         inc = 0
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
@@ -15,7 +17,8 @@ def INDEX(url):
         np=re.compile('<a href="(.+?)" class="yt-uix-button  yt-uix-pager-button yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=.+?" data-page=".+?"><span class="yt-uix-button-content">Next \xc2\xbb </span></a>').findall(link)
         if len(np) > 0:
                 next_page = base_url + np[0]
-                main.addDir('Next Page',next_page,'youtubeIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'youtubeIndex',artwork + '/main/next.png')
         match=re.compile('data-context-item-title="(.+?)"').findall(link)
         times=re.compile('data-context-item-time="(.+?)"').findall(link)
         ids=re.compile('data-context-item-id="(.+?)"').findall(link)
@@ -45,6 +48,10 @@ def INDEX(url):
                                 continue
                 
                 inc += 1
+        if len(np) > 0:
+                next_page = base_url + np[0]
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'youtubeIndex',artwork + '/main/next.png')
 
 
 

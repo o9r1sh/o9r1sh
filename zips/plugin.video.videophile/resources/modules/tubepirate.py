@@ -8,6 +8,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.tubepirate.com'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Latest Videos',base_url +'/videos.html','tubePirateIndex',artwork + '/main/recentlyadded.png')
@@ -124,13 +125,15 @@ def GENRES():
                 main.addDir('Voyeur',base_url +'/videos/voyeur.html','tubePirateIndex',artwork + '/adult/voyeur.png')
  
 def INDEX(url):
+        next_page = ''
         link = net.http_GET(url).content
         match=re.compile('<a href=".+?" title=".+?" class="thumb" style="background-image:url(.+?);"></a><a href=".+?" class="add"></a><h5><a href="(.+?)" title=".+?">(.+?)</a>').findall(link)
         np=re.compile('<link rel="next" href="(.+?)" />').findall(link)
         if len(np) > 0:
                 npc = str(np[0]).replace('&amp;','&')
                 next_page = base_url + npc
-                main.addDir('Next Page',next_page,'tubePirateIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'tubePirateIndex',artwork + '/main/next.png')
         for thumbnail,url,name in match:
                 
                         thumbnail = re.sub('[()]','',thumbnail)
@@ -145,8 +148,12 @@ def INDEX(url):
                                 main.addDir(name,vid_link[0],'resolve',thumbnail)
                         except:
                                 continue
-
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'tubePirateIndex',artwork + '/main/next.png')
+    
 def ACTOR_INDEX(url):
+        next_page = ''
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
         response = urllib2.urlopen(req)
@@ -157,7 +164,8 @@ def ACTOR_INDEX(url):
         if len(np) > 0:
                 npc = str(np[0]).replace('&amp;','&')
                 next_page = base_url + npc
-                main.addDir('Next Page',next_page,'tubePirateMostActorIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'tubePirateMostActorIndex',artwork + '/main/next.png')
         for thumbnail,url,name in match:
                 
                         thumbnail = re.sub('[()]','',thumbnail)
@@ -167,6 +175,10 @@ def ACTOR_INDEX(url):
                                 main.addDir(name,url,'tubePirateIndex',thumbnail)
                         except:
                                 continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'tubePirateMostActorIndex',artwork + '/main/next.png')
+   
 
         
 

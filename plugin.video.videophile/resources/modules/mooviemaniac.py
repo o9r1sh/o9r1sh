@@ -7,21 +7,28 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.mooviemaniac.net'
+settings = main.settings
 
 def CATEGORIES():
         url = base_url + '/movies.htm'
         INDEX(url)
         
 def INDEX(url):
+        np_url= ''
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" target=".+?" onclick=".+?">\n  <img class=".+?" src="(.+?)" alt=".+?" title="(.+?)" onmousemove=".+?" style=".+?"/>').findall(link)
-
         if url == base_url + '/movies.htm':
-                main.addDir('Next Page',base_url + '/movies2.htm','moovieManiacIndex',artwork + '/main/next.png')
+                np_url = base_url + '/movies2.htm'
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'moovieManiacIndex',artwork + '/main/next.png')
         elif url == base_url + '/movies2.htm':
-                main.addDir('Next Page',base_url + '/movies3.htm','moovieManiacIndex',artwork + '/main/next.png')
+                np_url = base_url + '/movies3.htm'
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'moovieManiacIndex',artwork + '/main/next.png')
         elif url == base_url + '/movies3.htm':
-                main.addDir('Next Page',base_url + '/movies4.htm','moovieManiacIndex',artwork + '/main/next.png')
+                np_url = base_url + '/movies4.htm'
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'moovieManiacIndex',artwork + '/main/next.png')
                 
         for url,thumbnail,name in match:
                 if len(match) > 0:
@@ -33,6 +40,13 @@ def INDEX(url):
                         main.addMDir(name,url,'resolve',thumbnail,year,False)
                 except:
                         continue
+        if settings.getSetting('nextpagebottom') == 'true':
+                if np_url == '':
+                        pass
+                else:
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'moovieManiacIndex',artwork + '/main/next.png')
+                
+
 
         main.AUTOVIEW('movies')
 

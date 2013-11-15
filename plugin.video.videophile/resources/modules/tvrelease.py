@@ -6,8 +6,8 @@ from t0mm0.common.net import Net
 net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
-
 base_url = 'http://tv-release.net'
+settings = main.settings
 
 def TV_CATEGORIES():
         main.addDir('XVID Episodes',base_url + '/category/tvshows/tvxvid/','tvreleaseIndex',artwork + '/main/xvidtv.png')
@@ -29,6 +29,7 @@ def MOVIE_CATEGORIES():
         main.addDir('Foreign Movies',base_url + '/category/movies/moviesforeign','tvreleaseIndex',artwork + '/main/foreign.png')
         
 def INDEX(url):
+        np_url = ''
         types = None
         link = net.http_GET(url).content
         match=re.compile('a href="(.+?)"><b><font size=".+?">(.+?)</font></b></a>').findall(link)
@@ -51,8 +52,8 @@ def INDEX(url):
                                 np_url = base_url + '/page/' + str(next_page) +'/' + sep + tail
 
                 
-                        
-                main.addDir('Next Page',np_url,'tvreleaseIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':       
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'tvreleaseIndex',artwork + '/main/next.png')
 
         for url,name in match:
                 try:
@@ -83,7 +84,9 @@ def INDEX(url):
                 main.AUTOVIEW('episodes')
         else:
                 main.AUTOVIEW('movies')
-
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':       
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'tvreleaseIndex',artwork + '/main/next.png')
 
 
 def VIDEOLINKS(name,url,thumb):

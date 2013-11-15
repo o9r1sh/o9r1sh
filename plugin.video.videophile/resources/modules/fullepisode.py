@@ -7,18 +7,21 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://fullepisode.info'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Recently Added',base_url,'fullEpisodeIndex', artwork + '/main/recentlyadded.png')
         main.addDir('Search','none','fullEpisodeSearch', artwork + '/main/search.png')
 
 def INDEX(url):
+        np_url = ''
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" class="post-info-title" title="Permanent Link to (.+?)">').findall(link)
         np=re.compile("<a href=\'(.+?)' class=\'(.+?)\'>.+?</a>").findall(link)
-        for url,name in np:
+        for np_url,name in np:
                 if name == 'nextpostslink':
-                        main.addDir('Next Page',url,'fullEpisodeIndex',artwork + '/main/next.png')
+                        if settings.getSetting('nextpagetop') == 'true':
+                                main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'fullEpisodeIndex',artwork + '/main/next.png')
         for url, name in match:
                 head,sep,tail = name.partition('Season')
                 show = head
@@ -29,6 +32,11 @@ def INDEX(url):
                         main.addEDir(name,url,'fullEpisodeVideoLinks','',show)
                 except:
                         continue
+        for np_url,name in np:
+                if name == 'nextpostslink':
+                        if settings.getSetting('nextpagebottom') == 'true':
+                                main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'fullEpisodeIndex',artwork + '/main/next.png')
+
 
         main.AUTOVIEW('episodes')
 

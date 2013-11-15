@@ -7,6 +7,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.gogoanime.com'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('A-Z','none','gogoAnimeLetters',artwork + '/main/a-z.png')
@@ -369,12 +370,14 @@ def Z(url):
         main.AUTOVIEW('tvshows')
 
 def RECENTINDEX(url):
+        next_page = ''
         link = net.http_GET(url).content
         np=re.compile('<span class="current">.+?</span><a href="(.+?)" class=".+?" title=".+?">.+?</a>').findall(link)
         match=re.compile('<a href="(.+?)" title="(.+?)" ><img src="(.+?)" width=".+?" height=".+?" /></a>').findall(link)
         if len(np) > 0:
                 next_page = np[0]
-                main.addDir('Next Page',next_page,'gogoAnimeRecentIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'gogoAnimeRecentIndex',artwork + '/main/next.png')
         for url, name, thumbnail in match:
                 if "<span>" not in name:
                         url = base_url + '/category/' +  url
@@ -382,6 +385,10 @@ def RECENTINDEX(url):
                                 main.addAnimeDir(name,url,'gogoAnimeEpisodes',thumbnail,False)
                         except:
                                 continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'gogoAnimeRecentIndex',artwork + '/main/next.png')
+
         main.AUTOVIEW('tvshows')
 
 def INDEXEPS(url,name):

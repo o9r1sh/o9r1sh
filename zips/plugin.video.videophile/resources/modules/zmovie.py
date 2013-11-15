@@ -8,6 +8,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www2.zmovie.tw'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('New Releases',base_url + '/movies/new','zmovieIndex',artwork + '/main/newreleases.png')
@@ -76,12 +77,14 @@ def GENRES():
         main.addDir('Western',base_url + '/search/genre/Western','zmovieIndex',artwork + '/genres/western.png')
 
 def INDEX(url):
+        next_page = ''
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" title="(.+?)"> <img src="(.+?)"  alt=".+?" height=".+?" width=".+?"/></a>').findall(link)
         np=re.compile("..</span> <a class=.+? href='(.+?)'> Next+").findall(link)
         if len(np) > 0:
                 next_page = np[0]
-                main.addDir('Next Page',next_page,'zmovieIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'zmovieIndex',artwork + '/main/next.png')
                                               
         for url,name,thumbnail in match:
                 head, sep, tail = name.partition(')')
@@ -90,7 +93,12 @@ def INDEX(url):
                 try:
                         main.addMDir(name,url,'zmovieVideoLinks',thumbnail,year,False)
                 except:
+
                         continue
+        if len(np) > 0:        
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'zmovieIndex',artwork + '/main/next.png')
+
         main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb):

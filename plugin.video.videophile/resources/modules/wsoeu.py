@@ -7,6 +7,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.watchseries-online.eu'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('A-Z','none','watchSeriesOnlineLetters',artwork + '/main/a-z.png')
@@ -181,6 +182,7 @@ def RECENTEPS(url):
         main.AUTOVIEW('episodes')
 
 def INDEXEPS(url,name):
+        np_url = ''
         thumb = ''
         show_name = name
         link = net.http_GET(url).content
@@ -193,7 +195,8 @@ def INDEXEPS(url,name):
                         
         if len(np) > 0:
                 np_url = np[0]
-                main.addDir('Next Page',np_url,'watchSeriesOnlineEpisodesIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'watchSeriesOnlineEpisodesIndex',artwork + '/main/next.png')
 
         for url,name in match:
                 name = re.sub('&#215;','X',name)
@@ -202,6 +205,9 @@ def INDEXEPS(url,name):
                         main.addEDir(name,url,'watchSeriesOnlineVideoLinks',thumb,show_name)
                 except:
                         continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'watchSeriesOnlineEpisodesIndex',artwork + '/main/next.png')
 
         main.AUTOVIEW('episodes')
 

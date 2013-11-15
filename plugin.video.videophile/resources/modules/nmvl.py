@@ -6,8 +6,8 @@ from t0mm0.common.net import Net
 net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
-
 base_url = 'http://www.myvideolinks.eu'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Yify Movies',base_url + '/category/movies/yify/','newMyVideoLinksIndex',artwork + '/main/yify.png')
@@ -28,6 +28,7 @@ def INDEX(url):
         match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a>').findall(link)
         np=re.compile("<span class='pages'>Page (.+?)</span>").findall(link)
         if len(np) > 0:
+                next_page = ''
                 numbers = np[0]
                 head,sep,tail = numbers.partition('of')
                 current_page = int(head)
@@ -39,7 +40,8 @@ def INDEX(url):
                         else:
                                 a,b,c = url.partition('/page/')
                                 next_page = url + a + b + str(nex)
-                        main.addDir('Next Page',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
+                        if settings.getSetting('nextpagetop') == 'true':
+                                main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
 
         for url,name in match:
                 if '<img src=' in name:
@@ -68,6 +70,11 @@ def INDEX(url):
                                         main.addMDir(name,url,'newMyVideoLinksVideoLinks','',year,False)      
                                 except:
                                         continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
+
+
         if types == 'episode':
                 main.AUTOVIEW('episodes')
         else:

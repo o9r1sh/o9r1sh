@@ -7,6 +7,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.toonjet.com'
+settings = main.settings
 
 def CATEGORIES():
         main.addDir('Featured', base_url + '/featured/','toonJetIndex',artwork + '/main/featured.png')
@@ -18,6 +19,7 @@ def CATEGORIES():
         main.addDir('More Classics', base_url + '/cartoons/Classic/','toonJetIndex',artwork + '/main/moreclassics.png')
 
 def INDEX(url):
+        next_page = ''
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)"><img src="(.+?)" height=".+?" alt=".+?"><br />\r\n\t(.+?)<br /> "(.+?)"</a>').findall(link)
         np=re.compile('<<< Prev</a> | <a href="(.+?)">Next >></a></td></tr></table></div>\t\t\t\t\t</td>\r\n\t\t\t\t\t<td class=".+?" valign=".+?" align=".+?" width=".+?">').findall(link)
@@ -31,13 +33,13 @@ def INDEX(url):
                 match=re.compile('a href="(.+?)" class=".+?">(.+?)\r\n\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td valign=".+?">\r\n\t\t\t\t\t\t\t\t<table align=".+?" border=".+?" cellpadding=".+?" cellspacing=".+?" class=".+?">\r\n\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t<a href=".+?"><img src="(.+?)" border=".+?" width=".+?" height=".+?">').findall(link)
         if len(np) == 0:
                 np=re.compile('<a href="(.+?)">Next >></a>').findall(link)
-       
-        try:
-                np_url = np[0]
-                next_page = base_url + '/' + np_url
-                main.addDir('Next Page',next_page,'toonJetIndex',artwork + '/main/next.png')
-        except:
-                pass
+        if settings.getSetting('nextpagetop') == 'true':
+                try:
+                        np_url = np[0]
+                        next_page = base_url + '/' + np_url
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'toonJetIndex',artwork + '/main/next.png')
+                except:
+                        pass
 
         try:                
                 for url,thumbnail,namea,nameb in match:
@@ -67,6 +69,23 @@ def INDEX(url):
                                                 main.addDir(name,head,'resolve',thumbnail)
                         except:
                                 continue
+        if len(np) == 0:
+                np=re.compile('<<< Prev</a> | <a href="(.+?)">Next >></a>').findall(link)
+        if len(match) == 0:
+                match=re.compile('<a href="(.+?)" class=".+?">(.+?)\r\n\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td valign=".+?">\r\n\t\t\t\t\t\t\t\t<table align=".+?" border=".+?" cellpadding=".+?" cellspacing=".+?" class=".+?">\r\n\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t<a href=".+?"><img src="(.+?)" border=".+?" width=".+?" height=".+?" style="border: thin solid;">').findall(link)
+        if len(np) == 0:
+                np=re.compile('<a href="(.+?)" class="cartoons">More...</a>').findall(link)
+        if len(match) == 0:
+                match=re.compile('a href="(.+?)" class=".+?">(.+?)\r\n\t\t\t\t\t\t\t\t</a>\r\n\t\t\t\t\t\t\t</td>\r\n\t\t\t\t\t\t</tr>\r\n\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t<td valign=".+?">\r\n\t\t\t\t\t\t\t\t<table align=".+?" border=".+?" cellpadding=".+?" cellspacing=".+?" class=".+?">\r\n\t\t\t\t\t\t\t\t\t<tr>\r\n\t\t\t\t\t\t\t\t\t\t<td>\r\n\t\t\t\t\t\t\t\t<a href=".+?"><img src="(.+?)" border=".+?" width=".+?" height=".+?">').findall(link)
+        if len(np) == 0:
+                np=re.compile('<a href="(.+?)">Next >></a>').findall(link)
+        if settings.getSetting('nextpagetop') == 'true':
+                try:
+                        np_url = np[0]
+                        next_page = base_url + '/' + np_url
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'toonJetIndex',artwork + '/main/next.png')
+                except:
+                        pass
                 
                 
 

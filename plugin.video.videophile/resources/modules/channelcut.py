@@ -9,6 +9,8 @@ net = Net()
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.channelcut.me'
 
+settings = main.settings
+
 def CATEGORIES():
         main.addDir('Latest Episodes',base_url + '/last-150','channelCutRecentEpisodes',artwork + '/main/recentlyadded.png')
         main.addDir('TV Shows A-Z','none','channelCutLetters',artwork + '/main/a-z.png')
@@ -453,8 +455,9 @@ def EPISODES(url):
         match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a>').findall(link)
         np=re.compile('<span class="prev"><a href="(.+?)" >Previous Posts</a>').findall(link)
         if len(np) > 0:
-                next_page = str(np[0])
-                main.addDir('Next Page',next_page,'channelCutEpisodes',artwork + 'main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        next_page = str(np[0])
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'channelCutEpisodes',artwork + 'main/next.png')
         for url, name in match:
                 name = re.sub(' Episode ','x',name)
                 show,sep,numbers = name.partition('Season')
@@ -464,6 +467,11 @@ def EPISODES(url):
                         main.addEDir(name,url,'channelCutVideoLinks','',show)
                 except:
                         continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        next_page = str(np[0])
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'channelCutEpisodes',artwork + 'main/next.png')
+
         main.AUTOVIEW('episodes')
 
 def RECENTEPISODES(url):
