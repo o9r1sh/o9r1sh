@@ -3,6 +3,9 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os,mechanize
 import urlresolver
 
+from t0mm0.common.net import Net
+net = Net()
+
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.freeomovie.com'
 
@@ -50,11 +53,7 @@ def GENRES():
         main.addDir('Teen',base_url + '/category/teen/','freeOMovieIndex',artwork + '/adult/teen.png')
 
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" title="(.+?)">\r\n\r\n\t\t\t\t\t\t\t\t\t\r\n                                    <img src="(.+?)"').findall(link)
         np=re.compile("<link rel='next' href='(.+?)' />").findall(link)
         if len(np) > 0:
@@ -67,25 +66,14 @@ def INDEX(url):
                         continue
                 
 def VIDEOLINKS(name,url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" target="_blank">').findall(link)
-        for url in match:
-                if 'vidx.to' in url:
-                        main.addHDir(name,url,'resolve',thumb,artwork + 'hosts/vidx.png')
-                        
-                else:
-                        hmf = urlresolver.HostedMediaFile(url)
-                        if hmf:
-                                host = hmf.get_host()
-                                hthumb = main.GETHOSTTHUMB(host)
-                                try:
-                                        main.addHDir(name,url,'resolve',thumb,hthumb)
-                                except:
-                                        continue
+        for url in match:                
+                if main.resolvable(url):
+                        try:
+                                main.addHDir(name,url,'resolve','')
+                        except:
+                                continue
                         
 
 

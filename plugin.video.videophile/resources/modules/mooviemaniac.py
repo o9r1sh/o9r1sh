@@ -1,7 +1,9 @@
 #MoovieManiac Module by o9r1sh September 2013
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
+
+from t0mm0.common.net import Net
+net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.mooviemaniac.net'
@@ -11,11 +13,7 @@ def CATEGORIES():
         INDEX(url)
         
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" target=".+?" onclick=".+?">\n  <img class=".+?" src="(.+?)" alt=".+?" title="(.+?)" onmousemove=".+?" style=".+?"/>').findall(link)
 
         if url == base_url + '/movies.htm':

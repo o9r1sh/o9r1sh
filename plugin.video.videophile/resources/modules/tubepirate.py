@@ -1,7 +1,10 @@
 #TubePirate Module by o9r1sh October 2013
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os,cgi
 import urlresolver
+
+from t0mm0.common.net import Net
+net = Net()
+
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.tubepirate.com'
@@ -121,11 +124,7 @@ def GENRES():
                 main.addDir('Voyeur',base_url +'/videos/voyeur.html','tubePirateIndex',artwork + '/adult/voyeur.png')
  
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href=".+?" title=".+?" class="thumb" style="background-image:url(.+?);"></a><a href=".+?" class="add"></a><h5><a href="(.+?)" title=".+?">(.+?)</a>').findall(link)
         np=re.compile('<link rel="next" href="(.+?)" />').findall(link)
         if len(np) > 0:
@@ -138,11 +137,7 @@ def INDEX(url):
                         url = base_url + url
                         
                         try:
-                                req = urllib2.Request(url)
-                                req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-                                response = urllib2.urlopen(req)
-                                links=response.read()
-                                response.close()
+                                links = net.http_GET(url).content
                                 vid_link=re.compile('var streams={"low":"(.+?)"}').findall(links)
                         except:
                                 continue

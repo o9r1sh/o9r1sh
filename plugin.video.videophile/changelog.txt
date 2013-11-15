@@ -1,3 +1,12 @@
+Version 1.1.1.3
+Lots of code cleanup
+Better filtering for Youtube Documentaries
+Added options for where Next Page directories should be located
+Fixed a bug in MyVideoLinks
+Changed Host listings to display the host's name'
+Removed MegaMovieLine 'Website Shutdown'
+Removed VideoCloud 'Changed Video Host'
+
 Version 1.1.1.2
 Added ToonJet (Stripped out the majority of dead links)
 Changed adult password to be set after section is enabled

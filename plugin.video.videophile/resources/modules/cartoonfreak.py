@@ -1,5 +1,4 @@
 #Cartoon Freak Module by o9r1sh October 2013
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 
 from t0mm0.common.net import Net
@@ -7,6 +6,7 @@ net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.cartoonfreak.net'
+settings = main.settings
 
 def CARTOONS():
         INDEX(base_url + '/cartoon/')
@@ -79,10 +79,11 @@ def INDEX(url):
         match=re.compile('<li id="(.+?)"><div class="anime-list-item"><a href="(.+?)" class="thumbnail"><img data-src=".+?" alt=".+?" src="(.+?)" class="primary" /><span class="play"></span><span class=".+?">(.+?)</span><span class="anime-data">').findall(link)
         np=re.compile('<a class="pagination-next btn btn-inverse" href="(.+?)">').findall(link)
         if len(np) > 0:
-                np_url = np[0]
-                next_page = base_url + np_url
-                next_page = next_page.replace('&#038;','&')
-                main.addDir('Next Page',next_page,'cartoonFreakIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        np_url = np[0]
+                        next_page = base_url + np_url
+                        next_page = next_page.replace('&#038;','&')
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'cartoonFreakIndex',artwork + '/main/next.png')
         for vid,url,thumbnail,name in match:
                 if 'anime' in o_url:       
                         try:
@@ -94,6 +95,13 @@ def INDEX(url):
                                 main.addToonDir(name,url,'cartoonFreakEpisodes',thumbnail,False)
                         except:
                                 continue
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        np_url = np[0]
+                        next_page = base_url + np_url
+                        next_page = next_page.replace('&#038;','&')
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'cartoonFreakIndex',artwork + '/main/next.png')
+ 
                 
         main.AUTOVIEW('tvshows')
 
@@ -155,8 +163,7 @@ def VIDEOLINKS(name,url,thumb):
                         try:       
                                 try:
                                         if main.resolvable(url):
-                                                hthumb = main.GETHOSTTHUMB(main.getHost(url))
-                                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                                                main.addHDir(name,url,'resolve','')
                                 except:
                                         continue
                         except:

@@ -1,7 +1,9 @@
 #NewMyVideoLinks Module by o9r1sh September 2013
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
+
+from t0mm0.common.net import Net
+net = Net()
 
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 
@@ -22,11 +24,7 @@ def TVCATEGORIES():
         
 def INDEX(url):
         types = None
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a>').findall(link)
         np=re.compile("<span class='pages'>Page (.+?)</span>").findall(link)
         if len(np) > 0:
@@ -62,7 +60,10 @@ def INDEX(url):
                                 
                         if types == 'movie':
                                 split = re.split('(\d\d\d\d)',name)
-                                year =  str(split[1])
+                                try:
+                                        year =  str(split[1])
+                                except:
+                                        pass
                                 try:        
                                         main.addMDir(name,url,'newMyVideoLinksVideoLinks','',year,False)      
                                 except:
@@ -73,19 +74,14 @@ def INDEX(url):
                 main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb,year):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<li><a href="(.+?)">.+?</a></li>').findall(link)
         for url in match:
-                if len(match) > 0:
-                                hmf = urlresolver.HostedMediaFile(url)
-                                if hmf:
-                                        host = hmf.get_host()
-                                        hthumb = main.GETHOSTTHUMB(host)
-                                        main.addHDir(name,url,'resolve',thumb,hthumb)
+                if main.resolvable(url):
+                        try:
+                                main.addHDir(name,url,'resolve','')
+                        except:
+                                continue
 
 def SEARCH():
         search = ''

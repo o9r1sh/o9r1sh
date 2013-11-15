@@ -3,6 +3,9 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
 
+from t0mm0.common.net import Net
+net = Net()
+
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www2.zmovie.tw'
 
@@ -73,11 +76,7 @@ def GENRES():
         main.addDir('Western',base_url + '/search/genre/Western','zmovieIndex',artwork + '/genres/western.png')
 
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" title="(.+?)"> <img src="(.+?)"  alt=".+?" height=".+?" width=".+?"/></a>').findall(link)
         np=re.compile("..</span> <a class=.+? href='(.+?)'> Next+").findall(link)
         if len(np) > 0:
@@ -95,19 +94,13 @@ def INDEX(url):
         main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('class="atest" target="_blank"   href="(.+?)">').findall(link)
         for url in match:
                 hmf = urlresolver.HostedMediaFile(url)
-                if hmf:
-                        host = hmf.get_host()
-                        hthumb = main.GETHOSTTHUMB(host)
+                if main.resolvable(url):
                         try:
-                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                                main.addHDir(name,url,'resolve','')
                         except:
                                 continue
 

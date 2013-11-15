@@ -3,6 +3,9 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
 
+from t0mm0.common.net import Net
+net = Net()
+
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.wewatchmoviesfree.net/'
 
@@ -67,11 +70,7 @@ def GENRES():
         main.addDir('Western',base_url + '/category/western','wwmfIndex',artwork + '/genres/western.png')
 
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a\nhref="(.+?)" rel=".+?" > <img\nclass=".+?" src="(.+?)" width=".+?" height=".+?" title="Watch (.+?) Online Free" >').findall(link)
         np=re.compile("rel='next' href='(.+?)' /><link").findall(link)
         if len(np) > 0:
@@ -87,20 +86,13 @@ def INDEX(url):
         main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a\nhref="(.+?)" class="ext-link"').findall(link)
         for url in match:
                 head,sep,tail = url.partition('=')
-                hmf = urlresolver.HostedMediaFile(tail)
-                if hmf:
-                        host = hmf.get_host()
-                        hthumb = main.GETHOSTTHUMB(host)
+                if main.resolvable(tail):
                         try:
-                                main.addHDir(name,tail,'resolve',thumb,hthumb)
+                                main.addHDir(name,tail,'resolve','')
                         except:
                                 continue
 

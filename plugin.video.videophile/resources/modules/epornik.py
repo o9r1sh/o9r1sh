@@ -51,7 +51,6 @@ def SEARCH():
                 search = search.replace(' ','+')
                 
                 url = base_url + '/search.php?q=' + search + '&x=-1085&y=-177'
-                print url
                 
                 INDEX(url)
 

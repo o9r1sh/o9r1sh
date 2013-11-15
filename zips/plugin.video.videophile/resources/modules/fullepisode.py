@@ -37,11 +37,10 @@ def VIDEOLINKS(url,name,thumb):
         match=re.compile('<a rel="nofollow" target="_blank" href="(.+?)">').findall(link)
         for url in match:
                 if main.resolvable(url):
-                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
-                try:
-                        main.addHDir(name,url,'resolve',thumb,hthumb)
-                except:
-                        continue
+                        try:
+                                main.addHDir(name,url,'resolve','')
+                        except:
+                                continue
        
 def SEARCH():
         search = ''

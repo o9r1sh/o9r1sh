@@ -32,13 +32,11 @@ def VIDEOLINKS(url,name,thumb):
         match=re.compile('<input type=button value="(.+?)" onClick="javascript:popUp((.+?))">').findall(link)
         for host, url,url2 in match:
                 url = base_url + url
-                print'llllllll'+url
                 url = re.sub("[')(]", '', url)
                 link = net.http_GET(url).content
                 links2=re.compile('<frameset  cols=".+?">\n  <frame src="(.+?)" />\n  <frame src=".+?" />').findall(link)
                 if len(links2) > 0:
                         url = str(links2[0])
-                print host
                 if main.resolvable(url):
                         if host == 'Watch Part 1-ePornik':
                                 hthumb = artwork + '/hosts/epornik1.png'
@@ -75,7 +73,7 @@ def VIDEOLINKS(url,name,thumb):
                         else:
                                 hthumb = main.GETHOSTTHUMB(main.getHost(url))
                         try:
-                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                                main.addHDir(name,url,'resolve',hthumb)
                         except:
                                 continue
        

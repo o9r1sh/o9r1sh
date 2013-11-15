@@ -368,7 +368,6 @@ def Z(url):
                                 continue
         main.AUTOVIEW('tvshows')
 
-
 def RECENTINDEX(url):
         link = net.http_GET(url).content
         np=re.compile('<span class="current">.+?</span><a href="(.+?)" class=".+?" title=".+?">.+?</a>').findall(link)
@@ -402,12 +401,10 @@ def VIDEOLINKS(url,name,thumb):
         match=re.compile('<iframe src="(.+?)"').findall(link)
         for url in match:
                 if main.resolvable(url):
-                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
                         try:
-                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                                main.addHDir(name,url,'resolve','')
                         except:
                                 continue
-       
          
 def SEARCH():
         search = ''

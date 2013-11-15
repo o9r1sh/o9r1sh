@@ -2,6 +2,9 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
+from t0mm0.common.net import Net
+net = Net()
+
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.watchseries-online.eu'
 
@@ -43,11 +46,7 @@ def INDEXSHOWS(url):
         az = url[-1:]
         letter = ''
         inc = 0
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)">(.+?)</a>').findall(link)
            
         stop = len(match) - 5
@@ -165,11 +164,7 @@ def INDEXSHOWS(url):
         main.AUTOVIEW('tvshows')
 
 def RECENTEPS(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)">(.+?)</a>').findall(link)
         inc = 0
         for url,name in match:        
@@ -188,11 +183,7 @@ def RECENTEPS(url):
 def INDEXEPS(url,name):
         thumb = ''
         show_name = name
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" rel=".+?" title=".+?">\n(.+?)\n</a>').findall(link)
         np=re.compile('</a></li><li><a href="(.+?)" class="next">').findall(link)
         if show_name == 'Next Page':
@@ -215,44 +206,28 @@ def INDEXEPS(url,name):
         main.AUTOVIEW('episodes')
 
 def VIDEOLINKS(url,name,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a target="_blank" id="hovered" href="(.+?)">.+?</a>').findall(link)
         for url in match:
                 if 'fanstash' in url:
                         continue
                 else:
+                        
                         try:
-                                req = urllib2.Request(url)
-                                req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-                                response = urllib2.urlopen(req)
-                                links=response.read()
-                                response.close()
+                                links = net.http_GET(url).content
                                 reallink=re.compile("href='(.+?)'>Click Here to Play</a>").findall(links)
                                 if len(reallink) > 0:
-                                        file_link = reallink[0]
-
-                                        hmf = urlresolver.HostedMediaFile(str(file_link))
-                                        if hmf:
-                                                host = hmf.get_host()
-                                                hthumb = main.GETHOSTTHUMB(host)
+                                        if main.resolvable(str(reallink[0])):
+                                                file_link = reallink[0]
                                                 try:
-                                                        print main.thumb
-                                                        main.addHDir(name,hmf.get_url(),'resolve',thumb,hthumb)
+                                                        main.addHDir(name,file_link,'resolve','')
                                                 except:
                                                         continue
                         except:
                                 continue
 
 def SEARCHINDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">\n\t\t\t(.+?)\t\t\t</a>').findall(link)
         np=re.compile('<a href="(.+?)" class="next">&raquo;</a>').findall(link)
         if len(np) > 0:

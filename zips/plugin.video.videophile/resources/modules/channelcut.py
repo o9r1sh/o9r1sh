@@ -3,6 +3,9 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
 
+from t0mm0.common.net import Net
+net = Net()
+
 artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
 base_url = 'http://www.channelcut.me'
 
@@ -42,11 +45,7 @@ def LETTERS():
 
 def NUM():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -61,11 +60,7 @@ def NUM():
 
 def A():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -80,11 +75,7 @@ def A():
 
 def B():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -99,11 +90,7 @@ def B():
 
 def C():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -118,11 +105,7 @@ def C():
 
 def D():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -137,11 +120,7 @@ def D():
 
 def E():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -156,11 +135,7 @@ def E():
 
 def F():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -175,11 +150,7 @@ def F():
 
 def G():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -194,11 +165,7 @@ def G():
 
 def H():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -213,11 +180,7 @@ def H():
 
 def I():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -232,11 +195,7 @@ def I():
 
 def J():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -251,11 +210,7 @@ def J():
 
 def K():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -270,11 +225,7 @@ def K():
 
 def L():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -289,11 +240,7 @@ def L():
 
 def M():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -308,11 +255,7 @@ def M():
 
 def N():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -327,11 +270,7 @@ def N():
 
 def O():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -346,11 +285,7 @@ def O():
 
 def P():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -365,11 +300,7 @@ def P():
 
 def Q():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -384,11 +315,7 @@ def Q():
 
 def R():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -403,11 +330,7 @@ def R():
 
 def S():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -422,11 +345,7 @@ def S():
 
 def T():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -441,11 +360,7 @@ def T():
 
 def U():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -460,11 +375,7 @@ def U():
 
 def V():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -479,11 +390,7 @@ def V():
 
 def W():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -498,11 +405,7 @@ def W():
 
 def X():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -517,11 +420,7 @@ def X():
 
 def Y():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link,False)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -536,11 +435,7 @@ def Y():
 
 def Z():
         url = base_url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<option class=".+?" value=".+?">(.+?)</option>').findall(link)
         for name in match:
                 name = re.sub(' ', '-', name)
@@ -554,11 +449,7 @@ def Z():
         main.AUTOVIEW('tvshows')
 
 def EPISODES(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a>').findall(link)
         np=re.compile('<span class="prev"><a href="(.+?)" >Previous Posts</a>').findall(link)
         if len(np) > 0:
@@ -576,11 +467,7 @@ def EPISODES(url):
         main.AUTOVIEW('episodes')
 
 def RECENTEPISODES(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)">(.+?)</a> </li>').findall(link)
         for url, name in match:
                 name = re.sub(' Episode ','x',name)
@@ -594,18 +481,14 @@ def RECENTEPISODES(url):
         main.AUTOVIEW('episodes')
 
 def VIDEOLINKS(name,url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<p><a href="(.+?)" rel="nofollow">.+?</a></p>').findall(link)
         for url in match:
-                hmf = urlresolver.HostedMediaFile(url)
-                hthumb = main.GETHOSTTHUMB(hmf.get_host())
-                if hmf:
+                
+                
+                if main.resolvable(url):
                         try:
-                                main.addHDir(name,url,'resolve','',hthumb)
+                                main.addHDir(name,url,'resolve','')
                         except:
                                 continue
                         

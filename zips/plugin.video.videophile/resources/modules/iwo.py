@@ -482,13 +482,11 @@ def EPISODES_INDEX(url,name):
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)"><i class="icon-play-circle"></i>.+?</a></td>\r\n\t\t\t\t\t\t\t  <td>(.+?)</td>\r\n\t\t\t\t\t\t\t  <td><div class="pull-right"><div class="star" data-rating=".+?">').findall(link)
         for url,name in match:
-                print 'url is '+url
                 s,e = main.GET_EPISODE_NUMBERS(url)
                 s = 'S' + s
                 e = 'E' + e
                 se = s+e
                 name = name + ' ' + se
-                print s+e
                 try:
                         main.addEDir(name,url,'iwoVideoLinks','',show)
                 except:
@@ -503,13 +501,9 @@ def VIDEOLINKS(name,url,thumb):
                 if inc < 50:
                         link = net.http_GET(url).content
                         urls=re.compile('<iframe name="frame" class="frame" src="(.+?)"').findall(link)
-
-                        hmf = urlresolver.HostedMediaFile(urls[0])
-                        if hmf:
-                                host = hmf.get_host()
-                                hthumb = main.GETHOSTTHUMB(host)
+                        if main.resolvable(urls[0]):
                                 try:
-                                        main.addHDir(name,str(urls[0]),'resolve',thumb,hthumb)
+                                        main.addHDir(name,str(urls[0]),'resolve','')
                                         inc +=1
                                 except:
                                         continue

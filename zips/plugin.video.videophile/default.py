@@ -1,8 +1,8 @@
 #VideoPhile addon by o9r1sh
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
-from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,videocloud,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,mmline,filmikz,epornik,gogoanime,fullepisode,toonjet
+from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
+from resources.modules import channelcut,filmikz,epornik,gogoanime,fullepisode,toonjet
 
 addon_id = 'plugin.video.videophile'
 from t0mm0.common.addon import Addon
@@ -60,9 +60,6 @@ def MOVIESECTIONS():
         if settings.getSetting('iwatchonlinemovies') == 'true':
                 main.addDir('I-WatchOnline','none','iwoCategories',artwork + '/main/iwatchonline.png')
 
-        if settings.getSetting('mmline') == 'true':
-                main.addDir('MegaMovieLine','none','mmlineCategories',artwork + '/main/mmline.png')
-
         if settings.getSetting('mooviemaniac') == 'true':
                 main.addDir('MoovieManiac','none','moovieManiacCategories',artwork + '/main/mmaniac.png')
 
@@ -71,9 +68,6 @@ def MOVIESECTIONS():
 
         if settings.getSetting('tvreleasemovies') == 'true':
                 main.addDir('TV Release','none','tvreleaseMovieCategories',artwork + '/main/tvrelease.png')
-
-        if settings.getSetting('videocloud') == 'true':
-                main.addDir('VideoCloud','none','videoCloudCategories',artwork + '/main/videocloud.png')
         
         if settings.getSetting('zmovie') == 'true':
                 main.addDir('Watch-Movies / Z-Movie','none','zmovieCategories',artwork + '/main/zmovie.png')
@@ -109,10 +103,10 @@ def TVSECTIONS():
         
 def DOCSECTIONS():
         if settings.getSetting('youtubedocs') == 'true':
-                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?filters=video%2C+long&search_query=national+geographic+documentary','youtubeIndex',artwork + '/main/natgeo.png')
-                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc+documentary&filters=video%2C+long&lclk=long','youtubeIndex',artwork + '/main/bbc.png')
-                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel++documentary&filters=video%2C+long&lclk=long','youtubeIndex',artwork + '/main/history.png')
-                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?filters=video%2C+long&search_query=discovery+channel++documentary&lclk=long','youtubeIndex',artwork + '/main/discovery.png')
+                main.addDir('National Geographic Documentaries','http://www.youtube.com/results?search_query=national+geographic+english&filters=video%2C+long&search_sort=video_date_uploaded','youtubeIndex',artwork + '/main/natgeo.png')
+                main.addDir('BBC Documentaries','http://www.youtube.com/results?search_query=bbc+documentary&search_sort=video_date_uploaded&filters=video%2C+long','youtubeIndex',artwork + '/main/bbc.png')
+                main.addDir('History Channel Documentaries','http://www.youtube.com/results?search_query=history+channel+english&search_sort=video_date_uploaded&filters=video%2C+long','youtubeIndex',artwork + '/main/history.png')
+                main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_sort=video_date_uploaded&filters=video%2C+long&search_query=discovery+channel','youtubeIndex',artwork + '/main/discovery.png')
                               
 def CARTOONSECTIONS():
         if settings.getSetting('cartoonfreakcartoons') == 'true':
@@ -157,11 +151,6 @@ def MASTERSEARCH():
                 search = search.replace(' ','+')
 
         threads = []
-        if settings.getSetting('mmline') == 'true':
-                try:
-                        threads.append(main.Thread(mmline.MASTERSEARCH(search)))
-                except:
-                        pass
         if settings.getSetting('wwmf') == 'true':
                 try:
                         threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
@@ -463,14 +452,6 @@ elif mode=='wwmfSearch':
 elif mode=='wwmfVideoLinks':
         print ""+url
         wwmf.VIDEOLINKS(name,url,thumb)
-#Videocloud modes_______________________________________________________________
-elif mode=='videoCloudCategories':
-        print ""+url
-        videocloud.CATEGORIES()
-
-elif mode=='videoCloudIndex':
-        print ""+url
-        videocloud.INDEX(url)
 #I-WatchOnline modes____________________________________________________________
 elif mode=='iwoCategories':
         print ""+url
@@ -973,118 +954,7 @@ elif mode=='channelCutSearch':
         print ""+url
         channelcut.SEARCH()
 
-elif mode=='mmlineCategories':
-        print ""+url
-        mmline.CATEGORIES()
-
-elif mode=='mmlineIndex':
-        print ""+url
-        mmline.INDEX(url)
-
-elif mode=='mmlineGenres':
-        print ""+url
-        mmline.GENRES()
-
-elif mode=='mmlineVideoLinks':
-        print ""+url
-        mmline.VIDEOLINKS(name,url,thumb)
-
-elif mode=='mmlineSearch':
-        print ""+url
-        mmline.SEARCH()
-
-elif mode=='mmlineAction':
-        print ""+url
-        mmline.ACION()
-
-elif mode=='mmlineAdventure':
-        print ""+url
-        mmline.ADVENTURE()
-        
-elif mode=='mmlineAnimation':
-        print ""+url
-        mmline.ANIMATION()
-        
-elif mode=='mmlineBiography':
-        print ""+url
-        mmline.BIOGRAPHY()
-        
-elif mode=='mmlineComedy':
-        print ""+url
-        mmline.COMEDY()
-        
-elif mode=='mmlineCrime':
-        print ""+url
-        mmline.CRIME()
-        
-elif mode=='mmlineDocumentary':
-        print ""+url
-        mmline.DOCUMENTARY()
-        
-elif mode=='mmlineDrama':
-        print ""+url
-        mmline.DRAMA()
-        
-elif mode=='mmlineFamily':
-        print ""+url
-        mmline.FAMILY()
-
-elif mode=='mmlineHistory':
-        print ""+url
-        mmline.HISTORY()
-        
-elif mode=='mmlineHorror':
-        print ""+url
-        mmline.HORROR()
-        
-elif mode=='mmlineMusic':
-        print ""+url
-        mmline.MUSIC()
-        
-elif mode=='mmlineMusical':
-        print ""+url
-        mmline.MUSICAL()
-        
-elif mode=='mmlineMystery':
-        print ""+url
-        mmline.MYSTERY()
-        
-elif mode=='mmlineRomance':
-        print ""+url
-        mmline.ROMANCE()
-        
-elif mode=='mmlineScifi':
-        print ""+url
-        mmline.SCIFI()
-        
-elif mode=='mmlineSport':
-        print ""+url
-        mmline.SPORT()
-        
-elif mode=='mmlineThriller':
-        print ""+url
-        mmline.THRILLER()
-
-elif mode=='mmlineWar':
-        print ""+url
-        mmline.WAR()
-        
-elif mode=='mmlineWestern':
-        print ""+url
-        mmline.WESTERN()
-        
-elif mode=='mmlineIndian':
-        print ""+url
-        mmline.INDIAN()
-        
-elif mode=='mmlineShort':
-        print ""+url
-        mmline.SHORT()
-
-elif mode=='mmlineClassic':
-        print ""+url
-        mmline.CLASSIC()
-#Filmikz Modes___________________________________________________________________
+#Filmikz Modes____________________________________________________________________
 elif mode=='filmikzAdultCategories':
         print ""+url
         filmikz.ADULT_CATEGORIES()
@@ -1112,7 +982,7 @@ elif mode=='epornikIndex':
 elif mode=='epornikSearch':
         print ""+url
         epornik.SEARCH()
-
+#GoGO Anime Modes_______________________________________________________________
 elif mode=='gogoAnimeCategories':
         print ""+url
         gogoanime.CATEGORIES()
@@ -1244,7 +1114,7 @@ elif mode=='gogoAnimeY':
 elif mode=='gogoAnimeZ':
         print ""+url
         gogoanime.Z(url)
-
+#Full Episode Modes___________________________________________________________
 elif mode=='fullEpisodeCategories':
         print ""+url
         fullepisode.CATEGORIES()
@@ -1260,7 +1130,7 @@ elif mode=='fullEpisodeVideoLinks':
 elif mode=='fullEpisodeSearch':
         print ""+url
         fullepisode.SEARCH()
-
+#ToonJet Modes_________________________________________________________________
 elif mode=='toonJetCategories':
         print ""+url
         toonjet.CATEGORIES()
@@ -1268,10 +1138,5 @@ elif mode=='toonJetCategories':
 elif mode=='toonJetIndex':
         print ""+url
         toonjet.INDEX(url)
-
-
-
-
-
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

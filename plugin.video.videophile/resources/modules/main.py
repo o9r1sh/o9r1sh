@@ -43,6 +43,7 @@ types = addon.queries.get('types', '')
 fanart = addon.queries.get('fanart', '')
 rmode = addon.queries.get('rmode', '')
 imdb_id = addon.queries.get('imdb_id', '')
+host = addon.queries.get('host', '')
 
 #Define other needed global variables_____________________________________________________________________________________________________________________________
 settings = xbmcaddon.Addon(id=addon_id)
@@ -51,40 +52,39 @@ grab=metahandlers.MetaData()
 net = Net()
 
 def resolvable(url):
-     resolvable = False
+     status = False
      hmf = urlresolver.HostedMediaFile(url)
      if hmf:
-          resolvable = True
+          status = True
 
      if 'uploadcrazy' in url:
-          resolvable = True
+          status = True
 
      if 'vidcrazy' in url:
-          resolvable = True
+          status = True
 
      if 'vidx.to' in url:
-          resolvable = True
+          status = True
 
      if 'epornik' in url:
-          resolvable = True
+          status = True
 
      if 'video44' in url:
-          resolvable = True
+          status = True
 
      if 'play44' in url:
-          resolvable = True
+          status = True
 
      if 'cheesestream' in url:
-          resolvable = True
+          status = True
 
-     return(resolvable)
+     return(status)
 
 def getHost(url):
      host = None
      hmf = urlresolver.HostedMediaFile(url)
      if hmf:
           host = hmf.get_host()
-          print 'ssssssss'+host
 
      if 'vidcrazy' in url:
           host = 'vidcrazy'
@@ -133,7 +133,38 @@ def getHost(url):
 
      if 'uploadcrazy' in url:
           host = 'uploadcrazy'
-     
+
+     if host.endswith('.com'):
+          host = host[:-4]
+     if host.endswith('.com/'):
+          host = host[:-5]
+     if host.endswith('.org'):
+          host = host[:-4]
+     if host.endswith('.eu'):
+          host = host[:-3]
+     if host.endswith('.ch'):
+          host = host[:-3]
+     if host.endswith('.in'):
+          host = host[:-3]
+     if host.endswith('.es'):
+          host = host[:-3]
+     if host.endswith('.tv'):
+          host = host[:-3]
+     if host.endswith('.net'):
+          host = host[:-4]
+     if host.endswith('.me'):
+          host = host[:-3]
+     if host.endswith('.ws'):
+          host = host[:-3]
+     if host.endswith('.sx'):
+          host = host[:-3]
+     if host.startswith('www.'):
+             host = host[4:]
+     if host.startswith('http://'):
+             host = host[7:]
+
+     host = host.title()
+
      return(host)
 
 def nameCleaner(name):
@@ -417,11 +448,14 @@ def addAnimeDir(name,url,mode,thumb, isfav):
           addon.add_directory(params, {'title':name},contextMenuItems, img= thumb, fanart=fanart)
 
 #Host directory function to be used when adding a file Host, hthumb stands for host thumb and should be grabbed using the 'GETHOSTTHUMB(host)' function before hand
-def addHDir(name,url,mode,thumb,hthumb):
+def addHDir(name,url,mode,thumb):
+     host = getHost(url)
+     if thumb == '':
+          thumb = GETHOSTTHUMB(host)
      fanart = artwork + '/main/fanart.jpg'
      name = re.sub('[()]','',name)
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'season':season, 'episode':episode, 'show':show}
-     addon.add_directory(params, {'title':name}, img=hthumb, fanart=fanart)
+     addon.add_directory(params, {'title':host}, img=thumb, fanart=fanart)
 
 #Episode directory function to be used when adding a Episode, all metadata scrapes and context menu items are handled within_________
 def addEDir(name,url,mode,thumb,show):
