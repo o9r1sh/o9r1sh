@@ -25,7 +25,7 @@ def TVCATEGORIES():
 def INDEX(url):
         types = None
         link = net.http_GET(url).content
-        match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">(.+?)</a>').findall(link)
+        match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">\r\n\r\n<img src="(.+?)" width=".+?" height="auto" title="(.+?)" class="alignleft" >').findall(link)
         np=re.compile("<span class='pages'>Page (.+?)</span>").findall(link)
         if len(np) > 0:
                 next_page = ''
@@ -43,7 +43,7 @@ def INDEX(url):
                         if settings.getSetting('nextpagetop') == 'true':
                                 main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
 
-        for url,name in match:
+        for url,thumbnail,name in match:
                 if '<img src=' in name:
                         continue
                 else:
@@ -56,7 +56,7 @@ def INDEX(url):
 
                         if types == 'episode':
                                 try:        
-                                        main.addEDir(name,url,'newMyVideoLinksVideoLinks','',show[0])
+                                        main.addEDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,show[0])
                                 except:
                                         continue
                                 
@@ -67,7 +67,7 @@ def INDEX(url):
                                 except:
                                         pass
                                 try:        
-                                        main.addMDir(name,url,'newMyVideoLinksVideoLinks','',year,False)      
+                                        main.addMDir(name,url,'newMyVideoLinksVideoLinks',thumbnail,year,False)      
                                 except:
                                         continue
         if len(np) > 0:

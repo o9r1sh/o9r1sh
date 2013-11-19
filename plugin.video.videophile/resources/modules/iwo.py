@@ -449,7 +449,7 @@ def MOVIE_INDEX(url):
                 except:
                         continue
         if len(np) > 0:
-                if settings.getSetting('nextpagetop') == 'true':
+                if settings.getSetting('nextpagebottom') == 'true':
                         main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoIndex',artwork + '/main/next.png')
 
         main.AUTOVIEW('movies')
@@ -462,7 +462,8 @@ def SERIES_INDEX(url):
                 next_page = np[0]
                 next_page = next_page.replace('&amp;','&')
                 next_page = next_page.replace('movies','tv-show')
-                main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoSeriesIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoSeriesIndex',artwork + '/main/next.png')
         
         for url,thumbnail in match:
                 head,sep,tail = url.partition('/tv-shows/')
@@ -482,6 +483,9 @@ def SERIES_INDEX(url):
                         main.addSDir(name,url,'iwoEpisodesIndex',thumbnail,False)
                 except:
                         continue
+        if settings.getSetting('nextpagebottom') == 'true':
+                main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'iwoSeriesIndex',artwork + '/main/next.png')
+
         main.AUTOVIEW('tvshows')
 
 def EPISODES_INDEX(url,name):
