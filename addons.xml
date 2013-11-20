@@ -21,11 +21,7 @@
 
 <addon id="plugin.video.videophile"
        name="VideoPhile"
-<<<<<<< HEAD
        version="1.1.1.6"
-=======
-       version="1.1.1.5"
->>>>>>> 051816eff42e68a03b2f942b4a8190f6f97e92d9
        provider-name="o9r1sh, Graphics by Marquerite">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
