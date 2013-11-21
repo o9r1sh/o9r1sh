@@ -85,9 +85,9 @@
 <setting id="hdmovies" type="bool" label="[COLOR blue]HD Movies[/COLOR]" default="true"/>
 
 
-<setting id="newmyvideolinksmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-1,false)"/>
+<setting id="newmyvideolinkshdmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-1,false)"/>
 
-<setting id="tvreleasemovies" type="bool" label="TV Release" default="true" enable="!eq(-5,false)"/>
+<setting id="tvreleasehdmovies" type="bool" label="TV Release" default="true" enable="!eq(-5,false)"/>
      
 
 <setting id="cartoons" type="bool" label="[COLOR blue]Cartoons[/COLOR]" default="true"/>

@@ -76,10 +76,10 @@ def MOVIESECTIONS():
                 main.addDir('WeWatchMoviesFree','none','wwmfCategories',artwork + '/main/wwmf.png')
         
 def HDMOVIESECTIONS():
-        if settings.getSetting('newmyvideolinksmovies') == 'true':
+        if settings.getSetting('newmyvideolinkshdmovies') == 'true':
                 main.addDir('NewMyVideoLinks Yify Movies','none','newMyVideoLinksHDMovies',artwork + '/main/nmvl.png')
 
-        if settings.getSetting('tvreleasemovies') == 'true':
+        if settings.getSetting('tvreleasehdmovies') == 'true':
                 main.addDir('TV Release','none','tvreleaseHDMovies',artwork + '/main/tvrelease.png')
         
 def TVSECTIONS():

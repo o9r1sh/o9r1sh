@@ -25,11 +25,7 @@ def TVCATEGORIES():
 def INDEX(url):
         types = None
         link = net.http_GET(url).content
-<<<<<<< HEAD
-        match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?"> <img src="(.+?)" width="80" height="119" title="(.+?)" class="alignleft"></a>').findall(link)
-=======
-        match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?">\r\n\r\n<img src="(.+?)" width=".+?" height="auto" title="(.+?)" class="alignleft" >').findall(link)
->>>>>>> 051816eff42e68a03b2f942b4a8190f6f97e92d9
+        match=re.compile('<a href="(.+?)" rel="bookmark" title=".+?"> <img src="(.+?)" width=".+?" height=".+?" title=".+?" class="alignleft" alt="(.+?)" /></a>').findall(link)
         np=re.compile("<span class='pages'>Page (.+?)</span>").findall(link)
         if len(np) > 0:
                 next_page = ''

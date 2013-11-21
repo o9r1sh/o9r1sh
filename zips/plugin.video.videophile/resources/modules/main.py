@@ -2,7 +2,7 @@
 #Main VideoPhile module by o9r1sh
 
 #Imports_____________________________________________________________________________________________________________________________
-import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,urlresolver,xbmc,os,xbmcaddon,mechanize
+import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,urlresolver,xbmc,os,xbmcaddon
 from metahandler import metahandlers
 
 from t0mm0.common.addon import Addon
@@ -660,21 +660,6 @@ def RESOLVE(name,url,thumb):
 
 #Used to resolve urls that urlresolver doesn't support________________________________________________________________________________
 def OTHER_RESOLVERS(url):
-     if 'vidx.to' in url:
-        br = mechanize.Browser()
-
-        response1 = br.open(url)
-
-        addon.show_countdown(20,'VidX.to','')
-        
-        br.select_form(nr=0)
-        response2 = br.submit()
-        link=response2.read()
-        response2.close()
-        xbmc.sleep(1000)
-        match=re.compile('file: "(.+?)"').findall(link)
-        url = match[0]
-
      if 'uploadcrazy' in url:
           link = net.http_GET(url).content
           links=re.compile("file': '(.+?)'").findall(link)

@@ -1,6 +1,6 @@
 #FreeMoviesAddict Module by o9r1sh September 2013
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os,mechanize
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
 
 from t0mm0.common.net import Net
@@ -82,11 +82,6 @@ def VIDEOLINKS(name,url,thumb):
                         except:
                                 continue
                         
-
-
-
-
-        
 def SEARCH():
         search = ''
         keyboard = xbmc.Keyboard(search,'Search')
