@@ -134,6 +134,12 @@ def getHost(url):
      if 'uploadcrazy' in url:
           host = 'uploadcrazy'
 
+     if 'ul.to' in url:
+          host = 'uploaded'
+
+     if 'bitshare' in url:
+          host = 'bitshare'
+
      if host.endswith('.com'):
           host = host[:-4]
      if host.endswith('.com/'):

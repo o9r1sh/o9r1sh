@@ -1,3 +1,8 @@
+Version 1.1.1.8
+Fixed TV Release
+Did up a few new tiles for hosters
+Small fixes to MyVideoLinks
+
 Version 1.1.1.7
 Fixed NewMyVideoLinks Again and Again.
 Removed Mechanize Code

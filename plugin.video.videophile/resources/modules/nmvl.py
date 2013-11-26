@@ -81,14 +81,18 @@ def INDEX(url):
                 main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb,year):
+        skip = 4
+        inc = 0
         link = net.http_GET(url).content
         match=re.compile('<li><a href="(.+?)">.+?</a></li>').findall(link)
         for url in match:
-                if main.resolvable(url):
-                        try:
-                                main.addHDir(name,url,'resolve','')
-                        except:
-                                continue
+                if inc > skip:
+                        if main.resolvable(url):
+                                try:
+                                        main.addHDir(name,url,'resolve','')
+                                except:
+                                        continue
+                inc += 1
 
 def SEARCH():
         search = ''
