@@ -5,7 +5,7 @@ import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 from t0mm0.common.net import Net
 net = Net()
 
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = main.artwork
 base_url = 'http://www.gogoanime.com'
 settings = main.settings
 

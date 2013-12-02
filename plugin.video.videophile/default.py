@@ -9,7 +9,7 @@ from t0mm0.common.addon import Addon
 addon = main.addon
 
 settings = xbmcaddon.Addon(id=addon_id)
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = main.artwork
 
 def CATEGORIES():
         if settings.getSetting('adult') == 'true':

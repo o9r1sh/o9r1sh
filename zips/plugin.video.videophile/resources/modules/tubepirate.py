@@ -6,7 +6,7 @@ from t0mm0.common.net import Net
 net = Net()
 
 
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = main.artwork
 base_url = 'http://www.tubepirate.com'
 settings = main.settings
 

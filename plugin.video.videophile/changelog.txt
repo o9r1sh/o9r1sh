@@ -1,3 +1,7 @@
+Version 1.1.1.9
+Fixed CartoonFreak
+Moved all artwork to a remote location
+
 Version 1.1.1.8
 Fixed TV Release
 Did up a few new tiles for hosters

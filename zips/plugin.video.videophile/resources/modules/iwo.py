@@ -3,7 +3,7 @@
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 import urlresolver
 
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = main.artwork
 base_url = 'http://www.iwatchonline.to'
 settings = main.settings
 

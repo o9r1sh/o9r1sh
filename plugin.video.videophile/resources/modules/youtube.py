@@ -2,7 +2,7 @@
 
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = main.artwork
 base_url = 'http://www.youtube.com'
 settings = main.settings
 

@@ -4,7 +4,7 @@ import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 from t0mm0.common.net import Net
 net = Net()
 
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = main.artwork
 base_url = 'http://www.cartoonfreak.net'
 settings = main.settings
 
@@ -76,7 +76,7 @@ def ANIMEMOVIES():
 def INDEX(url):
         o_url = url
         link = net.http_GET(url).content
-        match=re.compile('<li id="(.+?)"><div class="anime-list-item"><a href="(.+?)" class="thumbnail"><img data-src=".+?" alt=".+?" src="(.+?)" class="primary" /><span class="play"></span><span class=".+?">(.+?)</span><span class="anime-data">').findall(link)
+        match=re.compile('<a href="(.+?)" class=".+?"><img data-src=".+?" src="(.+?)" class="primary"/><span class="play"></span><span class=".+?">(.+?)</span>').findall(link)
         np=re.compile('<a class="pagination-next btn btn-inverse" href="(.+?)">').findall(link)
         if len(np) > 0:
                 if settings.getSetting('nextpagetop') == 'true':
@@ -84,7 +84,7 @@ def INDEX(url):
                         next_page = base_url + np_url
                         next_page = next_page.replace('&#038;','&')
                         main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'cartoonFreakIndex',artwork + '/main/next.png')
-        for vid,url,thumbnail,name in match:
+        for url,thumbnail,name in match:
                 if 'anime' in o_url:       
                         try:
                                 main.addAnimeDir(name,url,'cartoonFreakAnimeEpisodes',thumbnail,False)
@@ -107,14 +107,14 @@ def INDEX(url):
 
 def MOVIEINDEX(url):
         link = net.http_GET(url).content
-        match=re.compile('<li id="(.+?)"><div class="anime-list-item"><a href="(.+?)" class="thumbnail"><img data-src=".+?" alt=".+?" src="(.+?)" class="primary" /><span class="play"></span><span class=".+?">(.+?)</span><span class="anime-data">').findall(link)
+        match=re.compile('<a href="(.+?)" class=".+?"><img data-src=".+?" src="(.+?)" class="primary"/><span class="play"></span><span class=".+?">(.+?)</span>').findall(link)
         np=re.compile('<a class="pagination-next btn btn-inverse" href="(.+?)">').findall(link)
         if len(np) > 0:
                 np_url = np[0]
                 next_page = base_url + np_url
                 next_page = next_page.replace('&#038;','&')
                 main.addDir('Next Page',next_page,'cartoonFreakMovieIndex',artwork + '/main/next.png')
-        for vid,url,thumbnail,name in match:
+        for url,thumbnail,name in match:
                 try:
                         main.addMDir(name,url,'cartoonFreakMovieEpisodes',thumbnail,'',False)
                 except:

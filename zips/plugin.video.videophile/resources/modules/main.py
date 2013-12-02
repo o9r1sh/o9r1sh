@@ -47,7 +47,7 @@ host = addon.queries.get('host', '')
 
 #Define other needed global variables_____________________________________________________________________________________________________________________________
 settings = xbmcaddon.Addon(id=addon_id)
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+artwork = 'http://addonrepo.com/xbmchub/o9r1sh1/videophile/artwork'
 grab=metahandlers.MetaData()
 net = Net()
 
@@ -633,6 +633,7 @@ def GETHOSTTHUMB(host):
           host = 'nowvideo'
      
      host = artwork + '/hosts/' + host +'.png'
+     host = host.lower()
      return(host)
 
 #Function used for resolving video urls before  playback_____________________________________________________________________________     
