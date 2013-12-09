@@ -253,14 +253,10 @@ def INDEX(url):
 def ADULTINDEX(url):
         link = net.http_GET(url).content
         pages=re.compile("<a style=\'color:red;\' href=\'(.+?)'>(.+?)</a>").findall(link)
-        if len(pages) > 0:
-             if not 'search' in url:
-                  if url == base_url + 'index.php?genre=14':
-                          next_page = str(pages[10][0])
-                          addDir('Next Page',base_url + '/' + next_page,6,artwork + 'Icon_Next.jpg','dir',False)
-                  else:
-                          next_page = str(pages[11][0])
-                          addDir('Next Page',base_url + '/' + next_page,6,artwork + 'Icon_Next.jpg','dir',False)
+        
+        for url,name in pages:
+             if '&rsaquo' in name:
+                  addDir('Next Page',base_url +'/' + url,'adultIndex',artwork + 'Icon_Next.jpg','dir',False)
         
         match=re.compile('<img src="(.+?)" width=".+?" height=".+?" border=".+?" /></a></div></td>\n                           \n                            <td width=".+?" valign=".+?" class=".+?"  align=".+?"><p><strong>(.+?): </strong></p>\n                                <p>(.+?)</p>\n                              <p><span class=".+?"><a href="/(.+?)">').findall(link)
         for thumbnail,name,plot,url in match:
