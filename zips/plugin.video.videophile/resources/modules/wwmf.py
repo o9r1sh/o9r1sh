@@ -1,11 +1,7 @@
 #WeWatchMoviesFree Module by o9r1sh October 2013
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
-import urlresolver
 
-from t0mm0.common.net import Net
-net = Net()
-
+net = main.net
 artwork = main.artwork
 base_url = 'http://www.wewatchmoviesfree.net/'
 settings = main.settings

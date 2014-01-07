@@ -44,20 +44,23 @@
 
 <setting id="movies" type="bool" label="[COLOR blue]Movies[/COLOR]" default="true"/>
 
+<setting id="bmovies" type="bool" label="B-Movies" default="true" enable="!eq(-1,false)"/>
 
-<setting id="freemoviesaddict" type="bool" label="FreeMoviesAddict" default="true" enable="!eq(-1,false)"/>
+<setting id="freemoviesaddict" type="bool" label="FreeMoviesAddict" default="true" enable="!eq(-2,false)"/>
 
-<setting id="iwatchonlinemovies" type="bool" label="I-WatchOnline" default="true" enable="!eq(-2,false)"/>
+<setting id="iwatchonlinemovies" type="bool" label="I-WatchOnline" default="true" enable="!eq(-3,false)"/>
 
-<setting id="mooviemaniac" type="bool" label="MoovieManiac" default="true" enable="!eq(-3,false)"/>
+<setting id="mmline" type="bool" label="MegaMovieLine" default="true" enable="!eq(-4,false)"/>
 
-<setting id="newmyvideolinksmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-4,false)"/>
+<setting id="mooviemaniac" type="bool" label="MoovieManiac" default="true" enable="!eq(-5,false)"/>
 
-<setting id="tvreleasemovies" type="bool" label="TV Release" default="true" enable="!eq(-5,false)"/>
+<setting id="newmyvideolinksmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-6,false)"/>
 
-<setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true" enable="!eq(-6,false)"/>
+<setting id="tvreleasemovies" type="bool" label="TV Release" default="true" enable="!eq(-7,false)"/>
 
-<setting id="wwmf" type="bool" label="WeWatchMoviesFree" default="true" enable="!eq(-7,false)"/>
+<setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true" enable="!eq(-8,false)"/>
+
+<setting id="wwmf" type="bool" label="WeWatchMoviesFree" default="true" enable="!eq(-9,false)"/>
 
 
 <setting id="shows" type="bool" label="[COLOR blue]TV Shows[/COLOR]" default="true"/>
@@ -105,6 +108,10 @@
 
 <setting id="gogoanime" type="bool" label="GoGo Anime" default="true" enable="!eq(-2,false)"/>
 
+
+<setting id="music" type="bool" label="[COLOR blue]Music[/COLOR]" default="true"/>
+
+<setting id="metalVideo" type="bool" label="Metal Video" default="true" enable="!eq(-1,false)"/>
 
 <setting id="search" type="bool" label="[COLOR blue]Master Search[/COLOR]" default="true"/>
 

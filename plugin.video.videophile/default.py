@@ -1,14 +1,11 @@
 #VideoPhile addon by o9r1sh
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,filmikz,epornik,gogoanime,fullepisode,toonjet
+from resources.modules import channelcut,filmikz,epornik,gogoanime,fullepisode,toonjet,bmovies,mmline,metalvideo
 
-addon_id = 'plugin.video.videophile'
-from t0mm0.common.addon import Addon
+addon_id = main.addon_id
 addon = main.addon
-
-settings = xbmcaddon.Addon(id=addon_id)
+settings = main.settings
 artwork = main.artwork
 
 def CATEGORIES():
@@ -46,6 +43,8 @@ def CATEGORIES():
                 main.addDir('Cartoons','none','cartoonSections',artwork + '/main/cartoons.png')
         if settings.getSetting('anime') == 'true':
                 main.addDir('Anime','none','animeSections',artwork + '/main/anime.png')
+        if settings.getSetting('music') == 'true':
+                main.addDir('Music','none','musicSections',artwork + '/main/music.png')
         if settings.getSetting('favorites') == 'true':
                 main.addDir('Favorites','none','favorites',artwork + '/main/favorites.png')
         if settings.getSetting('search') == 'true':
@@ -54,11 +53,17 @@ def CATEGORIES():
                 main.addDir('Resolver Settings','none','resolverSettings',artwork + '/main/resolver.png')
 
 def MOVIESECTIONS():
+        if settings.getSetting('bmovies') == 'true':
+                main.addDir('B-Movies','none','bMoviesCategories',artwork + '/main/bmovies.png')
+
         if settings.getSetting('freemoviesaddict') == 'true':
                 main.addDir('FreeMoviesAddict','none','fmaCategories',artwork + '/main/fma.png')
 
         if settings.getSetting('iwatchonlinemovies') == 'true':
                 main.addDir('I-WatchOnline','none','iwoCategories',artwork + '/main/iwatchonline.png')
+
+        if settings.getSetting('mmline') == 'true':
+                main.addDir('MegaMovieLine','none','mmlineCategories',artwork + '/main/mmline.png')
 
         if settings.getSetting('mooviemaniac') == 'true':
                 main.addDir('MoovieManiac','none','moovieManiacCategories',artwork + '/main/mmaniac.png')
@@ -74,7 +79,8 @@ def MOVIESECTIONS():
 
         if settings.getSetting('wwmf') == 'true':
                 main.addDir('WeWatchMoviesFree','none','wwmfCategories',artwork + '/main/wwmf.png')
-        
+
+
 def HDMOVIESECTIONS():
         if settings.getSetting('newmyvideolinkshdmovies') == 'true':
                 main.addDir('NewMyVideoLinks Yify Movies','none','newMyVideoLinksHDMovies',artwork + '/main/nmvl.png')
@@ -120,6 +126,11 @@ def ANIMESECTIONS():
         if settings.getSetting('gogoanime') == 'true':
                 main.addDir('GoGo Anime','none','gogoAnimeCategories',artwork + '/main/gogoanime.png')
 
+
+def musicSections():
+        if settings.getSetting('metalVideo') == 'true':
+                main.addDir('Metal Video','none','metalVideoCategories',artwork + '/main/metalvideo.png')
+
 def ADULT():
         text_file = open(xbmc.translatePath("special://home/userdata/addon_data/plugin.video.videophile/sec.0"), "r")
         line = file.readline(text_file)
@@ -151,6 +162,12 @@ def MASTERSEARCH():
                 search = search.replace(' ','+')
 
         threads = []
+
+        if settings.getSetting('mmline') == 'true':
+                try:
+                        threads.append(main.Thread(mmline.MASTERSEARCH(search)))
+                except:
+                        pass
         if settings.getSetting('wwmf') == 'true':
                 try:
                         threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
@@ -179,46 +196,6 @@ def MASTERSEARCH():
         if settings.getSetting('fullepisode') == 'true':
                 try:
                         threads.append(main.Thread(fullepisode.MASTERSEARCH(search)))
-                except:
-                        pass
-        [i.start() for i in threads]
-        [i.join() for i in threads]
-
-def COLLECTIVESEARCH(name):
-        threads = []
-        if settings.getSetting('mmline') == 'true':
-                try:
-                        threads.append(main.Thread(mmline.MASTERSEARCH(name)))
-                except:
-                        pass
-        if settings.getSetting('wwmf') == 'true':
-                try:
-                        threads.append(main.Thread(wwmf.MASTERSEARCH(name)))
-                except:
-                        pass
-        if settings.getSetting('newmyvideolinks') == 'true':
-                try:
-                        threads.append(main.Thread(nmvl.MASTERSEARCH(name)))
-                except:
-                        pass
-        if settings.getSetting('channelcut') == 'true':
-                try:
-                        threads.append(main.Thread(channelcut.MASTERSEARCH(name)))
-                except:
-                        pass
-        if settings.getSetting('wsoeu') == 'true':
-                try:
-                        threads.append(main.Thread(wsoeu.MASTERSEARCH(name)))
-                except:
-                        pass
-        if settings.getSetting('tvrelease') == 'true':
-                try:
-                        threads.append(main.Thread(tvrelease.MASTERSEARCH(name)))
-                except:
-                        pass
-        if settings.getSetting('fullepisode') == 'true':
-                try:
-                        threads.append(main.Thread(fullepisode.MASTERSEARCH(name)))
                 except:
                         pass
         [i.start() for i in threads]
@@ -296,13 +273,13 @@ elif mode=='masterSearch':
         print ""+url
         MASTERSEARCH()
 
-elif mode=='collectiveSearch':
-        print ""+url
-        COLLECTIVESEARCH(name)
-
 elif mode=='adultSections':
         print ""+url
         ADULT()
+
+elif mode=='musicSections':
+        print ""+url
+        musicSections()
 
 elif mode=='resolverSettings':
         print ""+url
@@ -1138,5 +1115,153 @@ elif mode=='toonJetCategories':
 elif mode=='toonJetIndex':
         print ""+url
         toonjet.INDEX(url)
+
+elif mode=='bMoviesCategories':
+        print ""+url
+        bmovies.categories()
+
+elif mode=='bMoviesIndex':
+        print ""+url
+        bmovies.index(url)
+
+elif mode=='bMoviesVideoLinks':
+        print ""+url
+        bmovies.videoLinks(url,name)
+#MegaMovieLine Modes___________________________________________________________
+elif mode=='mmlineCategories':
+        print ""+url
+        mmline.CATEGORIES()
+
+elif mode=='mmlineIndex':
+        print ""+url
+        mmline.INDEX(url)
+
+elif mode=='mmlineGenres':
+        print ""+url
+        mmline.GENRES()
+
+elif mode=='mmlineVideoLinks':
+        print ""+url
+        mmline.VIDEOLINKS(name,url,thumb)
+
+elif mode=='mmlineSearch':
+        print ""+url
+        mmline.SEARCH()
+
+elif mode=='mmlineAction':
+        print ""+url
+        mmline.ACION()
+
+elif mode=='mmlineAdventure':
+        print ""+url
+        mmline.ADVENTURE()
+        
+elif mode=='mmlineAnimation':
+        print ""+url
+        mmline.ANIMATION()
+        
+elif mode=='mmlineBiography':
+        print ""+url
+        mmline.BIOGRAPHY()
+        
+elif mode=='mmlineComedy':
+        print ""+url
+        mmline.COMEDY()
+        
+elif mode=='mmlineCrime':
+        print ""+url
+        mmline.CRIME()
+        
+elif mode=='mmlineDocumentary':
+        print ""+url
+        mmline.DOCUMENTARY()
+        
+elif mode=='mmlineDrama':
+        print ""+url
+        mmline.DRAMA()
+        
+elif mode=='mmlineFamily':
+        print ""+url
+        mmline.FAMILY()
+
+elif mode=='mmlineHistory':
+        print ""+url
+        mmline.HISTORY()
+        
+elif mode=='mmlineHorror':
+        print ""+url
+        mmline.HORROR()
+        
+elif mode=='mmlineMusic':
+        print ""+url
+        mmline.MUSIC()
+        
+elif mode=='mmlineMusical':
+        print ""+url
+        mmline.MUSICAL()
+        
+elif mode=='mmlineMystery':
+        print ""+url
+        mmline.MYSTERY()
+        
+elif mode=='mmlineRomance':
+        print ""+url
+        mmline.ROMANCE()
+        
+elif mode=='mmlineScifi':
+        print ""+url
+        mmline.SCIFI()
+        
+elif mode=='mmlineSport':
+        print ""+url
+        mmline.SPORT()
+        
+elif mode=='mmlineThriller':
+        print ""+url
+        mmline.THRILLER()
+
+elif mode=='mmlineWar':
+        print ""+url
+        mmline.WAR()
+        
+elif mode=='mmlineWestern':
+        print ""+url
+        mmline.WESTERN()
+        
+elif mode=='mmlineIndian':
+        print ""+url
+        mmline.INDIAN()
+        
+elif mode=='mmlineShort':
+        print ""+url
+        mmline.SHORT()
+
+elif mode=='mmlineClassic':
+        print ""+url
+        mmline.CLASSIC()
+#Metal Video Modes______________________________________________________________
+elif mode=='metalVideoCategories':
+        print ""+url
+        metalvideo.categories()
+
+elif mode=='metalVideoIndex':
+        print ""+url
+        metalvideo.index(url)
+
+elif mode=='metalVideoVideoLinks':
+        print ""+url
+        metalvideo.videoLinks(url,name)
+
+elif mode=='metalVideoGenres':
+        print ""+url
+        metalvideo.genres()
+
+elif mode=='metalVideoSearch':
+        print ""+url
+        metalvideo.search()
+
+
+
+
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))

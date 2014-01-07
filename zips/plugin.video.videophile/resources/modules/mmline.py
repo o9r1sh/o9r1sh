@@ -1,8 +1,9 @@
 #MegaMovieLine Module by o9r1sh October 2013
+import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 
-import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os,mechanize
-
+net = main.net
 artwork = main.artwork
+settings = main.settings
 base_url = 'http://www.megamovieline.com'
 
 def CATEGORIES():
@@ -210,16 +211,13 @@ def CLASSIC():
         
 
 def INDEX(url):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)"><img src="(.+?)" width=".+?" title=".+?" alt="(.+?)"></a>').findall(link)
         np=re.compile('<a href="/(.+?) " >').findall(link)
         if len(np) > 0:
                 np_url = base_url + '/' + str(np[0])
-                main.addDir('Next Page',np_url,'mmlineIndex',artwork + '/main/next.png')
+                if settings.getSetting('nextpagetop') == 'true':
+                        main.addDir('Next Page',np_url,'mmlineIndex',artwork + '/main/next.png')
         inc = 0
         if len(match) > 0:
                 for url,thumbnail,name in match:
@@ -227,29 +225,25 @@ def INDEX(url):
                         if inc > 8:
                                 movie_name = name[:-6]
                                 year = name[-6:]
-                                movie_name = movie_name.decode('UTF-8','ignore')
                                 
-                                
-                                main.addMDir(movie_name,base_url + url,'mmlineVideoLinks',base_url+thumbnail,year,False)
+                                try:
+                                        main.addMDir(movie_name,base_url + url,'mmlineVideoLinks',base_url+thumbnail,year,False)
+                                except:
+                                        pass
+        if len(np) > 0:
+                if settings.getSetting('nextpagebottom') == 'true':
+                        main.addDir('Next Page',np_url,'mmlineIndex',artwork + '/main/next.png')
 
                 
         main.AUTOVIEW('movies')
 
 def VIDEOLINKS(name,url,thumb):
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
+        link = net.http_GET(url).content
         match=re.compile('<a target="_blank" href="(.+?)">.+?</a>').findall(link)
         for url in match:
-        
-                hmf = urlresolver.HostedMediaFile(url)
-                if hmf:
-                        host = hmf.get_host()
-                        hthumb = main.GETHOSTTHUMB(host)
+                if main.resolvable(url):
                         try:
-                                main.addHDir(name,url,'resolve',thumb,hthumb)
+                                main.addHDir(name,url,'resolve','')
                         except:
                                 continue
                         

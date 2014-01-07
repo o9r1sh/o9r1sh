@@ -1,9 +1,7 @@
-#'' module by o9r1sh
-
+#Full Episode.info module by o9r1sh
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
-from t0mm0.common.net import Net
-net = Net()
+net = main.net
 
 artwork = main.artwork
 base_url = 'http://fullepisode.info'
@@ -26,7 +24,7 @@ def INDEX(url):
                 head,sep,tail = name.partition('Season')
                 show = head
                 numbers = tail.replace('Episode','x')
-                numbers = numbers.replace(' ','')
+                numbers = numbers.replace(' x ','x')
                 name = show + numbers
                 try:
                         main.addEDir(name,url,'fullEpisodeVideoLinks','',show)

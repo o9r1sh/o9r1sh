@@ -1,10 +1,7 @@
 #TV Release Module by o9r1sh September 2013
 import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
-import urlresolver
 
-from t0mm0.common.net import Net
-net = Net()
-
+net = main.net
 artwork = main.artwork
 base_url = 'http://tv-release.net'
 settings = main.settings

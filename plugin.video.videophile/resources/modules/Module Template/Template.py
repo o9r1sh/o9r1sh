@@ -1,19 +1,17 @@
 #'' module by o9r1sh
-
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,main,urlresolver,xbmc,os
 
-from t0mm0.common.net import Net
-net = Net()
-
-artwork = xbmc.translatePath(os.path.join('special://home/addons/plugin.video.videophile/resources/artwork/', ''))
+net = main.net
+artwork = main.artwork
+settings = main.settings
 base_url = ''
 
-def CATEGORIES():
+def categories():
         main.addDir('A-Z','none','mode',artwork + '/main/a-z.png')
         main.addDir('Latest Episodes',base_url + 'url','mode',artwork + '/main/recentlyadded.png')
         main.addDir('Search','none','mode',artwork + '/main/search.png')
 
-def LETTERS():
+def letters():
         main.addDir("#",base_url + 'url' ,'mode', artwork + '/letters/num.png')
         main.addDir("A",base_url + 'url','mode',artwork + '/letters/a.png')
         main.addDir("B",base_url + 'url','mode',artwork + '/letters/b.png')
@@ -42,7 +40,7 @@ def LETTERS():
         main.addDir("Y",base_url + 'url','mode',artwork + '/letters/y.png')
         main.addDir("Z",base_url + 'url','mode',artwork + '/letters/z.png')
                        
-def INDEX(url):
+def index(url):
         link = net.http_GET(url).content
         match=re.compile('<a href="(.+?)" title="(.+?)"><img src="(.+?)" width="130" border=".+?" height=".+?" /></a>').findall(link)
 
@@ -53,7 +51,7 @@ def INDEX(url):
         main.AUTOVIEW('tvshows')
 
 
-def INDEXEPS(url,name):
+def indexEps(url,name):
         link = net.http_GET(url).content
         match=re.compile('<li>(.+?)<a href="(.+?)">').findall(link)
                         
@@ -66,19 +64,18 @@ def INDEXEPS(url,name):
 
         main.AUTOVIEW('episodes')
 
-def VIDEOLINKS(url,name,thumb):
+def videoLinks(url,name):
         link = net.http_GET(url).content
         match=re.compile('<a target="_blank" id="hovered" href="(.+?)">.+?</a>').findall(link)
         for url in match:
                 if main.resolvable(url):
-                        hthumb = main.GETHOSTTHUMB(main.getHost(url))
-                try:
-                        main.addHDir(name,hmf.get_url(),'resolve',thumb,hthumb)
-                except:
-                        continue
+                        try:
+                                main.addHDir(name,hmf.get_url(),'resolve','')
+                        except:
+                                continue
        
          
-def SEARCH():
+def search():
         search = ''
         keyboard = xbmc.Keyboard(search,'Search')
         keyboard.doModal()

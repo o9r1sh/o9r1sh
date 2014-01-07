@@ -312,8 +312,6 @@ def addMDir(name,url,mode,thumb,year,isfav):
 
      contextMenuItems.append(('Movie Information', 'XBMC.Action(Info)'))
      
-     if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
-                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=51&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
      if settings.getSetting('metadata') == 'true':
           addon.add_directory(params, meta, contextMenuItems, img= thumb, fanart=fanart)
      else:
@@ -354,9 +352,6 @@ def addSDir(name,url,mode,thumb,isfav):
      if isfav == True:
           contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'types':'tvshow', 'rmode':mode})))
 
-
-     if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
-                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
      if settings.getSetting('metadata') == 'true':
           addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
      else:
@@ -397,9 +392,6 @@ def addToonDir(name,url,mode,thumb,isfav):
      if isfav == True:
           contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'types':'cartoon', 'rmode':mode})))
 
-
-     if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
-                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
      if settings.getSetting('metadata') == 'true':
           addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
      else:
@@ -445,9 +437,6 @@ def addAnimeDir(name,url,mode,thumb, isfav):
      if isfav == True:
           contextMenuItems.append(('Remove From VideoPhile Favourites', 'XBMC.RunPlugin(%s)' % addon.build_plugin_url({'url':url, 'mode':'removeFavorite', 'name':name, 'thumb':thumb, 'types':'anime', 'rmode':mode})))
 
-
-     if os.path.exists(xbmc.translatePath("special://home/addons/plugin.video.collective")):
-                        contextMenuItems.append(('Search The Collective', 'XBMC.Container.Update(%s?mode=52&url=url&name=%s)' % ('plugin://plugin.video.collective/', name)))
      if settings.getSetting('metadata') == 'true':
           addon.add_directory(params, meta, contextMenuItems, img=thumb, fanart=fanart)
      else:
@@ -455,9 +444,18 @@ def addAnimeDir(name,url,mode,thumb, isfav):
 
 #Host directory function to be used when adding a file Host, hthumb stands for host thumb and should be grabbed using the 'GETHOSTTHUMB(host)' function before hand
 def addHDir(name,url,mode,thumb):
-     host = getHost(url)
-     if thumb == '':
-          thumb = GETHOSTTHUMB(host)
+     host = 'Play'
+
+     try:
+          host = getHost(url)
+          if thumb == '':
+               thumb = GETHOSTTHUMB(host)
+     except:
+          pass
+
+     if host == 'Play':
+          thumb = artwork + '/hosts/play.png'
+          
      fanart = artwork + '/main/fanart.jpg'
      name = re.sub('[()]','',name)
      params = {'url':url, 'mode':mode, 'name':name, 'thumb':thumb, 'year':year, 'types':types, 'season':season, 'episode':episode, 'show':show}
