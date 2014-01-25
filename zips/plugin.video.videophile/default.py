@@ -1,7 +1,7 @@
 #VideoPhile addon by o9r1sh
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
 from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
-from resources.modules import channelcut,filmikz,epornik,gogoanime,fullepisode,toonjet,bmovies,mmline,metalvideo
+from resources.modules import channelcut,filmikz,epornik,gogoanime,fullepisode,toonjet,bmovies,mmline,metalvideo, sotw
 
 addon_id = main.addon_id
 addon = main.addon
@@ -43,6 +43,8 @@ def CATEGORIES():
                 main.addDir('Cartoons','none','cartoonSections',artwork + '/main/cartoons.png')
         if settings.getSetting('anime') == 'true':
                 main.addDir('Anime','none','animeSections',artwork + '/main/anime.png')
+        if settings.getSetting('shortsandclips') == 'true':
+                main.addDir('Shorts And Clips','none','shortsAndClips',artwork + '/main/shortsandclips.png')
         if settings.getSetting('music') == 'true':
                 main.addDir('Music','none','musicSections',artwork + '/main/music.png')
         if settings.getSetting('favorites') == 'true':
@@ -51,6 +53,7 @@ def CATEGORIES():
                 main.addDir('Master Search','none','masterSearch',artwork + '/main/search.png')
         if settings.getSetting('resolver') == 'true':
                 main.addDir('Resolver Settings','none','resolverSettings',artwork + '/main/resolver.png')
+
 
 def MOVIESECTIONS():
         if settings.getSetting('bmovies') == 'true':
@@ -126,6 +129,9 @@ def ANIMESECTIONS():
         if settings.getSetting('gogoanime') == 'true':
                 main.addDir('GoGo Anime','none','gogoAnimeCategories',artwork + '/main/gogoanime.png')
 
+def shortsAndClips():
+        if settings.getSetting('sotw') == 'true':
+                main.addDir('Short Of The Week','none','sotwCategories',artwork + '/main/sotw.png')
 
 def musicSections():
         if settings.getSetting('metalVideo') == 'true':
@@ -236,9 +242,9 @@ if mode==None or url==None or len(url)<1:
         print ""
         CATEGORIES()
 
-elif mode=='addFavorite':
+elif mode=='shortsAndClips':
         print ""+url
-        main.addFavorite()
+        shortsAndClips()
 
 elif mode=='removeFavorite':
         print ""+url
@@ -1259,7 +1265,26 @@ elif mode=='metalVideoGenres':
 elif mode=='metalVideoSearch':
         print ""+url
         metalvideo.search()
+#Short Of The Week Modes_________________________________________________________
+elif mode=='sotwCategories':
+        print ""+url
+        sotw.categories()
 
+elif mode=='sotwSections':
+        print ""+url
+        sotw.sections(url) 
+
+elif mode=='sotwIndex':
+        print ""+url
+        sotw.index(url) 
+
+elif mode=='sotwSearch':
+        print ""+url
+        sotw.search()
+
+elif mode=='sotwVideoLinks':
+        print ""+url
+        sotw.videoLinks(url,name) 
 
 
 

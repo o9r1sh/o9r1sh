@@ -109,6 +109,11 @@
 <setting id="gogoanime" type="bool" label="GoGo Anime" default="true" enable="!eq(-2,false)"/>
 
 
+<setting id="shortsandclips" type="bool" label="[COLOR blue]Shorts And Clips[/COLOR]" default="true"/>
+
+<setting id="sotw" type="bool" label="Short Of The Week" default="true" enable="!eq(-1,false)"/>
+
+
 <setting id="music" type="bool" label="[COLOR blue]Music[/COLOR]" default="true"/>
 
 <setting id="metalVideo" type="bool" label="Metal Video" default="true" enable="!eq(-1,false)"/>

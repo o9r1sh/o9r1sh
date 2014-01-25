@@ -70,7 +70,7 @@ def videoLinks(url,name):
         for url in match:
                 if main.resolvable(url):
                         try:
-                                main.addHDir(name,hmf.get_url(),'resolve','')
+                                main.addHDir(name,url,'resolve','')
                         except:
                                 continue
        

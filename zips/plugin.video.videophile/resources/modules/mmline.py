@@ -217,7 +217,7 @@ def INDEX(url):
         if len(np) > 0:
                 np_url = base_url + '/' + str(np[0])
                 if settings.getSetting('nextpagetop') == 'true':
-                        main.addDir('Next Page',np_url,'mmlineIndex',artwork + '/main/next.png')
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'mmlineIndex',artwork + '/main/next.png')
         inc = 0
         if len(match) > 0:
                 for url,thumbnail,name in match:
@@ -232,7 +232,7 @@ def INDEX(url):
                                         pass
         if len(np) > 0:
                 if settings.getSetting('nextpagebottom') == 'true':
-                        main.addDir('Next Page',np_url,'mmlineIndex',artwork + '/main/next.png')
+                        main.addDir('[COLOR blue]Next Page[/COLOR]',np_url,'mmlineIndex',artwork + '/main/next.png')
 
                 
         main.AUTOVIEW('movies')
