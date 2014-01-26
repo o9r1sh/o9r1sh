@@ -1,7 +1,0 @@
-Version 1.0
-Initial Release
-
-Version 1.1
-Added option to allow adult content.
-Removed Nowdownload and BillionUpload Links from the list.
-
