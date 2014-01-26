@@ -261,7 +261,11 @@ def addDir(name,url,mode,thumb,console):
      addon.add_directory(params, {'title':name}, contextmenu_items=contextMenuItems, context_replace=True, img= thumb, fanart=fanart)
 
 def addGDir(name,url,mode,thumb,console):
-     meta = scrapeTitle(name,console)
+
+     meta = []
+
+     if settings.getSetting('meta') == 'true':
+          meta = scrapeTitle(name,console)
 
      contextMenuItems = []
      

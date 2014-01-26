@@ -4,6 +4,8 @@
 
 <setting id="dl_path" type="folder" label="Download Path" default="" />
 <setting id="artworkFolders" type="bool" label="Generate Artwork Folders" default="true" />
+<setting id="meta" type="bool" label="Scrape Game Information" default="true" />
+
 
 </category>
 

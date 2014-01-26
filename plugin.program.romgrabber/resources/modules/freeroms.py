@@ -42,6 +42,17 @@ def lettersIndex(url):
 def index(url):
      link = net.http_GET(url).content
      match=re.compile('<td align=left nowrap><a href="(.+?)">(.+?)</a>').findall(link)
+     pages=re.compile('<a href="(.+?)"><font size=3><B><I>(.+?)</I>').findall(link)
+     skipPages = len(pages) / 2
+     inc = 1
+
+     for url, name in pages:
+          if not inc > skipPages:
+               name = '[COLOR blue]%s [/COLOR]' % console + '[COLOR blue]Roms Letters [/COLOR]' + '[COLOR blue]%s [/COLOR]' % name
+               art = xbmc.translatePath('special://home/addons/plugin.program.romgrabber/icon.png')
+               main.addDir(name,url,'freeromsIndex',art,console)
+          inc += 1
+
      for url,name in match:
           if '<' in name:
                head,sep,tail = name.partition('<')
