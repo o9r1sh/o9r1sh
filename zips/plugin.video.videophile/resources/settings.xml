@@ -60,8 +60,6 @@
 
 <setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true" enable="!eq(-8,false)"/>
 
-<setting id="wwmf" type="bool" label="WeWatchMoviesFree" default="true" enable="!eq(-9,false)"/>
-
 
 <setting id="shows" type="bool" label="[COLOR blue]TV Shows[/COLOR]" default="true"/>
 
@@ -90,23 +88,19 @@
 
 <setting id="newmyvideolinkshdmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-1,false)"/>
 
-<setting id="tvreleasehdmovies" type="bool" label="TV Release" default="true" enable="!eq(-5,false)"/>
+<setting id="tvreleasehdmovies" type="bool" label="TV Release" default="true" enable="!eq(-2,false)"/>
      
 
 <setting id="cartoons" type="bool" label="[COLOR blue]Cartoons[/COLOR]" default="true"/>
 
 
-<setting id="cartoonfreakcartoons" type="bool" label="Cartoon Freak" default="true" enable="!eq(-1,false)"/>
-
-<setting id="toonjet" type="bool" label="ToonJet" default="true" enable="!eq(-2,false)"/>
+<setting id="toonjet" type="bool" label="ToonJet" default="true" enable="!eq(-1,false)"/>
 
 
 <setting id="anime" type="bool" label="[COLOR blue]Anime[/COLOR]" default="true"/>
 
 
-<setting id="cartoonfreakanime" type="bool" label="Cartoon Freak" default="true" enable="!eq(-1,false)"/>
-
-<setting id="gogoanime" type="bool" label="GoGo Anime" default="true" enable="!eq(-2,false)"/>
+<setting id="gogoanime" type="bool" label="GoGo Anime" default="true" enable="!eq(-1,false)"/>
 
 
 <setting id="shortsandclips" type="bool" label="[COLOR blue]Shorts And Clips[/COLOR]" default="true"/>

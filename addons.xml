@@ -42,7 +42,7 @@
 
 <addon id="plugin.video.videophile"
        name="VideoPhile"
-       version="1.1.2.3"
+       version="1.1.2.4"
        provider-name="o9r1sh, Graphics by Marquerite">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -74,7 +74,7 @@ Special thanks to Marquerite for the outstanding work on the graphics and To Eld
 	<extension point="xbmc.addon.metadata">
 		<summary>Install Addons from o9r1sh</summary>
 		<description>Download and install addons from o9r1sh. For OFFICIAL !! Support Visit XBMCHUB.COM
-Addons Inside - VideoPhiles, Filmikz, FreeRoms Downloader</description>
+Addons Inside - VideoPhile, Filmikz, FreeRoms Downloader</description>
 
 	<platform>all</platform>
 	</extension>

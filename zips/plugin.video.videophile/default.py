@@ -1,6 +1,6 @@
 #VideoPhile addon by o9r1sh
 import urllib,urllib2,re,xbmcplugin,xbmcgui,sys,xbmc,urlresolver,xbmcaddon,os
-from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,wwmf,iwo,freeomovie,tvrelease,tubepirate,cartoonfreak
+from resources.modules import main,mooviemaniac,wsoeu,youtube,nmvl,fma,zmovie,iwo,freeomovie,tvrelease,tubepirate
 from resources.modules import channelcut,filmikz,epornik,gogoanime,fullepisode,toonjet,bmovies,mmline,metalvideo, sotw
 
 addon_id = main.addon_id
@@ -80,9 +80,6 @@ def MOVIESECTIONS():
         if settings.getSetting('zmovie') == 'true':
                 main.addDir('Watch-Movies / Z-Movie','none','zmovieCategories',artwork + '/main/zmovie.png')
 
-        if settings.getSetting('wwmf') == 'true':
-                main.addDir('WeWatchMoviesFree','none','wwmfCategories',artwork + '/main/wwmf.png')
-
 
 def HDMOVIESECTIONS():
         if settings.getSetting('newmyvideolinkshdmovies') == 'true':
@@ -118,14 +115,10 @@ def DOCSECTIONS():
                 main.addDir('Discovery Channel Documentaries','http://www.youtube.com/results?search_sort=video_date_uploaded&filters=video%2C+long&search_query=discovery+channel','youtubeIndex',artwork + '/main/discovery.png')
                               
 def CARTOONSECTIONS():
-        if settings.getSetting('cartoonfreakcartoons') == 'true':
-                main.addDir('Cartoon Freak','none','cartoonFreakToons',artwork + '/main/cartoonfreak.png')
         if settings.getSetting('toonjet') == 'true':
                 main.addDir('ToonJet','none','toonJetCategories',artwork + '/main/toonjet.png')
 
 def ANIMESECTIONS():
-        if settings.getSetting('cartoonfreakanime') == 'true':
-                main.addDir('Cartoon Freak','none','cartoonFreakAnime',artwork + '/main/cartoonfreak.png')
         if settings.getSetting('gogoanime') == 'true':
                 main.addDir('GoGo Anime','none','gogoAnimeCategories',artwork + '/main/gogoanime.png')
 
@@ -172,11 +165,6 @@ def MASTERSEARCH():
         if settings.getSetting('mmline') == 'true':
                 try:
                         threads.append(main.Thread(mmline.MASTERSEARCH(search)))
-                except:
-                        pass
-        if settings.getSetting('wwmf') == 'true':
-                try:
-                        threads.append(main.Thread(wwmf.MASTERSEARCH(search)))
                 except:
                         pass
         if settings.getSetting('newmyvideolinks') == 'true':
@@ -411,30 +399,6 @@ elif mode=='zmovieCategories':
 elif mode=='zmovieVideoLinks':
         print ""+url
         zmovie.VIDEOLINKS(name,url,thumb)
-#We Watch Movies Free___________________________________________________________
-elif mode=='wwmfCategories':
-        print ""+url
-        wwmf.CATEGORIES()
-        
-elif mode=='wwmfIndex':
-        print ""+url
-        wwmf.INDEX(url)
-
-elif mode=='wwmfLetters':
-        print ""+url
-        wwmf.LETTERS()
-
-elif mode=='wwmfGenres':
-        print ""+url
-        wwmf.GENRES()
-
-elif mode=='wwmfSearch':
-        print ""+url
-        wwmf.SEARCH()
-
-elif mode=='wwmfVideoLinks':
-        print ""+url
-        wwmf.VIDEOLINKS(name,url,thumb)
 #I-WatchOnline modes____________________________________________________________
 elif mode=='iwoCategories':
         print ""+url
@@ -760,46 +724,6 @@ elif mode=='tubePirateMostActorIndex':
 elif mode=='tubePirateGenres':
         print ""+url
         tubepirate.GENRES()
-#CartoonFreak Modes_____________________________________________________________
-elif mode=='cartoonFreakToons':
-        print ""+url
-        cartoonfreak.CARTOONS()
-
-elif mode=='cartoonFreakAnime':
-        print ""+url
-        cartoonfreak.ANIME()
-
-elif mode=='cartoonFreakAnimeSeries':
-        print ""+url
-        cartoonfreak.ANIMESERIES()
-
-elif mode=='cartoonFreakAnimeMovies':
-        print ""+url
-        cartoonfreak.ANIMEMOVIES()
-
-elif mode=='cartoonFreakIndex':
-        print ""+url
-        cartoonfreak.INDEX(url)
-
-elif mode=='cartoonFreakMovieIndex':
-        print ""+url
-        cartoonfreak.MOVIEINDEX(url)
-
-elif mode=='cartoonFreakEpisodes':
-        print ""+url
-        cartoonfreak.EPISODES(url)
-
-elif mode=='cartoonFreakAnimeEpisodes':
-        print ""+url
-        cartoonfreak.ANIMEEPISODES(url,thumb)
-
-elif mode=='cartoonFreakMovieEpisodes':
-        print ""+url
-        cartoonfreak.MOVIEEPISODES(url,thumb)
-
-elif mode=='cartoonFreakVideoLinks':
-        print ""+url
-        cartoonfreak.VIDEOLINKS(name,url,thumb)
 #ChannelCut Modes_______________________________________________________________
 elif mode=='channelCutIndex':
         print ""+url

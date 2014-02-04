@@ -101,7 +101,6 @@ def VIDEOLINKS(name,url,thumb):
         link = net.http_GET(url).content
         match=re.compile('class="atest" target="_blank"   href="(.+?)">').findall(link)
         for url in match:
-                hmf = urlresolver.HostedMediaFile(url)
                 if main.resolvable(url):
                         try:
                                 main.addHDir(name,url,'resolve','')

@@ -8,7 +8,7 @@
 	<extension point="xbmc.addon.metadata">
 		<summary>Install Addons from o9r1sh</summary>
 		<description>Download and install addons from o9r1sh. For OFFICIAL !! Support Visit XBMCHUB.COM
-Addons Inside - VideoPhiles, Filmikz, FreeRoms Downloader</description>
+Addons Inside - VideoPhile, Filmikz, FreeRoms Downloader</description>
 		
 	<platform>all</platform>
 	</extension>
