@@ -423,7 +423,7 @@ def scrapeTitle(name,console):
                link = net.http_GET(gameUrl).content
                imageLink = net.http_GET(imageUrl).content
 
-               match=re.compile('<div class="pod game_summary"><div class="head"><h2 class="title">Description</h2></div><div class="body"><div class="details">(.+?)</div></div>').findall(link)
+               match=re.compile('<div class="head"><h2 class="title">Description</h2></div><div class="body game_desc"><div class="desc">(.+?)</div>').findall(link)
                imageMatch=re.compile('<a href=".+?"><img class=".+?" src="(.+?)" alt="(.+?)" />').findall(imageLink)
                companyMatch=re.compile('href="/features/company/.+?">(.+?)</a></li>').findall(link)
 
