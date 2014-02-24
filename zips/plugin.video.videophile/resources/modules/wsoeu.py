@@ -210,24 +210,18 @@ def INDEXEPS(url,name):
 
 def VIDEOLINKS(url,name,thumb):
         link = net.http_GET(url).content
-        match=re.compile('<a target="_blank" id="hovered" href="(.+?)">.+?</a>').findall(link)
+        match=re.compile('<a target="_blank" href="(.+?)">.+?</a>').findall(link)
         for url in match:
                 if 'fanstash' in url:
                         continue
                 else:
                         
-                        try:
-                                links = net.http_GET(url).content
-                                reallink=re.compile("href='(.+?)'>Click Here to Play</a>").findall(links)
-                                if len(reallink) > 0:
-                                        if main.resolvable(str(reallink[0])):
-                                                file_link = reallink[0]
-                                                try:
-                                                        main.addHDir(name,file_link,'resolve','')
-                                                except:
-                                                        continue
-                        except:
-                                continue
+                        if main.resolvable(url):
+                                               
+                                try:
+                                        main.addHDir(name,url,'resolve','')
+                                except:
+                                        continue
 
 def SEARCHINDEX(url):
         link = net.http_GET(url).content

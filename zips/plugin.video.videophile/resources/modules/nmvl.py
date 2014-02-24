@@ -22,7 +22,7 @@ def TVCATEGORIES():
 def INDEX(url):
         types = None
         link = net.http_GET(url).content
-        match=re.compile('<img src="(.+?)" title=".+?" class="alignleft" alt=".+?" /></a>\r\n\t\t\r\n<h3><a href="(.+?)" rel="bookmark" title="(.+?)">').findall(link)
+        match=re.compile('<img src="(.+?)"  title=".+?" class="alignleft" alt="(.+?)" /></a>\r\n\t\t\r\n<h3><a href="(.+?)" rel="bookmark"').findall(link)
         np=re.compile("<span class='pages'>Page (.+?)</span>").findall(link)
         if len(np) > 0:
                 next_page = ''
@@ -40,7 +40,7 @@ def INDEX(url):
                         if settings.getSetting('nextpagetop') == 'true':
                                 main.addDir('[COLOR blue]Next Page[/COLOR]',next_page,'newMyVideoLinksIndex',artwork + '/main/next.png')
 
-        for thumbnail,url,name in match:
+        for thumbnail,name,url in match:
                 if '<img src=' in name:
                         continue
                 else:

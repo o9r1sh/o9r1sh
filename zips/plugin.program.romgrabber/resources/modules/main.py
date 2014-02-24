@@ -58,13 +58,6 @@ thumb = addon.queries.get('thumb', '')
 ext = addon.queries.get('ext', '')
 console = addon.queries.get('console', '')
 
-print 'Mode is: ' + mode
-print 'Url is: ' + url
-print 'Name is: ' + name
-print 'Thumb is: ' + thumb
-print 'Extension is: ' + ext
-print 'Console is: ' + console
-
 settings = xbmcaddon.Addon(id=addon_id)
 artwork = xbmc.translatePath(os.path.join('http://addonrepo.com/xbmchub/o9r1sh1/romgrabber/artwork', ''))
 net = Net()
@@ -138,7 +131,8 @@ class downloadThread (threading.Thread):
                          return
           queue_items.append((name,url,thumb,ext,console))         
           cache.set('queue', str(queue_items))
-          addon.show_small_popup(title='Item Added To Your Queue', msg=name + ' Was Added To Your Download Queue', delay=int(5000), image=thumb)
+          if not ' - Download Failed' in name:
+               addon.show_small_popup(title='Item Added To Your Queue', msg=name + ' Was Added To Your Download Queue', delay=int(5000), image=thumb)
           
      def removeFromQueue(self,name,url,thumb,ext,console):
           queue = cache.get('queue')
@@ -179,69 +173,82 @@ class downloadThread (threading.Thread):
                          os.makedirs(self.path)
 
                     self.file_name = self.name + self.ext
-
-                    addon.show_small_popup(title='Downloads Started', msg=self.name + ' Is Downloading', delay=int(5000), image=self.thumb)
-
                     filePath = os.path.join(self.path,self.file_name)
-                    u = urllib.urlopen(self.url)
-                    f = open(filePath, 'wb')
-                    meta = u.info()
-                    file_size = int(meta.getheaders("Content-Length")[0])
 
-                    file_size_dl = 0
-                    block_sz = 8192
-                    while True:
-                         buffer = u.read(block_sz)
-                         if not buffer:
-                              break
+                    if not ' - Download Failed' in self.name:
 
-                         file_size_dl += len(buffer)
-                         f.write(buffer)
-                         status = int( file_size_dl * 1000. / file_size)
+                         try:
+                              u = urllib.urlopen(self.url)
+                              addon.show_small_popup(title='Downloads Started', msg=self.name + ' Is Downloading', delay=int(5000), image=self.thumb)
 
-                         if status > 99 and status < 101:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='10% Complete',delay=int(1000), image=self.thumb)
+                              f = open(filePath, 'wb')
+                              meta = u.info()
+                              file_size = int(meta.getheaders("Content-Length")[0])
 
-                         elif status > 199 and status < 201:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='20% Complete',delay=int(1000), image=self.thumb)
+                              file_size_dl = 0
+                              block_sz = 8192
+                              while True:
+                                   buffer = u.read(block_sz)
+                                   if not buffer:
+                                        break
 
-                         elif status > 299 and status < 301:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='30% Complete',delay=int(1000), image=self.thumb)
+                                   file_size_dl += len(buffer)
+                                   f.write(buffer)
+                                   status = int( file_size_dl * 1000. / file_size)
 
-                         elif status > 399 and status < 401:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='40% Complete',delay=int(1000), image=self.thumb)
+                                   if status > 99 and status < 101:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='10% Complete',delay=int(1000), image=self.thumb)
 
-                         elif status > 499 and status < 501:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='50% Complete',delay=int(1000), image=self.thumb)
+                                   elif status > 199 and status < 201:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='20% Complete',delay=int(1000), image=self.thumb)
 
-                         elif status > 599 and status < 601:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='60% Complete',delay=int(1000), image=self.thumb)
+                                   elif status > 299 and status < 301:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='30% Complete',delay=int(1000), image=self.thumb)
 
-                         elif status > 699 and status < 701:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='70% Complete',delay=int(1000), image=self.thumb)
+                                   elif status > 399 and status < 401:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='40% Complete',delay=int(1000), image=self.thumb)
 
-                         elif status > 799 and status < 801:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='80% Complete',delay=int(1000), image=self.thumb)
+                                   elif status > 499 and status < 501:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='50% Complete',delay=int(1000), image=self.thumb)
 
-                         elif status > 899 and status < 901:
-                              print self.thumb
-                              addon.show_small_popup(title=self.name, msg='90% Complete',delay=int(1000), image=self.thumb)
-                        
-                    f.close()
-                    time.sleep(2.5)
-                    addon.show_small_popup(title='Download Complete', msg=self.name + ' Finished Downloading', delay=int(5000), image=self.thumb)
+                                   elif status > 599 and status < 601:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='60% Complete',delay=int(1000), image=self.thumb)
 
-                    self.removeFromQueue(self.name,self.url,self.thumb,self.ext,self.console)
-                    extractArchive(os.path.join(self.path, self.file_name), os.path.join(self.path, self.name), self.console)
-                    
+                                   elif status > 699 and status < 701:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='70% Complete',delay=int(1000), image=self.thumb)
+
+                                   elif status > 799 and status < 801:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='80% Complete',delay=int(1000), image=self.thumb)
+
+                                   elif status > 899 and status < 901:
+                                        print self.thumb
+                                        addon.show_small_popup(title=self.name, msg='90% Complete',delay=int(1000), image=self.thumb)
+                                  
+                              f.close()
+                              time.sleep(2.5)
+                              addon.show_small_popup(title='Download Complete', msg=self.name + ' Finished Downloading', delay=int(5000), image=self.thumb)
+
+                              self.removeFromQueue(self.name,self.url,self.thumb,self.ext,self.console)
+                              extractArchive(os.path.join(self.path, self.file_name), os.path.join(self.path, self.name), self.console)
+
+                         except:
+                              self.removeFromQueue(self.name,self.url,self.thumb,self.ext,self.console)
+                              self.name = '[COLOR red]%s[/COLOR]' % self.name + '[COLOR red] - Download Failed[/COLOR]'
+                              addon.show_small_popup(title='Error', msg=self.name + ' Unable To Fetch Url', delay=int(5000), image=self.thumb)
+                              self.addToQueue(self.name,self.url,self.thumb,self.ext,self.console)
+                              print 'Failed To Fetch Url'
+                              pass
+                    else:
+                         pass
+                                     
 downloader = downloadThread()
 
 def addDir(name,url,mode,thumb,console):

@@ -76,13 +76,6 @@
 
 <setting id="wsoeu" type="bool" label="WatchSeries-Online" default="true" enable="!eq(-6,false)"/>
 
-
-<setting id="docs" type="bool" label="[COLOR blue]Documentaries[/COLOR]" default="true"/>
-
-
-<setting id="youtubedocs" type="bool" label="Youtube Documentaries" default="true" enable="!eq(-1,false)"/>
-
-
 <setting id="hdmovies" type="bool" label="[COLOR blue]HD Movies[/COLOR]" default="true"/>
 
 

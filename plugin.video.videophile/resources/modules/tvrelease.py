@@ -3,7 +3,7 @@ import urllib,urllib2,re,xbmcplugin,xbmcgui,xbmcaddon,sys,main,xbmc,os
 
 net = main.net
 artwork = main.artwork
-base_url = 'http://tv-release.net'
+base_url = 'http://tv-release.org'
 settings = main.settings
 
 def TV_CATEGORIES():

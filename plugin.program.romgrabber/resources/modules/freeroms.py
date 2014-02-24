@@ -11,13 +11,6 @@ thumb = addon.queries.get('thumb', '')
 ext = addon.queries.get('ext', '')
 console = addon.queries.get('console', '')
 
-print 'Mode is: ' + mode
-print 'Url is: ' + url
-print 'Name is: ' + name
-print 'Thumb is: ' + thumb
-print 'Extension is: ' + ext
-print 'Console is: ' + console
-
 settings = main.settings
 artwork = main.artwork
 net = main.net
@@ -29,6 +22,9 @@ downloader = main.downloader
 def lettersIndex(url):
      link = net.http_GET(url).content
      match=re.compile('\| <a href="(.+?)">(.+?)</a>').findall(link)
+
+     main.addDir('[COLOR blue]Manage Downloads[/COLOR]','none','viewQueue',artwork + '/other/downloads_manage.gif','none')
+
      for url,name in match:
           if name =='#':
                main.addDir(name,url,'freeromsIndex',artwork + 'letters/hash.gif',console)
@@ -45,6 +41,8 @@ def index(url):
      pages=re.compile('<a href="(.+?)"><font size=3><B><I>(.+?)</I>').findall(link)
      skipPages = len(pages) / 2
      inc = 1
+
+     main.addDir('[COLOR blue]Manage Downloads[/COLOR]','none','viewQueue',artwork + '/other/downloads_manage.gif','none')
 
      for url, name in pages:
           if not inc > skipPages:

@@ -37,8 +37,8 @@ def CATEGORIES():
                 main.addDir('HD Movies','none','hdSections',artwork + '/main/hd.png')
         if settings.getSetting('shows') == 'true':        
                 main.addDir('TV Shows','none','tvSections',artwork + '/main/tv.png')
-        if settings.getSetting('docs') == 'true':
-                main.addDir('Documentaries','none','docSections',artwork + '/main/docs.png')
+        #if settings.getSetting('docs') == 'true':
+                #main.addDir('Documentaries','none','docSections',artwork + '/main/docs.png')
         if settings.getSetting('cartoons') == 'true':
                 main.addDir('Cartoons','none','cartoonSections',artwork + '/main/cartoons.png')
         if settings.getSetting('anime') == 'true':
