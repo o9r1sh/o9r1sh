@@ -54,11 +54,9 @@
 
 <setting id="mooviemaniac" type="bool" label="MoovieManiac" default="true" enable="!eq(-5,false)"/>
 
-<setting id="newmyvideolinksmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-6,false)"/>
+<setting id="tvreleasemovies" type="bool" label="TV Release" default="true" enable="!eq(-6,false)"/>
 
-<setting id="tvreleasemovies" type="bool" label="TV Release" default="true" enable="!eq(-7,false)"/>
-
-<setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true" enable="!eq(-8,false)"/>
+<setting id="zmovie" type="bool" label="Watch-Movies / Z-Movie" default="true" enable="!eq(-7,false)"/>
 
 
 <setting id="shows" type="bool" label="[COLOR blue]TV Shows[/COLOR]" default="true"/>
@@ -78,10 +76,7 @@
 
 <setting id="hdmovies" type="bool" label="[COLOR blue]HD Movies[/COLOR]" default="true"/>
 
-
-<setting id="newmyvideolinkshdmovies" type="bool" label="NewMyVideoLinks" default="true" enable="!eq(-1,false)"/>
-
-<setting id="tvreleasehdmovies" type="bool" label="TV Release" default="true" enable="!eq(-2,false)"/>
+<setting id="tvreleasehdmovies" type="bool" label="TV Release" default="true" enable="!eq(-1,false)"/>
      
 
 <setting id="cartoons" type="bool" label="[COLOR blue]Cartoons[/COLOR]" default="true"/>

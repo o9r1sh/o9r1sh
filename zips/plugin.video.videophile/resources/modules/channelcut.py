@@ -489,7 +489,7 @@ def RECENTEPISODES(url):
 
 def VIDEOLINKS(name,url):
         link = net.http_GET(url).content
-        match=re.compile('<p><a href="(.+?)" rel="nofollow">.+?</a></p>').findall(link)
+        match=re.compile('<a href=".+?" rel="nofollow">(.+)</a>').findall(link)
         for url in match:
                 
                 

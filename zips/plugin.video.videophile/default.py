@@ -71,8 +71,8 @@ def MOVIESECTIONS():
         if settings.getSetting('mooviemaniac') == 'true':
                 main.addDir('MoovieManiac','none','moovieManiacCategories',artwork + '/main/mmaniac.png')
 
-        if settings.getSetting('newmyvideolinksmovies') == 'true':
-                main.addDir('NewMyVideoLinks','none','newMyVideoLinksCategories',artwork + '/main/nmvl.png')
+        #if settings.getSetting('newmyvideolinksmovies') == 'true':
+                #main.addDir('NewMyVideoLinks','none','newMyVideoLinksCategories',artwork + '/main/nmvl.png')
 
         if settings.getSetting('tvreleasemovies') == 'true':
                 main.addDir('TV Release','none','tvreleaseMovieCategories',artwork + '/main/tvrelease.png')
@@ -82,8 +82,8 @@ def MOVIESECTIONS():
 
 
 def HDMOVIESECTIONS():
-        if settings.getSetting('newmyvideolinkshdmovies') == 'true':
-                main.addDir('NewMyVideoLinks Yify Movies','none','newMyVideoLinksHDMovies',artwork + '/main/nmvl.png')
+        #if settings.getSetting('newmyvideolinkshdmovies') == 'true':
+                #main.addDir('NewMyVideoLinks Yify Movies','none','newMyVideoLinksHDMovies',artwork + '/main/nmvl.png')
 
         if settings.getSetting('tvreleasehdmovies') == 'true':
                 main.addDir('TV Release','none','tvreleaseHDMovies',artwork + '/main/tvrelease.png')
