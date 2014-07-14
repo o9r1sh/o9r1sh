@@ -129,7 +129,7 @@ class downloadThread (threading.Thread):
                     if (name,url,thumb,ext,console) in queue_items:
                          addon.show_small_popup(title='Item Already In Your Queue', msg=name + ' Is Already In Your Download Queue', delay=int(5000), image=thumb)
                          return
-          queue_items.append((name,url,thumb,ext,console))         
+          queue_items.append((name,url,thumb,ext,console))
           cache.set('queue', str(queue_items))
           if not ' - Download Failed' in name:
                addon.show_small_popup(title='Item Added To Your Queue', msg=name + ' Was Added To Your Download Queue', delay=int(5000), image=thumb)
@@ -141,10 +141,7 @@ class downloadThread (threading.Thread):
                try:
                     queue_items.remove((name,url,thumb,'.zip',console))
                except:
-                    try:
-                         queue_items.remove((name,url,thumb,'.rar',console))
-                    except:
-                         queue_items.remove((name,url,thumb,'.7z',console))
+                    queue_items.remove((name,url,thumb,'.7z',console))
                cache.set('queue', str(queue_items))
                xbmc.executebuiltin("XBMC.Container.Refresh")
 
@@ -236,15 +233,16 @@ class downloadThread (threading.Thread):
                               time.sleep(2.5)
                               addon.show_small_popup(title='Download Complete', msg=self.name + ' Finished Downloading', delay=int(5000), image=self.thumb)
 
-                              self.removeFromQueue(self.name,self.url,self.thumb,self.ext,self.console)
+                              
                               extractArchive(os.path.join(self.path, self.file_name), os.path.join(self.path, self.name), self.console)
+                              self.removeFromQueue(self.name,self.url,self.thumb,self.ext,self.console)
 
                          except:
                               self.removeFromQueue(self.name,self.url,self.thumb,self.ext,self.console)
                               self.name = '[COLOR red]%s[/COLOR]' % self.name + '[COLOR red] - Download Failed[/COLOR]'
-                              addon.show_small_popup(title='Error', msg=self.name + ' Unable To Fetch Url', delay=int(5000), image=self.thumb)
+                              addon.show_small_popup(title='Error', msg=self.name + ' There Was A Issue With This File', delay=int(5000), image=self.thumb)
                               self.addToQueue(self.name,self.url,self.thumb,self.ext,self.console)
-                              print 'Failed To Fetch Url'
+                              print 'Failed To Fetch File'
                               pass
                     else:
                          pass
@@ -421,10 +419,12 @@ def scrapeTitle(name,console):
           scraperUrl = scraperUrl.replace(' ','%20')
           
           link = net.http_GET(scraperUrl).content
-          match=re.compile('<td class="rtitle">\r\n                                <a href="(.+?)"\r\n                                >.+?</a>').findall(link)
+          match=re.compile('<td class="rtitle">\r\n                                <a href="(.+?)"\r\n                                class=".+?">.+?</a>').findall(link)
+          
 
           if len(match) > 0:
                gameUrl = baseScraperUrl + str(match[0])
+
                imageUrl = gameUrl + '/images'
                
                link = net.http_GET(gameUrl).content
